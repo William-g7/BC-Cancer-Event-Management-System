@@ -14,9 +14,13 @@ It serves as a roadmap to ensure alignment and effective collaboration throughou
 
 ## Team Purpose and Objectives
 Our team is dedicated to achieving the following purpose and objectives:
-1. **Purpose:** [Define the primary purpose of the team]
-2. **Objectives:** [List specific, measurable objectives the team aims to achieve]
+1. **Purpose: Our team’s primary purpose is to work collaboratively to successfully complete the software engineering project. We aim to apply our combined technical skills, communicate effectively, and support each other in producing a high-quality product that meets all project requirements and deadlines.**
 
+2. **Objectives:
+   Deliver all project components on time and meet the course’s specifications.
+   Ensure code quality through peer reviews and testing, maintaining a bug-free and efficient codebase.
+   Establish effective communication channels to resolve any issues promptly and maintain team alignment.
+   Foster a learning environment where team members can share knowledge and improve their skills in software development and teamwork.**
 ## Roles and Responsibilities
 To leverage individual strengths and ensure accountability, we have assigned the following roles and responsibilities:
 1. **Role:** [e.g., Team Leader] - **Responsibilities:** [List responsibilities]
