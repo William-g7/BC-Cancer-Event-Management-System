@@ -58,17 +58,16 @@ We have set the following performance expectations to maintain high standards:
 
 ## Meeting Schedules and Agendas
 Regular meetings will be scheduled as follows:
-1. **Frequency:** [Friday Morning 10am.]
-2. **Agenda:** [Agendas will be prepared by the team memeber by Thurthday mid-night before each meeting.]
-3. **Minutes:** [The minutes will include key decisions, action items, and deadlines.]
+1. **Frequency:** Friday Morning 10 am.
+2. **Agenda:** Agendas will be prepared by the team member by Thursday mid-night before each meeting.
+3. **Minutes:** One team member will be assigned to take minutes during each meeting. The minutes will include key decisions, action items, and deadlines. The minutes will sent to the team through e-mail before Friday midnight.
 
 ## Ensuring Adherence to the Charter
 To ensure we adhere to this charter, we will:
-1. **Regular Reviews:** [The team will review the charter every month to ensure it remains relevant and we are following its guidelines. If any major project changes occur, a review will be scheduled immediately to address potential adjustments.]
-2. **Accountability:** [Team members will hold each other accountable through regular check-ins and progress updates during meetings.]
-3. **Flexibility:** [If adjustments to the charter are needed, they will be proposed during the monthly review and require a consensus among all team members.]
-4. **Leadership:** [The team lead will be responsible for enforcing the charter and ensuring adherence.
-]
+1. **Regular Reviews:** The team will review the charter every month to ensure it remains relevant and we are following its guidelines. If any major project changes occur, a review will be scheduled immediately to address potential adjustments.
+2. **Accountability:** Team members will hold each other accountable through regular check-ins and progress updates during meetings.
+3. **Flexibility:** If adjustments to the charter are needed, they will be proposed during the monthly review and require a consensus among all team members.
+4. **Leadership:** The team lead will be responsible for enforcing the charter and ensuring adherence. If the lead is unavailable, a designated alternate will assume this responsibility to maintain consistency in leadership.
 
 ## Conclusion
 This team charter is essential for our collaboration and success. 
