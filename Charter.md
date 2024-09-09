@@ -58,16 +58,17 @@ We have set the following performance expectations to maintain high standards:
 
 ## Meeting Schedules and Agendas
 Regular meetings will be scheduled as follows:
-1. **Frequency:** [e.g., Weekly, bi-weekly]
-2. **Agenda:** [Describe how agendas will be prepared and shared]
-3. **Minutes:** [Outline how meeting minutes will be recorded and distributed]
+1. **Frequency:** [Friday Morning 10am.]
+2. **Agenda:** [Agendas will be prepared by the team memeber by Thurthday mid-night before each meeting.]
+3. **Minutes:** [The minutes will include key decisions, action items, and deadlines.]
 
 ## Ensuring Adherence to the Charter
 To ensure we adhere to this charter, we will:
-1. **Regular Reviews:** [Set schedule for reviewing the charter]
-2. **Accountability:** [Describe how accountability will be maintained]
-3. **Flexibility:** [Outline how adjustments to the charter will be made]
-4. **Leadership:** [Identify leadership roles in enforcing the charter]
+1. **Regular Reviews:** [The team will review the charter every month to ensure it remains relevant and we are following its guidelines. If any major project changes occur, a review will be scheduled immediately to address potential adjustments.]
+2. **Accountability:** [Team members will hold each other accountable through regular check-ins and progress updates during meetings.]
+3. **Flexibility:** [If adjustments to the charter are needed, they will be proposed during the monthly review and require a consensus among all team members.]
+4. **Leadership:** [The team lead will be responsible for enforcing the charter and ensuring adherence.
+]
 
 ## Conclusion
 This team charter is essential for our collaboration and success. 
