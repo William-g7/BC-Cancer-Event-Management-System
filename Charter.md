@@ -7,11 +7,10 @@ It serves as a roadmap to ensure alignment and effective collaboration throughou
 ## Team Information
 - **Team Name:** __________________________
 - **Team Members:**
-  1. __________________________
-  2. __________________________
-  3. __________________________
-  4. __________________________
-  5. __________________________
+  1. William
+  2. Makoya
+  3. Shiyuan
+  4. Yan
 
 ## Team Purpose and Objectives
 Our team is dedicated to achieving the following purpose and objectives:
