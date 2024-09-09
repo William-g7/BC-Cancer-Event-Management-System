@@ -27,16 +27,16 @@ To leverage individual strengths and ensure accountability, we have assigned the
 
 ## Team Values and Norms
 We commit to upholding the following values and norms to foster a positive and productive team environment:
-1. **Respect:** [Describe how team members will show respect]
-2. **Trust:** [Describe how trust will be maintained]
-3. **Punctuality:** [Set expectations for meeting attendance]
-4. **Commitment to Quality:** [Outline the standards for quality]
+1. **Respect:** Team members will show respect by actively listening to each other, valuing different perspectives, and maintaining open and constructive communication. We will avoid interrupting others and will always approach feedback with empathy and professionalism.
+2. **Trust:** Trust will be maintained by ensuring transparency in our work and being accountable for our responsibilities. Team members will follow through on their commitments, communicate openly about challenges, and rely on each other’s expertise to achieve shared goals.
+3. **Punctuality:** All team members are expected to attend meetings on time and be prepared to contribute. If a member is unable to attend, they should notify the team in advance and provide any necessary updates on their tasks. Punctuality shows respect for everyone’s time and helps maintain a smooth workflow.
+4. **Commitment to Quality:** We will adhere to high standards of quality in our work by paying attention to detail, thoroughly reviewing our output, and seeking feedback where needed. Each team member is responsible for delivering work that meets the agreed-upon criteria and reflects the collective effort of the team.
 
 ## Decision-Making Process
 Decisions within the team will be made using the following process:
-1. **Consensus:** [Describe how consensus will be achieved]
-2. **Majority Vote:** [Outline when majority vote will be used]
-3. **Designated Decision-Maker:** [Identify roles with decision-making authority]
+1. **Consensus:** Whenever possible, decisions will be made through consensus, where all team members discuss and contribute to the decision. The goal is to reach a mutually acceptable agreement where everyone feels heard and their concerns are addressed.
+2. **Majority Vote:** If consensus cannot be reached in a timely manner, a majority vote will be used to make decisions. Each member will have one vote, and the option with the most votes will be chosen. Majority voting will be used primarily for non-critical decisions or when time constraints are an issue.
+3. **Designated Decision-Maker:** For specific areas of expertise, a designated decision-maker will be assigned authority to make final decisions. These roles will be clearly identified at the beginning of the project, and their decisions will be respected by the entire team.
 
 ## Communication Plan
 Effective communication is crucial for our success. Our communication plan includes:
