@@ -10,10 +10,10 @@
 ## Team Members
 | Image | Name | Email |
 |-------|------|-------|
-| <img src="Resources/cat.png" alt="William" height="64" width="64"> | Cat | cat@example.com |
-| <img src="Resources/dog.png" alt="Makoya" height="64" width="64"> | Dog | lin.zhenz@northeastern.edu |
-| <img src="Resources/hippo.png" alt="Shiyuan" height="64" width="64"> | Hippo | hippo@example.com |
-| <img src="Resources/shark.png" alt="Yan" height="64" width="64"> | Shark | shark@example.com |
+| <img src="Resources/cat.png" alt="William" height="64" width="64"> | William | cat@example.com |
+| <img src="Resources/dog.png" alt="Makoya" height="64" width="64"> | Makoya | lin.zhenz@northeastern.edu |
+| <img src="Resources/hippo.png" alt="Shiyuan" height="64" width="64"> | Shiyuan | hippo@example.com |
+| <img src="Resources/shark.png" alt="Yan" height="64" width="64"> | Yan | shark@example.com |
 
 
 
