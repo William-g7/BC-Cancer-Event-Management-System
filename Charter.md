@@ -59,15 +59,31 @@ Decisions within the team will be made using the following process:
 
 ## Communication Plan
 Effective communication is crucial for our success. Our communication plan includes:
-1. **Tools:** [List tools, e.g., Slack, email, meetings]
-2. **Frequency:** [Set frequency for updates and meetings]
-3. **Reporting:** [Outline how progress will be reported]
+1. **Tools:** text messages, e-mails, face to face and Teams meetings
+2. **Frequency:** twice a week for updates and meetings
+3. **Reporting:** At the start of each meeting, every team member will give a brief update summarizing their progress, challenges, and any support they need. Additionally, the team's collective progress will be documented weekly in the StandUpDocuments on GitHub.
 
 ## Conflict Resolution Mechanisms
 Conflicts will be addressed promptly using the following mechanisms:
-1. **Open Discussion:** [Encourage open discussion of issues]
-2. **Mediation:** [Describe the mediation process]
-3. **Escalation:** [Outline steps for escalating unresolved conflicts]
+1. **Open Discussion:** Create an environment that encourages open and respectful conversations. When team members have different viewpoints, start by providing positive feedback and then engage in constructive discussions about the pros and cons of each idea. The team should operate with the mindset that every idea is valuable, allowing for more diverse and creative solutions.
+2. **Mediation:** Mediation process involves the following steps:
+### Step 1: Pause and Reflect:
+Encourage all members to take a moment to step back, cool down, and approach the situation with a clear, calm mindset.
+### Step 2: Acknowledge the Conflict:
+Recognize that conflicts can happen in a team setting, and frame it as an opportunity for growth and improved communication.
+### Step 3: Facilitate Dialogue: 
+Allow each person to express their perspective without interruptions, ensuring that everyone feels heard.
+### Step 4: Focus on Solutions: 
+Guide the conversation towards finding common ground and potential solutions, rather than dwelling on the disagreement.
+### Step 5: Follow-Up: 
+After reaching a resolution, check in with all members to ensure the solution is working and there are no lingering issues. 
+3. **Escalation:** Steps for escalating unresolved conflicts:
+### Step 1: Direct Discussion: 
+Engage in a one-on-one conversation with the involved team member(s) to pinpoint the root cause of the conflict and explore collaborative solutions.
+### Step 2: Reconfirm the Situation: 
+Reconfirm that all attempts at open discussion and mediation have been exhausted without a resolution.
+### Step 3: Course Instructor Involvement:
+As a final step, if the conflict remains unresolved, escalate the conflict to the course instructor by providing a detailed report that includes a summary of the conflict, mediation attempts, and actions taken to resolve the issue,and request further guidance.    
 
 ## Performance Expectations
 We have set the following performance expectations to maintain high standards:
