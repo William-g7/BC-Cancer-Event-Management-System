@@ -24,11 +24,25 @@ Our team is dedicated to achieving the following purpose and objectives:
     Foster a learning environment where team members can share knowledge and improve their skills in software development and teamwork.**
 ## Roles and Responsibilities
 To leverage individual strengths and ensure accountability, we have assigned the following roles and responsibilities:
-1. **Role:** [e.g., Team Leader] - **Responsibilities:** [List responsibilities]
-2. **Role:** [e.g., Developer] - **Responsibilities:** [List responsibilities]
-3. **Role:** [e.g., Designer] - **Responsibilities:** [List responsibilities]
-4. **Role:** [e.g., Tester] - **Responsibilities:** [List responsibilities]
-5. **Role:** [e.g., Documentation] - **Responsibilities:** [List responsibilities]
+1. **Role:** Team Leader - **Responsibilities:** Facilitate team meetings, ensuring everyone is heard and tasks are on track.
+Coordinate tasks and ensure the project is progressing according to schedule.
+Serve as the main point of contact for communicating with the course instructors.
+Help resolve conflicts and ensure smooth collaboration among team members.
+2. **Role:** Developer - **Responsibilities:** Write and maintain the codebase, ensuring it meets functionality and performance standards.
+Collaborate with other developers to integrate code and ensure compatibility.
+Address bugs and issues promptly to maintain a stable software version.
+Participate in code reviews to ensure code quality and consistency.
+3. **Role:** Designer - **Responsibilities:** Collaborate with developers to create user-friendly interfaces and ensure smooth user experience (if applicable).
+Ensure that the design aligns with the project's goals and is visually consistent.
+Support developers in translating design elements into functional components of the software.
+4. **Role:** Tester - **Responsibilities:** 
+Test the code for bugs and ensure all features work as expected.
+Document and report any issues found during testing.
+Verify bug fixes and new features before they are merged into the main codebase.
+Help maintain a smooth and functional project version by consistently testing each iteration.
+5. **Role:** Documentation - **Responsibilities:** Document project features, technical aspects, and codebase functions.
+Keep project documentation up to date with any changes or new features.
+Ensure that the documentation is clear and understandable for future reference by team members or stakeholders.
 
 ## Team Values and Norms
 We commit to upholding the following values and norms to foster a positive and productive team environment:
