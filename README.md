@@ -1,4 +1,4 @@
-# CS 5500 Fall 2024 Template Repository <img src="Resources/teamlogo.png" alt="Team Logo" height="256" width="256" align="right">
+# CS 5500 Fall 2024 Template Repository <img src="Resources/Team logo.png" alt="Team Logo" height="256" width="256" align="right">
 
 
 - This is the landing page of your team.
