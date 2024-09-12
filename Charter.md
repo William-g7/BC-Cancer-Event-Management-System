@@ -24,11 +24,11 @@ Our team is dedicated to achieving the following purpose and objectives:
     Foster a learning environment where team members can share knowledge and improve their skills in software development and teamwork.**
 ## Roles and Responsibilities
 To leverage individual strengths and ensure accountability, we have assigned the following roles and responsibilities:
-1. **Role:** Team Leader - **Responsibilities:** Oversee the overall progress of the project and ensure timely completion of all tasks; Coordinate meetings and set the agenda for team discussions; Act as the main point of contact between the team and the course instructor/clients; Ensure that all team members are aligned with the project goals and deadlines; Address any conflicts or challenges within the team and facilitate problem-solving.
-2. **Role:**  Lead Developer - **Responsibilities:** Design and implement key software components and functionalities; Ensure that the code adheres to best practices, is well-structured, and scalable; Conduct code reviews and provide feedback to other developers; Identify and resolve any technical challenges encountered during development; Collaborate with testers to ensure software components are properly tested and bug-free.
-3. **Role:** UI/UX Designer - **Responsibilities:** Design user interfaces that are intuitive, responsive, and aligned with the project requirements; Create wireframes, prototypes, and design documentation to guide the development process; Work closely with developers to ensure that the user interface is accurately implemented; Conduct user experience testing and incorporate feedback to improve the UI/UX; Ensure that the design is consistent and meets the aesthetic and functional goals of the project.
-4. **Role:** Tester/QA Engineer - **Responsibilities:** Develop and execute test cases to ensure that all components of the software are functioning correctly; Identify, log, and track bugs or issues, ensuring they are resolved before final delivery; Perform both manual and automated testing to validate code quality and performance; Collaborate with developers to troubleshoot and resolve issues promptly; Ensure that the software meets all the specified requirements before release.
-5. **Role:** Documentation Specialist - **Responsibilities:** Create and maintain comprehensive documentation for the project, including design decisions, code structure, and user guides; Ensure that all project deliverables are well-documented and submitted on time; Work with the team to develop any technical reports, presentations, or user manuals required; Keep track of all meeting minutes and decisions made during team discussions; Ensure that the documentation is clear, organized, and accessible for future reference or project handover.
+1. **Role:** [e.g., Team Leader] - **Responsibilities:** [List responsibilities]
+2. **Role:** [e.g., Developer] - **Responsibilities:** [List responsibilities]
+3. **Role:** [e.g., Designer] - **Responsibilities:** [List responsibilities]
+4. **Role:** [e.g., Tester] - **Responsibilities:** [List responsibilities]
+5. **Role:** [e.g., Documentation] - **Responsibilities:** [List responsibilities]
 
 ## Team Values and Norms
 We commit to upholding the following values and norms to foster a positive and productive team environment:
@@ -73,9 +73,22 @@ As a final step, if the conflict remains unresolved, escalate the conflict to th
 
 ## Performance Expectations
 We have set the following performance expectations to maintain high standards:
-1. **Metrics:** [List performance metrics]
-2. **Goals:** [Set specific performance goals]
-3. **Feedback:** [Describe how feedback will be provided and used]
+1. **Metrics:** 
+Task completion rate
+Quality of deliverables (e.g., code quality, documentation clarity)
+Timeliness (meeting deadlines)
+Participation and contribution to discussions and meetings
+Bug resolution rate (for developers/testers)
+2. **Goals:** 
+Complete all assigned tasks by the set deadlines with minimal delays.
+Ensure that code is clean, modular, and meets established coding standards.
+Deliver high-quality, bug-free software components by performing thorough testing.
+Maintain an active role in team discussions and decision-making processes, ensuring that each team member contributes effectively.
+3. **Feedback:** 
+Feedback will be provided regularly during weekly meetings.
+Peer reviews will be conducted to provide constructive criticism and suggestions for improvement.
+Team members will participate in self-assessments to reflect on individual contributions and identify areas for growth.
+Feedback will be used to make adjustments in roles, processes, and workload distribution to ensure continuous improvement.
 
 ## Meeting Schedules and Agendas
 Regular meetings will be scheduled as follows:
