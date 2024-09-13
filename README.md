@@ -12,7 +12,7 @@
 |-------|------|-------|
 | <img src="Resources/Samoyed.png" alt="William" height="64" width="64"> | William | gao.xing4@northeastern.edu |
 | <img src="Resources/truffle.png" alt="Makoya" height="64" width="64"> | Makoya | lin.zhenz@northeastern.edu |
-| <img src="Resources/teddy.png" alt="Shiyuan" height="64" width="64"> | Shiyuan | chen.shiyua@northeastern.edu |
+| <img src="Resources/teddy.jpg" alt="Shiyuan" height="64" width="64"> | Shiyuan | chen.shiyua@northeastern.edu |
 | <img src="Resources/cute puppy.jpg" alt="Yan" height="64" width="64"> | Yan | wang.yan8@northeastern.edu |
 
 
