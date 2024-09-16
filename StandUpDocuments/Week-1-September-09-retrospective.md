@@ -1,7 +1,7 @@
 # Retrospective Document Template
 
 ## Team Name
-[Insert Team Name Here]
+PuppyLover
 
 ## Date
 Week 1 September 09
