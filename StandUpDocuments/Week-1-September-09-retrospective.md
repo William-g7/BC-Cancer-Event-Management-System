@@ -7,11 +7,10 @@ PuppyLover
 Week 1 September 09
 
 ## Participants
-- [Team Member 1]
-- [Team Member 2]
-- [Team Member 3]
-- [Team Member 4]
-- [Team Member 5]
+- Shiyaun Chen
+- Yan Wang
+- Xing Gao
+- Zhenziye Lin
 
 ---
 
