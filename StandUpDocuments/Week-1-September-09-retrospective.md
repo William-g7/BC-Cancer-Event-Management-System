@@ -15,15 +15,16 @@ Week 1 September 09
 ---
 
 ## Overview
-Briefly describe the purpose of this retrospective and what you aim to achieve.
+We have a great start in the first week of the class. We found great team members, got to know each other, and had the first team meeting.
 
 ---
 
 ## What Went Well
 List the things that went well during the project.
--
--
--
+- Finish the charter file
+- Had the first meeting on the planned day
+- Finish the team quiz together
+- Build a reliable way to keep in touch with all team members
 
 ---
 
