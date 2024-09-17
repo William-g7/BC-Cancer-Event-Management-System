@@ -44,14 +44,17 @@ Identify actionable steps that can be taken to improve future projects.
 ---
 
 ## Individual Self-Assessments
-### [Team Member 1]
+### [Shiyuan Chen]
 - **Achievements and Contributions:**
-  -
+  -finish part of the charter file
+  - keep learning react and typescript
+  - start to read the assignment of the cal sheet app 
 - **Challenges Faced:**
-  -
+  - many new programming languages and frames to learn
 - **Areas for Improvement:**
-  -
+  - As a team leader, I may encourage more team communication
 - **Feedback and Suggestions:**
+  - it is hard to imagine what problem we will face in the future, things should getting more clear in the next week.
   -
 
 ### [Team Member 2]
