@@ -56,13 +56,13 @@ Identify actionable steps that can be taken to improve future projects.
 
 ### [Team Member 2]
 - **Achievements and Contributions:**
-  -
+  - completed two parts of our team charter and got familiar with my team members
 - **Challenges Faced:**
-  -
+  - inadequate knowledge, lack of relevant practice or experience
 - **Areas for Improvement:**
-  -
+  - skills for software engineering
 - **Feedback and Suggestions:**
-  -
+  - good time management, seek guidance from the instructor or TAs when necessary
 
 ### [Team Member 3]
 - **Achievements and Contributions:**
