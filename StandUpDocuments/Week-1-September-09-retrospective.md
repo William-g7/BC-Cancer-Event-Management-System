@@ -38,9 +38,8 @@ List the areas where there is room for improvement.
 
 ## Action Items
 Identify actionable steps that can be taken to improve future projects.
-1.
-2.
-3.
+1. contact more with each other (share ideas, recourses, and so on)
+2. Communicate more about each other's tech stacks and have a plan to develop programming ability.
 
 ---
 
