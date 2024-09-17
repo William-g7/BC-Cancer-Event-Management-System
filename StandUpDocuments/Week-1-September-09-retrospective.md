@@ -30,9 +30,9 @@ List the things that went well during the project.
 
 ## What Could Be Improved
 List the areas where there is room for improvement.
--
--
--
+- get to know each other better
+- fundamental knowledge about front-end and back-end
+- how to distribute the team assignments
 
 ---
 
