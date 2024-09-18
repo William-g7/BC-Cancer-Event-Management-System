@@ -74,10 +74,10 @@ As a final step, if the conflict remains unresolved, escalate the conflict to th
 ## Performance Expectations
 We have set the following performance expectations to maintain high standards:
 1. **Metrics:** 
-Task completion rate
-Quality of deliverables (e.g., code quality, documentation clarity)
-Timeliness (meeting deadlines)
-Participation and contribution to discussions and meetings
+Task completion rate  
+Quality of deliverables (e.g., code quality, documentation clarity)  
+Timeliness (meeting deadlines)  
+Participation and contribution to discussions and meetings  
 Bug resolution rate (for developers/testers)
 2. **Goals:** 
 Complete all assigned tasks by the set deadlines with minimal delays.
