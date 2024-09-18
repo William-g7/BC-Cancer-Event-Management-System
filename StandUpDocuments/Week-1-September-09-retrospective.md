@@ -21,24 +21,24 @@ We have a great start in the first week of the class. We found great team member
 
 ## What Went Well
 List the things that went well during the project.
-- Finish the charter file
+- Finished the charter file
 - Had the first meeting on the planned day
-- Finish the team quiz together
-- Build a reliable way to keep in touch with all team members
+- Finished the team quiz together
+- Built a reliable way to keep in touch with all team members
 
 ---
 
 ## What Could Be Improved
 List the areas where there is room for improvement.
-- get to know each other better
-- fundamental knowledge about front-end and back-end
-- how to distribute the team assignments
+- Get to know each other better
+- Fundamental knowledge about front-end and back-end
+- How to distribute the team assignments
 
 ---
 
 ## Action Items
 Identify actionable steps that can be taken to improve future projects.
-1. contact more with each other (share ideas, recourses, and so on)
+1. Contact more with each other (share ideas, recourses, and so on)
 2. Communicate more about each other's tech stacks and have a plan to develop programming ability.
 
 ---
@@ -46,25 +46,25 @@ Identify actionable steps that can be taken to improve future projects.
 ## Individual Self-Assessments
 ### [Shiyuan Chen]
 - **Achievements and Contributions:**
-  -finish part of the charter file
-  - keep learning react and typescript
-  - start to read the assignment of the cal sheet app 
+  - Finish part of the charter file
+  - Keep learning react and typescript
+  - Start to read the assignment of the cal sheet app 
 - **Challenges Faced:**
-  - many new programming languages and frames to learn
+  - Many new programming languages and frames to learn
 - **Areas for Improvement:**
   - As a team leader, I may encourage more team communication
 - **Feedback and Suggestions:**
-  - it is hard to imagine what problem we will face in the future, things should getting more clear in the next week.
+  - It is hard to imagine what problem we will face in the future, things should getting more clear in the next week.
 
 ### [Yan Wang]
 - **Achievements and Contributions:**
-  - completed two parts of our team charter and got familiar with my team members
+  - Completed two parts of our team charter and got familiar with my team members
 - **Challenges Faced:**
-  - inadequate knowledge, lack of relevant practice or experience
+  - Inadequate knowledge, lack of relevant practice or experience
 - **Areas for Improvement:**
-  - skills for software engineering
+  - Skills for software engineering
 - **Feedback and Suggestions:**
-  - good time management, seek guidance from the instructor or TAs when necessary
+  - Good time management, seek guidance from the instructor or TAs when necessary
 
 ### [Zhenziye Lin]
 - **Achievements and Contributions:**
