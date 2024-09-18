@@ -68,28 +68,18 @@ Identify actionable steps that can be taken to improve future projects.
 
 ### [Zhenziye Lin]
 - **Achievements and Contributions:**
-   -Gained a basic understanding of TypeScript and successfully installed and set up the development environment on the computer.
-    Followed the instructor’s steps in class and completed the learning objectives as outlined.
-    Collaborated with team members to complete the Team Charter.
+  - Gained a basic understanding of TypeScript and successfully installed and set up the development environment on the computer.
+  - Followed the instructor’s steps in class and completed the learning objectives as outlined.
+  - Collaborated with team members to complete the Team Charter.
 - **Challenges Faced:**
-   -After taking a gap year, some of the previously learned material has been forgotten, which requires reviewing to better contribute to the project moving forward.
+  - After taking a gap year, some of the previously learned material has been forgotten, which requires reviewing to better contribute to the project moving forward.
 - **Areas for Improvement:**
-   -Dedicate more time to the course, including reviewing Udemy courses outside of class to gain a deeper understanding of TypeScript.
+  - Dedicate more time to the course, including reviewing Udemy courses outside of class to gain a deeper understanding of TypeScript.
 Reach out to team members, TAs, or the instructor when faced with challenges to stay on track with the project.
 - **Feedback and Suggestions:**
   -
 
 ### [Team Member 4]
-- **Achievements and Contributions:**
-  -
-- **Challenges Faced:**
-  -
-- **Areas for Improvement:**
-  -
-- **Feedback and Suggestions:**
-  -
-
-### [Team Member 5]
 - **Achievements and Contributions:**
   -
 - **Challenges Faced:**
