@@ -77,7 +77,8 @@ Identify actionable steps that can be taken to improve future projects.
   - Dedicate more time to the course, including reviewing Udemy courses outside of class to gain a deeper understanding of TypeScript.
 Reach out to team members, TAs, or the instructor when faced with challenges to stay on track with the project.
 - **Feedback and Suggestions:**
-  -
+  - It would be helpful if the team could create more structured learning sessions for React and TypeScript.
+  - Encouraging more frequent communication within the team could help address any blockers faster.
 
 ### [Xing Gao]
 - **Achievements and Contributions:**
@@ -91,12 +92,6 @@ Reach out to team members, TAs, or the instructor when faced with challenges to 
   - Take a more proactive role in group activities and help drive the project progress.
   - Set aside more dedicated time for learning React and TypeScript to ensure a deeper understanding.
 
-- **Feedback and Suggestions:**
-  - It would be helpful if the team could create more structured learning sessions for React and TypeScript.
-  - Encouraging more frequent communication within the team could help address any blockers faster.
-
-
----
 
 ## Overall Team Assessment
 Reflect on the team’s performance as a whole.
