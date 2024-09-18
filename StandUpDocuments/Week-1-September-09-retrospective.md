@@ -93,7 +93,7 @@ Reach out to team members, TAs, or the instructor when faced with challenges to 
   - Set aside more dedicated time for learning React and TypeScript to ensure a deeper understanding.
 - **Feedback and Suggestions:**
   - It would be beneficial to have a clearer division of tasks, allowing each team member to focus on specific components, which could enhance efficiency.
-- Implementing regular check-ins to discuss progress and challenges might help ensure everyone is aligned and prevent delays.
+  - Implementing regular check-ins to discuss progress and challenges might help ensure everyone is aligned and prevent delays.
 
 
 ## Overall Team Assessment
