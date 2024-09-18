@@ -96,11 +96,16 @@ Reach out to team members, TAs, or the instructor when faced with challenges to 
 ## Overall Team Assessment
 Reflect on the team’s performance as a whole.
 - **Team Strengths:**
-  -
+  - UI Design Expertise: Our team leader has extensive experience in UI design, which is a significant advantage, ensuring high-quality, user-friendly interfaces for the project.
+  - Collaboration: The team collaborates effectively, with members actively contributing ideas and supporting each other, fostering a positive and productive working environment.
+  - Task Division: Roles and responsibilities are well-distributed, allowing each team member to focus on their strengths and contribute to the project efficiently.
 - **Areas for Improvement:**
-  -
+  - Increase Meeting Time: While the team has been meeting deadlines without delay, increasing the frequency or duration of meetings could enhance collaboration and allow for more thorough discussion of tasks and potential challenges.
+  - Technical Proficiency: Some team members are still familiarizing themselves with new tools and languages, particularly TypeScript. Spending more time improving technical skills will lead to greater team efficiency and overall project success.
 - **Suggestions for Future Projects:**
-  -
+  - Leverage UI Design Expertise: Continue to capitalize on the team leader’s UI design skills from the beginning of the project to establish a strong design framework and ensure consistency throughout development.
+  - More Frequent Check-ins: Adding regular, shorter check-ins between meetings will help the team stay aligned on progress and catch any blockers early on.
+  - Skill Development Sessions: Schedule sessions where team members can share their expertise or explore areas where they need more support, such as coding or testing, to strengthen the team’s technical foundation.
 
 ---
 
