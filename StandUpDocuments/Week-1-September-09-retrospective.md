@@ -79,25 +79,22 @@ Reach out to team members, TAs, or the instructor when faced with challenges to 
 - **Feedback and Suggestions:**
   -
 
-### [Team Member 4]
+### [Xing Gao]
 - **Achievements and Contributions:**
-  -
+  - Actively learning React and TypeScript to contribute to the project.
+  - Collaborated well with the team lead and participated actively in group activities.
+  - Engaged in team discussions and brainstorming sessions to move the project forward.
 - **Challenges Faced:**
-  -
+  - React and TypeScript cover a lot of material, and learning them feels time-consuming.
+  - Concerned about not having enough time to master these technologies before project deadlines.
 - **Areas for Improvement:**
-  -
-- **Feedback and Suggestions:**
-  -
+  - Take a more proactive role in group activities and help drive the project progress.
+  - Set aside more dedicated time for learning React and TypeScript to ensure a deeper understanding.
 
-### [Team Member 5]
-- **Achievements and Contributions:**
-  -
-- **Challenges Faced:**
-  -
-- **Areas for Improvement:**
-  -
 - **Feedback and Suggestions:**
-  -
+  - It would be helpful if the team could create more structured learning sessions for React and TypeScript.
+  - Encouraging more frequent communication within the team could help address any blockers faster.
+
 
 ---
 
