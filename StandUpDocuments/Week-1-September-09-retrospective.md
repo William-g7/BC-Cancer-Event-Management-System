@@ -56,7 +56,7 @@ Identify actionable steps that can be taken to improve future projects.
 - **Feedback and Suggestions:**
   - it is hard to imagine what problem we will face in the future, things should getting more clear in the next week.
 
-### [Team Member 2]
+### [Yan Wang]
 - **Achievements and Contributions:**
   - completed two parts of our team charter and got familiar with my team members
 - **Challenges Faced:**
