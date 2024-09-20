@@ -58,8 +58,8 @@ We have set the following performance expectations to maintain high standards:
 
 ## Meeting Schedules and Agendas
 Regular meetings will be scheduled as follows:
-1. **Frequency:** [e.g., Weekly, bi-weekly]
-2. **Agenda:** [Describe how agendas will be prepared and shared]
+1. **Frequency:** [Friday Morning 10am.]
+2. **Agenda:** [Agendas will be prepared by the all Team members by Thurthday mid-night before each meeting.]
 3. **Minutes:** [Outline how meeting minutes will be recorded and distributed]
 
 ## Ensuring Adherence to the Charter
