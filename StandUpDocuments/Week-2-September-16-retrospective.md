@@ -21,15 +21,15 @@ Briefly describe the purpose of this retrospective and what you aim to achieve.
 
 ## What Went Well
 List the things that went well during the project.
--
--
--
+- Team members effectively shared their thoughts and ideas with each other.
+- Task distribution was well-organized.
+- We gained a general understanding of the project's scope and the direction we need to take.
 
 ---
 
 ## What Could Be Improved
 List the areas where there is room for improvement.
--
+- 
 -
 -
 
