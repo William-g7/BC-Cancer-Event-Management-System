@@ -1,13 +1,13 @@
 # Retrospective Document Template
 
 ## Team Name
-[Insert Team Name Here]
+PuppyLover
 
 ## Date
 Week 10 November 11
 
 ## Participants
-- [Team Member 1]
+- Shiyuan Chen
 - [Team Member 2]
 - [Team Member 3]
 - [Team Member 4]
@@ -47,9 +47,10 @@ Identify actionable steps that can be taken to improve future projects.
 ## Individual Self-Assessments
 ### [Team Member 1]
 - **Achievements and Contributions:**
-  -
+  - create a Figma share project to help analyze the client presentation
+  - share understanding of the cal-sheet assignment with other team members
 - **Challenges Faced:**
-  -
+  - 
 - **Areas for Improvement:**
   -
 - **Feedback and Suggestions:**
