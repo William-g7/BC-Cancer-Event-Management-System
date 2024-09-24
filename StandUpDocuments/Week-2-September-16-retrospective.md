@@ -71,15 +71,21 @@ Identify actionable steps that can be taken to improve future projects.
 - **Feedback and Suggestions:**
   - Our group fosters a respectful and supportive environment, and I believe it would be beneficial to share our learning progress with each other each week. This practice will help us understand one another better and will be valuable for building our project.
 
-### [Team Member 3]
+### [Xing Gao]
 - **Achievements and Contributions:**
-  -
+  - Continued learning JavaScript, React, and TypeScript to improve my understanding.
+  - Made efforts to comprehend the structure and logic of the cal-sheet project, studying topics I had not encountered before.
+  - Collaborated with team members to analyze the front-end portion of the project.
+  - Analyzed and documented the requirements provided by BC Cancer clients.
 - **Challenges Faced:**
-  -
+  - Struggled with fully grasping the syntax and implementation of React and TypeScript, which made the learning process feel inefficient.
+  - Found it challenging to work with code that is slightly outdated and less structured compared to more standardized projects that I'm used to.
 - **Areas for Improvement:**
-  -
+  - Aim to improve the efficiency of my learning process.
+  - Seek to participate more actively in team discussions and contribute more frequently.
 - **Feedback and Suggestions:**
-  -
+  - Our team has a great atmosphere of mutual support and contribution, which I really appreciate. I plan to continue engaging more actively in our team activities.
+
 
 ### [Team Member 4]
 - **Achievements and Contributions:**
