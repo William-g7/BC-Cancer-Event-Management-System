@@ -37,9 +37,10 @@ List the areas where there is room for improvement.
 
 ## Action Items
 Identify actionable steps that can be taken to improve future projects.
-1.
-2.
-3.
+1. Set aside dedicated time each week to focus on learning TypeScript, React, Express.js, and Node.js to accelerate progress and better understand the project's architecture.
+2. Implement regular, structured team meetings to improve communication, share updates, and quickly address any challenges.
+3. Define clear roles and responsibilities for each team member at the start of each task or sprint to ensure efficient task distribution and avoid overlaps.
+
 
 ---
 
