@@ -54,15 +54,19 @@ Identify actionable steps that can be taken to improve future projects.
 - **Feedback and Suggestions:**
   -
 
-### [Team Member 2]
+### [Yan Wang]
 - **Achievements and Contributions:**
-  -
+  - Gained basic knowledge about javascript and typescript
+  - Actively contributed by sharing insights and thoughts about the first assignment during the group meeting
+  - Helped facilitate smooth communication within the team
 - **Challenges Faced:**
-  -
+  - Difficulty in understanding the whole project codebase
+  - Finding effective ways to master the necessary skills for this course within a limited timeframe
 - **Areas for Improvement:**
-  -
+  - Develop design skills
+  - Expand knowledge of full-stack development
 - **Feedback and Suggestions:**
-  -
+  - Our group fosters a respectful and supportive environment, and I believe it would be beneficial to share our learning progress with each other each week. This practice will help us understand one another better and will be valuable for building our project.
 
 ### [Team Member 3]
 - **Achievements and Contributions:**
