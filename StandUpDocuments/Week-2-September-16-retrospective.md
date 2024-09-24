@@ -29,9 +29,9 @@ List the things that went well during the project.
 
 ## What Could Be Improved
 List the areas where there is room for improvement.
-- 
--
--
+- Speed up the learning process of TypeScript, React, Express.js, and Node.js to gain a deeper understanding of the entire project.
+- Improve the team's communication and collaboration efficiency to ensure smoother progress.
+- Establish clearer roles and responsibilities for each team member to ensure tasks are distributed more effectively and prevent overlapping efforts.
 
 ---
 
