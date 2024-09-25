@@ -45,7 +45,7 @@ Identify actionable steps that can be taken to improve future projects.
 ---
 
 ## Individual Self-Assessments
-### [Team Member 1]
+### [Shiyuan Chen]
 - **Achievements and Contributions:**
   - create a Figma share project to help analyze the client presentation (https://www.figma.com/files/team/1400599363972161267/project/281237467/CS-5500?fuid=1400599359760576965)
   - share understanding of product and user experience design with team members
@@ -88,36 +88,40 @@ Identify actionable steps that can be taken to improve future projects.
   - Our team has a great atmosphere of mutual support and contribution, which I really appreciate. I plan to continue engaging more actively in our team activities.
 
 
-### [Team Member 4]
+### [Zhenziye Lin]
 - **Achievements and Contributions:**
-  -
+  - Studied portions of TypeScript and React, while revisiting key concepts from the 5004 course to strengthen my foundation.
+  - Explored the calc-sheet project, gaining a general understanding of both front-end and back-end components.
+  - Actively participated in group meetings and office hours, gathering valuable insights and information.
+  - Though concerned about my progress and foundational knowledge, I am committed to catching up to ensure I do not hinder the team's work.
 - **Challenges Faced:**
-  -
+  - Found some parts of the code confusing upon closer examination, which has slowed down my understanding.
+  - This week has been particularly hectic due to multiple deadlines, which added to the challenge of keeping up.
 - **Areas for Improvement:**
-  -
+  - My grasp of fundamental concepts still needs strengthening, and I will work harder to improve.
+  - I plan to ask questions and seek help more promptly, including utilizing AI tools to resolve issues efficiently.
 - **Feedback and Suggestions:**
-  -
-
-### [Team Member 5]
-- **Achievements and Contributions:**
-  -
-- **Challenges Faced:**
-  -
-- **Areas for Improvement:**
-  -
-- **Feedback and Suggestions:**
-  -
+  - Our team has fostered a supportive environment, which has been encouraging. I suggest that we continue sharing knowledge and helping one another, especially in tackling areas where we may face difficulties. Additionally, more structured check-ins on each other’s progress might help ensure we are all moving forward at a steady pace.
 
 ---
 
 ## Overall Team Assessment
 Reflect on the team’s performance as a whole.
 - **Team Strengths:**
-  -
+  - The team has demonstrated strong collaboration by sharing ideas, expertise, and insights during meetings, creating a supportive and open environment where everyone feels comfortable contributing.
+  - Task distribution has been well-structured, ensuring that each team member has clear responsibilities and can work on areas aligned with their strengths and interests.
+  - The team has built a respectful and encouraging atmosphere, which has helped maintain motivation and morale throughout the project. Mutual support is a key element of our working dynamic, allowing members to step in and assist each other when needed.
+  - Despite varying levels of familiarity with the technologies used (TypeScript, React, Node.js), team members have shown a commitment to learning, helping one another understand complex concepts, and pushing forward to improve individual and collective skills.
+  - Team members are not afraid to raise questions and have actively sought out help from both the TA and the instructor, ensuring timely resolution of issues and keeping the project on track.
 - **Areas for Improvement:**
-  -
+  - Some members are still developing their understanding of key technologies like TypeScript, React, Express.js, and Node.js. The team could benefit from more focused learning to deepen technical knowledge and streamline the development process.
+  - With the heavy workload of other courses and deadlines, the team has faced challenges in managing time effectively. Improving time management and prioritizing tasks will help ensure smoother progress and avoid last-minute rushes.
+  - Although communication has been positive, there is room to increase efficiency. More frequent and structured updates can help identify blockers early, making it easier to keep momentum and prevent delays.
 - **Suggestions for Future Projects:**
-  -
+  - To address the gaps in technical knowledge, we recommend setting aside time each week specifically for skill development in key technologies (TypeScript, React, Express.js, Node.js). This could include team-led sessions or pairing up for focused learning.
+  - To maintain momentum and address any potential challenges quickly, we suggest holding shorter, more frequent check-ins (perhaps midweek) to share progress, ask questions, and troubleshoot issues before they become major roadblocks.
+  - Clarifying roles at the start of each sprint or task can help ensure that everyone knows what they’re responsible for and can avoid overlapping efforts. This will increase accountability and help streamline the workflow.
+
 
 ---
 
