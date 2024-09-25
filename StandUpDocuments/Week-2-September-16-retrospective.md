@@ -15,7 +15,7 @@ Week 2 September 16
 ---
 
 ## Overview
-Briefly describe the purpose of this retrospective and what you aim to achieve.
+The purpose of this retrospective is to document our activities in the last week, allowing us to gain a better understanding of each team member's contributions. This reflection will also provide valuable insights for our future project development and facilitate our progress moving forward.
 
 ---
 
