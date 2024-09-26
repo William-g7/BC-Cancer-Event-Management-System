@@ -5,11 +5,7 @@
 
 ## BC Cancer Foundation: Fundraising Process Streamlining
 
-### **Client**: BC Cancer Foundation  
-**Executive Director**: Bruce Davidson  
-**Coordinator**: Livia  
-**Fundraising Support**: Cindy  
-
+### **Client**: BC Cancer
 ---
 
 ### **High-Level Problem Description**
