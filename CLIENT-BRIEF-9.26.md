@@ -3,7 +3,6 @@
 
 ### **Team Name**: PuppyLover
 
-## BC Cancer Foundation: Fundraising Process Streamlining
 
 ### **Client**: BC Cancer
 ---
