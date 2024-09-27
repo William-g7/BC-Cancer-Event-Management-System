@@ -14,12 +14,12 @@ The Observer pattern is implemented in the client-side code to handle real-time 
 
 ```typescript
 useEffect(() => {
-  const intervalId = setInterval(() => {
+  const interval = setInterval(() => {
     updateDisplayValues();
   }, 50);
 
-  return () => clearInterval(intervalId);
-}, [formulaValue, resultValue]);
+  return () => clearInterval(interval);
+});
 ```
 
 This useEffect hook sets up an interval to periodically fetch updates from the server, effectively observing changes in the spreadsheet data.
