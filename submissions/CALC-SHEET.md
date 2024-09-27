@@ -661,11 +661,18 @@ This method updates the internal state of the **SpreadSheetClient** with the new
 The processed data is then used to update the UI. This is primarily done in the SpreadSheet component, which uses React's **useState** hook to manage state and trigger re-renders. The updateDisplayValues function in the SpreadSheet component is responsible for updating various pieces of state with the latest data from the SpreadSheetClient:
 
 ```typescript
-const updateDisplayValues = (): void => {
-  setFormulaValue(spreadSheetClient.getFormulaString());
-  setResultValue(spreadSheetClient.getResultString());
-  setCellsValues(spreadSheetClient.getSheetDisplayStrings());
-};
+
+function updateDisplayValues(): void {
+    spreadSheetClient.userName = userName;
+    spreadSheetClient.documentName = documentName;
+    setFormulaString(spreadSheetClient.getFormulaString());
+    setResultString(spreadSheetClient.getResultString());
+    setStatusString(spreadSheetClient.getEditStatusString());
+    setCells(spreadSheetClient.getSheetDisplayStringsForGUI());
+    setCurrentCell(spreadSheetClient.getWorkingCellLabel());
+    setCurrentlyEditing(spreadSheetClient.getEditStatus());
+}
+
 ```
 
 The SpreadSheet component uses a **useEffect** hook to periodically call updateDisplayValues, ensuring that the UI stays in sync with the latest data from the server:
@@ -683,13 +690,32 @@ useEffect(() => {
 User interactions (like clicking a cell or a button) trigger functions that make API calls and then update the display. For example, the onCellClick function:
 
 ```typescript
-const onCellClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
-  const cellLabel = event.currentTarget.getAttribute("cell-label") ?? "";
-  spreadSheetClient.setCurrentCell(cellLabel);
-  setCurrentCell(cellLabel);
-  setCurrentlyEditing(false);
-  updateDisplayValues();
-};
+function onCellClick(event: React.MouseEvent<HTMLButtonElement>): void {
+
+    if (userName === "") {
+      alert("Please enter a user name");
+      return;
+    }
+    const cellLabel = event.currentTarget.getAttribute("cell-label");
+    // calculate the current row and column of the clicked on cell
+
+    const editStatus = spreadSheetClient.getEditStatus();
+    let realCellLabel = cellLabel ? cellLabel : "";
+
+
+    // if the edit status is true then add the token to the machine
+    if (editStatus) {
+      spreadSheetClient.addCell(realCellLabel);  // this will never be ""
+      updateDisplayValues();
+    }
+    // if the edit status is false then set the current cell to the clicked on cell
+    else {
+      spreadSheetClient.requestViewByLabel(realCellLabel);
+
+      updateDisplayValues();
+    }
+
+  }
 ```
 
 This function handles cell clicks and updates the server accordingly.
@@ -720,9 +746,11 @@ The updateDisplayValues() function updates the client-side state with the latest
 
 ```typescript
 const updateDisplayValues = (): void => {
+  ...
   setFormulaValue(spreadSheetClient.getFormulaString());
   setResultValue(spreadSheetClient.getResultString());
   setCellsValues(spreadSheetClient.getSheetDisplayStrings());
+  ...
 };
 ```
 
@@ -731,17 +759,23 @@ const updateDisplayValues = (): void => {
 The SpreadSheetClient class has a _timedFetch() method that periodically fetches the latest document data from the server:
 
 ```typescript
-private async _timedFetch(): Promise<void> {
-  if (this._timerID) {
-    clearTimeout(this._timerID);
-  }
+private async _timedFetch(): Promise<Response> {
 
-  await this.getDocument(this._userName);
-
-  this._timerID = setTimeout(() => {
-    this._timedFetch();
-  }, 100);
-}
+        // only get the document list every 2 seconds
+        let documentListInterval = 20;
+        let documentFetchCount = 0;
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                this.getDocument(this._documentName, this._userName);
+                documentFetchCount++;
+                if (documentFetchCount > documentListInterval) {
+                    documentFetchCount = 0;
+                    this.getDocuments(this._userName);
+                }
+                this._timedFetch();
+            }, 100);
+        });
+    }
 ```
 
 #### Document Update
@@ -750,27 +784,49 @@ When new document data is received from the server, the _updateDocument() method
 
 ```typescript
 private _updateDocument(document: DocumentTransport): void {
-  this._document = document;
+        const formula = document.formula;
+        const result = document.result;
+        const currentCell = document.currentCell;
+        const columns = document.columns;
+        const rows = document.rows;
+        const isEditing = document.isEditing;
+        const contributingUsers = document.contributingUsers;
+        const errorOccurred = document.errorOccurred;
 
-  // Reset the error flag and message
-  this._errorOccurred = false;
-  this._errorMessage = '';
 
-  // Extract the cell values from the document
-  const cells = new Map<string, string>();
-  const formula = new Map<string, string>();
+        // create the document
+        this._document = {
+            formula: formula,
+            result: result,
 
-  for (let cellName in document.cells) {
-    cells.set(cellName, document.cells[cellName].value);
-    formula.set(cellName, document.cells[cellName].formula);
-  }
+            currentCell: currentCell,
+            columns: columns,
+            rows: rows,
+            isEditing: isEditing,
+            cells: new Map<string, CellTransport>(),
+            contributingUsers: contributingUsers,
+            errorOccurred: errorOccurred
+        };
+        // create the cells
+        const cells = document.cells as unknown as CellTransportMap;
 
-  // Update the internal state
-  this._cells = cells;
-  this._formula = formula;
-  this._currentCell = document.currentCell;
-  this._isEditing = document.isEditing;
-}
+        for (let cellName in cells) {
+
+            let cellTransport = cells[cellName];
+            const [column, row] = Cell.cellToColumnRow(cellName);
+            const cell: CellTransport = {
+                formula: cellTransport.formula,
+                value: cellTransport.value,
+                error: cellTransport.error,
+                editing: this._getEditorString(contributingUsers, cellName)
+            };
+            this._document!.cells.set(cellName, cell);
+        }
+        if (errorOccurred !== '') {
+            this._errorCallback(errorOccurred)
+        }
+
+    }
 ```
 
 #### Contributing Users
@@ -778,9 +834,20 @@ private _updateDocument(document: DocumentTransport): void {
 The _updateDocument() method also updates information about contributing users, including which cells they are editing:
 
 ```typescript
-for (const [userName, user] of Object.entries(document.contributingUsers)) {
-  this._contributingUsers.set(userName, user);
-}
+const cells = document.cells as unknown as CellTransportMap;
+
+        for (let cellName in cells) {
+
+            let cellTransport = cells[cellName];
+            const [column, row] = Cell.cellToColumnRow(cellName);
+            const cell: CellTransport = {
+                formula: cellTransport.formula,
+                value: cellTransport.value,
+                error: cellTransport.error,
+                editing: this._getEditorString(contributingUsers, cellName)
+            };
+            this._document!.cells.set(cellName, cell);
+        }
 ```
 
 #### Server-Side Tracking
@@ -788,12 +855,26 @@ for (const [userName, user] of Object.entries(document.contributingUsers)) {
 On the server side, the SpreadSheetController class keeps track of which users are editing which cells:
 
 ```typescript
-public setEditStatus(userName: string, cell: string, isEditing: boolean): void {
-  const user = this._contributingUsers.get(userName) || { userName, cell: '', isEditing: false };
-  user.cell = cell;
-  user.isEditing = isEditing;
-  this._contributingUsers.set(userName, user);
-}
+requestEditAccess(user: string, cellLabel: string): boolean {
+    this._errorOccurred = '';
+
+    // is the user a contributingUser for this document. // this is for testing
+    if (!this._contributingUsers.has(user)) {
+      throw new Error('User is not a contributing user, this should not happen for a request to edit');
+    }
+
+    // now we know that the user is a viewer for sure and this line will succeed
+    let userData = this._contributingUsers.get(user);
+
+    // Is the user editing another cell? If so then release the other cell
+    if (userData!.isEditing && userData!.cellLabel !== cellLabel) {
+      this.releaseEditAccess(user);
+    }
+
+    // at this point the user is a contributing user and is not editing another cell
+    // make them a viewer of this cell
+    userData!.cellLabel = cellLabel;
+
 ```
 
 Document Container
@@ -801,16 +882,39 @@ Document Container
 The documentContainer() method in SpreadSheetController prepares a container with all the necessary information about the document, including contributing users:
 
 ```typescript
-public documentContainer(): DocumentTransport {
-  return {
-    cells: this._sheetMemory.getCellsForTransport(),
-    formula: this._getFormulaString(),
-    result: this._getResultString(),
-    currentCell: this.getCurrentCell(),
-    isEditing: this._isEditing,
-    contributingUsers: Object.fromEntries(this._contributingUsers),
-  };
-}
+public documentContainer(user: string): any {
+    // get the current formula for the cell of this user
+    let container = this._memory.sheetContainer();
+
+    // if the user is not a contributing user we request view access to A1
+    if (!this._contributingUsers.has(user)) {
+      this.requestViewAccess(user, 'A1');
+    }
+    let userData = this._contributingUsers.get(user)!;
+    let cellFocused = userData.cellLabel;
+    container.currentCell = cellFocused;
+    container.formula = this.getFormulaStringForUser(user);
+    container.result = this.getResultStringForUser(user);
+    container.isEditing = userData.isEditing;
+
+    // add the error message if there is one
+    container.errorOccurred = this._errorOccurred;
+    // reset the error since we only report it once
+    this._errorOccurred = '';
+
+    container.contributingUsers = [];
+    this._contributingUsers.forEach((value: ContributingUser, key: string) => {
+      let user = {
+        user: key,
+        cell: value.cellLabel,
+        isEditing: value.isEditing
+      }
+      if (value.isEditing) {
+        container.contributingUsers.push(user);
+      }
+    });
+    return container;
+  }
 ```
 
 This combination of periodic polling, server-side tracking of user edits, and client-side updates allows the client to see other users updating cells in near real-time. The client regularly fetches the latest document state, which includes information about which users are editing which cells, and updates its display accordingly.
@@ -824,14 +928,22 @@ This combination of periodic polling, server-side tracking of user edits, and cl
 The SpreadSheet component uses the currentlyEditing state to determine whether a user is currently editing a cell. This affects the display of certain UI components:
 
 ```typescript
-const [currentlyEditing, setCurrentlyEditing] = useState<boolean>(false);
+case ButtonNames.edit_toggle:
+        if (currentlyEditing) {
+          spreadSheetClient.setEditStatus(false);
+        } else {
+          spreadSheetClient.setEditStatus(true);
+        }
+        setStatusString(spreadSheetClient.getEditStatusString());
+        break;
 
-// Later in the component
-{currentlyEditing ? (
-  <Button onClick={handleSaveEdit}>Save</Button>
-) : (
-  <Button onClick={handleStartEdit}>Edit</Button>
-)}
+      case ButtonNames.clear:
+        spreadSheetClient.removeToken();
+        break;
+
+      case ButtonNames.allClear:
+        spreadSheetClient.clearFormula();
+        break;
 ```
 
 When a user toggles the edit status, the UI is updated to reflect this change.
@@ -847,7 +959,7 @@ useEffect(() => {
   }, 50);
 
   return () => clearInterval(intervalId);
-}, [formulaValue, resultValue]);
+});
 ```
 
 This ensures that the UI is frequently updated with the latest data from the server, including changes made by other users.
@@ -869,28 +981,16 @@ The cellsValues prop contains the latest cell data, including information about 
 
 #### Contributing Users
 
-The SpreadSheetController class keeps track of contributing users and which cells they are editing:
-
-```typescript
-private _contributingUsers: Map<string, ContributingUser>;
-```
-
-This information is then passed to the frontend through the documentContainer method, allowing the UI to display which users are editing which cells.
+The SpreadSheetController class keeps track of contributing users and which cells they are editing. The information is then passed to the frontend through the documentContainer method, allowing the UI to display which users are editing which cells.
 
 #### Error Messages
 
-The application handles and displays error messages, such as when a user tries to edit a cell that's already being edited by another user:
+The application handles and displays error messages, such as when a user tries to edit a cell that's already being edited by another user. These error messages are then displayed to the user through the displayErrorMessage function in the SpreadSheet component:
 
 ```typescript
-this._errorMessage = 'Cell is being edited by another user';
-```
-
-These error messages are then displayed to the user through the displayErrorMessage function in the SpreadSheet component:
-
-```typescript
-const displayErrorMessage = (message: string) => {
-  setStatusString(message);
-};
+function displayErrorMessage(message: string) {
+  alert(message);
+}
 ```
 
 #### Formula and Result Display
@@ -898,7 +998,7 @@ const displayErrorMessage = (message: string) => {
 The Formula component (rendered in the SpreadSheet component) displays the current formula and its result:
 
 ```typescript
-<Formula formula={formulaValue} result={resultValue} />
+<Formula formula={formulaValue} result={resultString} />
 ```
 
 This component is updated in real-time as the user edits the formula or when changes are fetched from the server.
@@ -914,12 +1014,17 @@ The cell ownership is displayed to users through a combination of client-side pr
 The SpreadSheetController keeps track of contributing users and their editing status:
 
 ```typescript
-public setEditStatus(userName: string, cell: string, isEditing: boolean): void {
-  const user = this._contributingUsers.get(userName) || { userName, cell: '', isEditing: false };
-  user.cell = cell;
-  user.isEditing = isEditing;
-  this._contributingUsers.set(userName, user);
-}
+container.contributingUsers = [];
+    this._contributingUsers.forEach((value: ContributingUser, key: string) => {
+      let user = {
+        user: key,
+        cell: value.cellLabel,
+        isEditing: value.isEditing
+      }
+      if (value.isEditing) {
+        container.contributingUsers.push(user);
+      }
+    });
 ```
 
 #### Client-side processing
@@ -928,27 +1033,30 @@ When the SpreadSheetClient receives updated document data, it processes the cont
 
 ```typescript
 private _updateDocument(document: DocumentTransport): void {
-  // ... other updates ...
-
-  // Update contributing users
-  this._contributingUsers.clear();
-  for (const [userName, user] of Object.entries(document.contributingUsers)) {
-    this._contributingUsers.set(userName, user);
-  }
+        const formula = document.formula;
+        const result = document.result;
+        const currentCell = document.currentCell;
+        const columns = document.columns;
+        const rows = document.rows;
+        const isEditing = document.isEditing;
+        const contributingUsers = document.contributingUsers;
+        const errorOccurred = document.errorOccurred;
+        ...
 }
+
 ```
 
 Specifically, it uses the _getEditorString method to determine the editor for each cell:
 
 ```typescript
-private _getEditorString(cellName: string): string {
-  for (const [userName, user] of this._contributingUsers) {
-    if (user.cell === cellName && user.isEditing) {
-      return `|${userName}`;
+private _getEditorString(contributingUsers: UserEditing[], cellLabel: string): string {
+        for (let user of contributingUsers) {
+            if (user.cell === cellLabel) {
+                return user.user;
+            }
+        }
+        return '';
     }
-  }
-  return '';
-}
 ```
 
 #### Preparing display data
@@ -957,17 +1065,14 @@ The getSheetDisplayStringsForGUI method in SpreadSheetClient prepares the cell d
 
 ```typescript
 public getSheetDisplayStringsForGUI(): string[][] {
-  const displayStrings: string[][] = [];
-  for (let row = 0; row < this._rowCount; row++) {
-    displayStrings[row] = [];
-    for (let col = 0; col < this._columnCount; col++) {
-      const cellName = `${String.fromCharCode(65 + col)}${row + 1}`;
-      const cellValue = this._cells.get(cellName) || '';
-      const editorString = this._getEditorString(cellName);
-      displayStrings[row][col] = cellValue + editorString;
-    }
-  }
-  return displayStrings;
+        if (!this._document) {
+            return [];
+        }
+        const columns = this._document.columns;
+        const rows = this._document.rows;
+        const cells: Map<string, CellTransport> = this._document.cells as Map<string, CellTransport>;
+        const sheetDisplayStrings: string[][] = [];
+        ...
 }
 ```
 
@@ -978,26 +1083,23 @@ This method appends the editor's name to each cell's value, separated by a "|" c
 The SpreadSheet component in React periodically updates its state with the latest data from SpreadSheetClient:
 
 ```typescript
-const updateDisplayValues = (): void => {
-  setFormulaValue(spreadSheetClient.getFormulaString());
-  setResultValue(spreadSheetClient.getResultString());
-  setCellsValues(spreadSheetClient.getSheetDisplayStrings());
-};
+function updateDisplayValues(): void {
+    spreadSheetClient.userName = userName;
+    spreadSheetClient.documentName = documentName;
+    setFormulaString(spreadSheetClient.getFormulaString());
+    setResultString(spreadSheetClient.getResultString());
+    setStatusString(spreadSheetClient.getEditStatusString());
+    setCells(spreadSheetClient.getSheetDisplayStringsForGUI());
+    setCurrentCell(spreadSheetClient.getWorkingCellLabel());
+    setCurrentlyEditing(spreadSheetClient.getEditStatus());
 
-useEffect(() => {
-  const intervalId = setInterval(() => {
-    updateDisplayValues();
-  }, 50);
-
-  return () => clearInterval(intervalId);
-}, [formulaValue, resultValue]);
+  }
 ```
 
 #### Rendering
 
-While not shown in the provided code snippets, the UI components (likely in a Cell or SheetHolder component) would then render this information. They would split the cell value string on the "|" character and display the editor's name if present.
+The UI components (in a Cell) would then render this information. They would split the cell value string on the "|" character and display the editor's name if present.
 
-In summary, cell ownership is tracked on the server, processed and formatted on the client, and then rendered in the UI. The "|" character is used as a delimiter to separate the cell value from the editor's name in the display string.
 
 # Part 4: Frontend and Backend Interaction
 
@@ -1163,17 +1265,23 @@ The real-time interaction in this project is primarily achieved through periodic
 The client uses a timed fetch mechanism to periodically request updates from the server. This is implemented in the _timedFetch method of the SpreadSheetClient class:
 
 ```typescript
-private async _timedFetch(): Promise<void> {
-  if (this._timerID) {
-    clearTimeout(this._timerID);
-  }
+private async _timedFetch(): Promise<Response> {
 
-  await this.getDocument(this._userName);
-
-  this._timerID = setTimeout(() => {
-    this._timedFetch();
-  }, 100);
-}
+        // only get the document list every 2 seconds
+        let documentListInterval = 20;
+        let documentFetchCount = 0;
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                this.getDocument(this._documentName, this._userName);
+                documentFetchCount++;
+                if (documentFetchCount > documentListInterval) {
+                    documentFetchCount = 0;
+                    this.getDocuments(this._userName);
+                }
+                this._timedFetch();
+            }, 100);
+        });
+    }
 ```
 
 This method sets up a loop that calls getDocument every 100 milliseconds, ensuring that the client frequently checks for updates.
@@ -1184,26 +1292,15 @@ When the client receives an updated document from the server, it processes the n
 
 ```typescript
 private _updateDocument(document: DocumentTransport): void {
-  this._document = document;
-
-  // Reset the error flag and message
-  this._errorOccurred = false;
-  this._errorMessage = '';
-
-  // Extract the cell values from the document
-  const cells = new Map<string, string>();
-  const formula = new Map<string, string>();
-
-  for (let cellName in document.cells) {
-    cells.set(cellName, document.cells[cellName].value);
-    formula.set(cellName, document.cells[cellName].formula);
-  }
-
-  // Update the internal state
-  this._cells = cells;
-  this._formula = formula;
-  this._currentCell = document.currentCell;
-  this._isEditing = document.isEditing;
+        const formula = document.formula;
+        const result = document.result;
+        const currentCell = document.currentCell;
+        const columns = document.columns;
+        const rows = document.rows;
+        const isEditing = document.isEditing;
+        const contributingUsers = document.contributingUsers;
+        const errorOccurred = document.errorOccurred;
+        ...
 }
 ```
 
@@ -1220,17 +1317,23 @@ useEffect(() => {
   }, 50);
 
   return () => clearInterval(intervalId);
-}, [formulaValue, resultValue]);
+});
 ```
 
 The updateDisplayValues function updates various state variables with the latest data from the SpreadSheetClient:
 
 ```typescript
-const updateDisplayValues = (): void => {
-  setFormulaValue(spreadSheetClient.getFormulaString());
-  setResultValue(spreadSheetClient.getResultString());
-  setCellsValues(spreadSheetClient.getSheetDisplayStrings());
-};
+  function updateDisplayValues(): void {
+    spreadSheetClient.userName = userName;
+    spreadSheetClient.documentName = documentName;
+    setFormulaString(spreadSheetClient.getFormulaString());
+    setResultString(spreadSheetClient.getResultString());
+    setStatusString(spreadSheetClient.getEditStatusString());
+    setCells(spreadSheetClient.getSheetDisplayStringsForGUI());
+    setCurrentCell(spreadSheetClient.getWorkingCellLabel());
+    setCurrentlyEditing(spreadSheetClient.getEditStatus());
+
+  }
 ```
 
 ### Handling User Edits
@@ -1238,35 +1341,31 @@ const updateDisplayValues = (): void => {
 When a user starts editing a cell, the client sends a request to the server using the setEditStatus method:
 
 ```typescript
-public async setEditStatus(cell: string, isEditing: boolean): Promise<boolean> {
-  const setEditStatusEndpoint = `${this._baseURL}/document/edit-status`;
-  const body = {
-    userName: this._userName,
-    documentName: this._documentName,
-    cell: cell,
-    isEditing: isEditing
-  };
+public setEditStatus(isEditing: boolean): void {
 
-  try {
-    const response = await fetch(setEditStatusEndpoint, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
-    });
+        // request edit status of the current cell
+        const body = {
+            "userName": this._userName,
+            "cell": this._document.currentCell
+        };
+        let requestEditViewURL = `${this._baseURL}/document/cell/view/${this._documentName}`;
+        if (isEditing) {
+            requestEditViewURL = `${this._baseURL}/document/cell/edit/${this._documentName}`;
+        }
 
-    if (response.ok) {
-      return true;
-    } else {
-      this._errorMessage = `Failed to set edit status: ${response.status} ${response.statusText}`;
-      return false;
+        fetch(requestEditViewURL, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        })
+            .then(response => {
+                return response.json() as Promise<DocumentTransport>;
+            }).then((document: DocumentTransport) => {
+                this._updateDocument(document);
+            });
     }
-  } catch (error) {
-    this._errorMessage = `Failed to set edit status: ${error}`;
-    return false;
-  }
-}
 ```
 
 This method sends a PUT request to the server to update the editing status of a cell.
@@ -1277,17 +1376,14 @@ The getSheetDisplayStringsForGUI method in SpreadSheetClient includes informatio
 
 ```typescript
 public getSheetDisplayStringsForGUI(): string[][] {
-  const displayStrings: string[][] = [];
-  for (let row = 0; row < this._rowCount; row++) {
-    displayStrings[row] = [];
-    for (let col = 0; col < this._columnCount; col++) {
-      const cellName = `${String.fromCharCode(65 + col)}${row + 1}`;
-      const cellValue = this._cells.get(cellName) || '';
-      const editorString = this._getEditorString(cellName);
-      displayStrings[row][col] = cellValue + editorString;
-    }
-  }
-  return displayStrings;
+        if (!this._document) {
+            return [];
+        }
+        const columns = this._document.columns;
+        const rows = this._document.rows;
+        const cells: Map<string, CellTransport> = this._document.cells as Map<string, CellTransport>;
+        const sheetDisplayStrings: string[][] = [];
+        ...
 }
 ```
 
