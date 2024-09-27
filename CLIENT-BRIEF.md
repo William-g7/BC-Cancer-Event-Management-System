@@ -35,7 +35,6 @@ The BC Cancer Foundation aims to address these challenges by implementing a syst
 
 1. **Candidate Selection Stage**
    - Automates and streamlines the invite list creation process, reducing the reliance on manual steps and Excel.
-   - Improves data integration between the invite lists and the CRM system, ensuring that data remains up-to-date and connected to donor profiles.
    - Provides better filtering and sorting tools to ensure relevant donors are selected for specific events based on their location, interests, and previous interactions.
    - Handles related accounts automatically, ensuring that duplicate entries are removed without requiring manual exclusion by fundraisers.
 
@@ -46,7 +45,6 @@ The BC Cancer Foundation aims to address these challenges by implementing a syst
 
 3. **Feedback and Improvement Stage**
    - Introduces a feedback loop that tracks donor interactions and helps avoid repeating tasks or sending redundant invitations.
-   - Implements a system to easily analyze past event successes or failures.
    - Provides tools to use historical data and feedback to improve future invitation strategies.
 
 ---
