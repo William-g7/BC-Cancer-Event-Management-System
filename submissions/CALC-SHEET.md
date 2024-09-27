@@ -485,7 +485,7 @@ This application does not implement protected routes. The app only uses a simple
 
 4. The server uses the username to associate actions with specific users, but doesn't perform any actual authentication:
 
-In DocumentServer.ts: app.put('/documents/:name', (req: express.Request, res: express.Response)
+   In DocumentServer.ts: app.put('/documents/:name', (req: express.Request, res: express.Response)
 
 ```typescript
 app.put('/documents/:name', (req: express.Request, res: express.Response) => {
