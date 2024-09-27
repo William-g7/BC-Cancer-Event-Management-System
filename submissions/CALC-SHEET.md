@@ -34,19 +34,16 @@ SpreadSheetController class manages the data and business logic.
 
 ```typescript
 export class SpreadSheetController {
-  /** The memory for the sheet */
-  private _memory: SheetMemory;
-  private _contributingUsers: Map<string, ContributingUser> = new Map<string, ContributingUser>();
-  private _cellsBeingEdited: Map<string, string> = new Map<string, string>();
+  private _sheetMemory: SheetMemory;
   private _calculationManager: CalculationManager;
-  private _errorOccurred: string = '';
-  /**
-   * constructor
-   * */
-  constructor(columns: number, rows: number) {
-    this._memory = new SheetMemory(columns, rows);
-    this._calculationManager = new CalculationManager();
+  private _contributingUsers: Map<string, ContributingUser>;
+
+  constructor(private _document: string) {
+    this._sheetMemory = new SheetMemory();
+    this._calculationManager = new CalculationManager(this._sheetMemory);
+    this._contributingUsers = new Map<string, ContributingUser>();
   }
+
   // ... other methods
 }
 ```
@@ -62,28 +59,14 @@ React components, like the SpreadSheet component, serve as the View in the MVC p
 The React components interact with the Model (represented by SpreadSheetClient and ultimately SpreadSheetController) to fetch and update data. For instance:
 
 ```typescript
-function SpreadSheet({ documentName, spreadSheetClient }: SpreadSheetProps) {
-  const [formulaString, setFormulaString] = useState(spreadSheetClient.getFormulaString())
-  const [resultString, setResultString] = useState(spreadSheetClient.getResultString())
-  const [cells, setCells] = useState(spreadSheetClient.getSheetDisplayStringsForGUI());
-  const [statusString, setStatusString] = useState(spreadSheetClient.getEditStatusString());
-  const [currentCell, setCurrentCell] = useState(spreadSheetClient.getWorkingCellLabel());
-  const [currentlyEditing, setCurrentlyEditing] = useState(spreadSheetClient.getEditStatus());
-  const [userName, setUserName] = useState(window.sessionStorage.getItem('userName') || "");
-  const [serverSelected, setServerSelected] = useState("localhost");
-
-
-  function updateDisplayValues(): void {
-    spreadSheetClient.userName = userName;
-    spreadSheetClient.documentName = documentName;
-    setFormulaString(spreadSheetClient.getFormulaString());
-    setResultString(spreadSheetClient.getResultString());
-    setStatusString(spreadSheetClient.getEditStatusString());
-    setCells(spreadSheetClient.getSheetDisplayStringsForGUI());
-    setCurrentCell(spreadSheetClient.getWorkingCellLabel());
-    setCurrentlyEditing(spreadSheetClient.getEditStatus());
-
-  }
+const SpreadSheet: React.FC<SpreadSheetProps> = ({ documentName }) => {
+  const [formulaValue, setFormulaValue] = useState<string>('');
+  const [resultValue, setResultValue] = useState<string>('');
+  const [statusString, setStatusString] = useState<string>('');
+  const [cellsValues, setCellsValues] = useState<string[][]>([]);
+  const [currentCell, setCurrentCell] = useState<string>('');
+  const [currentlyEditing, setCurrentlyEditing] = useState<boolean>(false);
+  const [userName, setUserName] = useState<string>('');
 
   // ... other code
 
@@ -104,28 +87,24 @@ The DocumentServer does act as a controller, handling HTTP requests and coordina
 Client-side Controller:
 
 ```typescript
-app.put('/documents/:name', (req: express.Request, res: express.Response) => {
-    console.log('PUT /documents/:name');
-    const name = req.params.name;
-    // get the userName from the body
-    console.log(`PUT /documents/:name ${name}`);
-    const userName = req.body.userName;
-    if (!userName) {
-        res.status(400).send('userName is required');
-        return;
-    }
-    // is this name valid?
-    const documentNames = documentHolder.getDocumentNames();
+export class SpreadSheetClient {
+  private _serverPort: number = 3005;
+  private _baseURL: string = `http://localhost:${this._serverPort}`;
+  private _documentName: string = '';
+  private _userName: string = '';
 
-    if (documentNames.indexOf(name) === -1) {
-        console.log(`Document ${name} not found, creating it`);
-        documentHolder.createDocument(name, 5, 8, userName);
-    }
-    // get the document
-    const document = documentHolder.getDocumentJSON(name, userName);
+  // ... other properties and methods
 
-    res.status(200).send(document);
-});
+  public async getDocument(userName: string): Promise<boolean> {
+    // ... implementation
+  }
+
+  public async createDocument(userName: string): Promise<boolean> {
+    // ... implementation
+  }
+
+  // ... other methods
+}
 ```
 
 #### Client-side Controller:
@@ -133,28 +112,30 @@ app.put('/documents/:name', (req: express.Request, res: express.Response) => {
 The SpreadSheetClient class also acts as a controller on the client side, This class manages the communication between the React components and the server, handling API calls and local state updates.
 
 ```typescript
-    public addToken(token: string): void {
-        const body = {
-            "userName": this._userName,
-            "token": token
-        };
+export class SpreadSheetClient {
+  private _serverPort: number = 3005;
+  private _baseURL: string = `http://localhost:${this._serverPort}`;
+  private _documentName: string = '';
+  private _userName: string = '';
+  private _document: DocumentTransport;
+  private _errorOccurred: boolean = false;
+  private _errorMessage: string = '';
+  private _timerID: NodeJS.Timeout | null = null;
 
-        const requestAddTokenURL = `${this._baseURL}/document/addtoken/${this._documentName}`;
-        fetch(requestAddTokenURL, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(body)
-        })
-            .then(response => {
+  constructor() {
+    this._document = {} as DocumentTransport;
+  }
 
-                return response.json() as Promise<DocumentTransport>;
-            }
-            ).then((document: DocumentTransport) => {
-                this._updateDocument(document);
-            });
-    }
+  public async getDocument(userName: string): Promise<boolean> {
+    // ... implementation
+  }
+
+  public async createDocument(userName: string): Promise<boolean> {
+    // ... implementation
+  }
+
+  // ... other methods
+}
 ```
 
 SpreadSheetController as a Model-Controller Hybrid:
@@ -162,24 +143,19 @@ SpreadSheetController as a Model-Controller Hybrid:
 The SpreadSheetController class, while primarily acting as a model, also has some controller-like responsibilities. This class manages the business logic and state of the spreadsheet, but also controls how operations are performed on the data.
 
 ```typescript
-addToken(token: string, user: string): void {
-    // is the user editing a cell
-    const userData = this._contributingUsers.get(user)!;
-    if (!userData.isEditing) {
-      return;
-    }
+export class SpreadSheetController {
+  private _sheetMemory: SheetMemory;
+  private _calculationManager: CalculationManager;
+  private _contributingUsers: Map<string, ContributingUser>;
 
-    // add the token to the formula
-    userData.formulaBuilder.addToken(token);
-    let cellBeingEdited = this._contributingUsers.get(user)?.cellLabel;
-
-
-    let cell = this._memory.getCellByLabel(cellBeingEdited!);
-    cell.setFormula(userData.formulaBuilder.getFormula());
-    this._memory.setCellByLabel(cellBeingEdited!, cell);
-
-    this._calculationManager.evaluateSheet(this._memory);
+  constructor(private _document: string) {
+    this._sheetMemory = new SheetMemory();
+    this._calculationManager = new CalculationManager(this._sheetMemory);
+    this._contributingUsers = new Map<string, ContributingUser>();
   }
+
+  // ... other methods
+}
 ```
 
 # Part 2: Analyzing the Backend (NodeJS)
@@ -389,16 +365,21 @@ This middleware logs incoming requests when in debug mode.
 There is no robust authentication or session management implemented. The server relies on a userName parameter passed in request bodies, but there's no verification of this user identity:
 
 ```typescript
-app.use(bodyParser.json());
-
-// Add a middleware function to log incoming requests
-app.use((req, res, next) => {
-    if (debug) {
-        console.log(`${req.method} ${req.url}`);
-    }
-    next();
+app.put('/documents/', (req: express.Request, res: express.Response) => {
+  let userName = req.body.userName;
+  let documentName = req.body.documentName;
+  if (!userName) {
+    res.status(400).send('userName is required');
+    return;
+  }
+  if (!documentName) {
+    res.status(400).send('documentName is required');
+    return;
+  }
+  console.log('get document');
+  let document = documentHolder.getDocument(documentName, userName);
+  res.status(200).json(document);
 });
-
 ```
 
 ### Data Validation:
@@ -406,34 +387,30 @@ app.use((req, res, next) => {
 Basic data validation is performed, primarily checking for the presence of required fields:
 
 ```typescript
-app.put('/documents/:name', (req: express.Request, res: express.Response) => {
-    console.log('PUT /documents/:name');
-    const name = req.params.name;
-    // get the userName from the body
-    console.log(`PUT /documents/:name ${name}`);
-    const userName = req.body.userName;
-    if (!userName) {
-        res.status(400).send('userName is required');
-        return;
-    }
-    // is this name valid?
-    const documentNames = documentHolder.getDocumentNames();
-
-    if (documentNames.indexOf(name) === -1) {
-        console.log(`Document ${name} not found, creating it`);
-        documentHolder.createDocument(name, 5, 8, userName);
-    }
-    // get the document
-    const document = documentHolder.getDocumentJSON(name, userName);
-
-    res.status(200).send(document);
-});
-
-app.get('/debug', (req: express.Request, res: express.Response) => {
-    debug = !debug
-    console.log(`debug is ${debug}`);
-    res.status(200).send(`debug is ${debug}`);
-
+app.put('/document/addtoken/', (req: express.Request, res: express.Response) => {
+  let userName = req.body.userName;
+  let documentName = req.body.documentName;
+  let cellName = req.body.cellName;
+  let token = req.body.token;
+  if (!userName) {
+    res.status(400).send('userName is required');
+    return;
+  }
+  if (!documentName) {
+    res.status(400).send('documentName is required');
+    return;
+  }
+  if (!cellName) {
+    res.status(400).send('cellName is required');
+    return;
+  }
+  if (!token) {
+    res.status(400).send('token is required');
+    return;
+  }
+  console.log('add token');
+  let result = documentHolder.addToken(documentName, userName, cellName, token);
+  res.status(200).json(result);
 });
 ```
 
@@ -448,31 +425,44 @@ Based on the provided code, the application does not follow a traditional server
 In App.tsx: the resetURL function is set to handle navigation between different screens by updating the URL with a new document name and then reloading the page.
 
 ```typescript
-const resetURL = (documentName: string) => {
-  window.history.pushState({}, '', `/${documentName}`);
-  window.```typescript
-const resetURL = (documentName: string) => {
-  window.history.pushState({}, '', `/${documentName}`);
+function resetURL(documentName: string) {
+  // get the current URL
+  const currentURL = window.location.href;
+  // remove anything after the last slash
+  const index = currentURL.lastIndexOf('/');
+  const newURL = currentURL.substring(0, index + 1) + documentName;
+  // set the URL
+  window.history.pushState({}, '', newURL);
+  // now reload the page
   window.location.reload();
-};
-```
+}
 
-```typescript
-useEffect(() => {
-  const path = window.location.pathname;
-  const parts = path.split('/');
-  if (parts.length > 1) {
-    const docName = parts[1];
-    setDocumentName(docName);
-  }
-}, []);
-```
 
-```typescript
-const handleSetDocument = (documentName: string) => {
-  setDocumentName(documentName);
-  resetURL(documentName);
-};
+
+// If there is no document name point this thing at /document
+if (documentName === '') {
+  setDocumentName('documents');
+  resetURL('documents');
+}
+
+if (documentName === 'documents') {
+  return (
+    <div className="LoginPage">
+      <header className="Login-header">
+        <LoginPageComponent spreadSheetClient={spreadSheetClient} />
+      </header>
+    </div>
+  )
+}
+
+return (
+  <div className="App">
+    <header className="App-header">
+      <SpreadSheet documentName={documentName} spreadSheetClient={spreadSheetClient} />
+    </header>
+
+  </div>
+);
 ```
 
 However, this approach has several drawbacks:
@@ -489,7 +479,7 @@ This application does not implement protected routes. The app only uses a simple
 
 1. The user enters their username in the input field provided by the getUserLogin function in the loginPageComponent.
 
-2. When the user presses Enter, the application stores the username in the browser's session storage, updates the local state , and sets the username in the spreadSheetClient object
+2. When the user presses Enter, the application stores the username in the browser's session storage, updates the local state , and sets the username in the SpreadSheetClient object
 
 3. When making requests to the server, the username is included in the request body.
 
@@ -499,25 +489,26 @@ In DocumentServer.ts: app.put('/documents/:name', (req: express.Request, res: ex
 
 ```typescript
 app.put('/documents/:name', (req: express.Request, res: express.Response) => {
-  const { userName } = req.body;
-  const { name } = req.params;
-  
-  if (!userName) {
-    res.status(400).send('userName is required');
-    return;
-  }
-  
-  // Process the request...
+    console.log('PUT /documents/:name');
+    const name = req.params.name;
+    // get the userName from the body
+    console.log(`PUT /documents/:name ${name}`);
+    const userName = req.body.userName;
+    if (!userName) {
+        res.status(400).send('userName is required');
+        return;
+    }
 });
 ```
 
 5. The logout process simply clears the username from session storage and reloads the page in LoginPageComponent.tsx
 
 ```typescript
-const handleLogout = () => {
-  window.sessionStorage.removeItem('userName');
-  window.location.reload();
-};
+function logout() {
+    // clear the user name
+    window.sessionStorage.setItem('userName', "");
+    // reload the page
+    window.location.reload();
 ```
 
 ## State Management
@@ -533,7 +524,9 @@ This class acts as a central state manager for the application. It holds importa
 The App component manages the high-level state of which view to display (login page or spreadsheet). It uses the useState hook to keep track of the current document name.
 
 ```typescript
-const [documentName, setDocumentName] = useState<string>('');
+function App() {
+
+  const [documentName, setDocumentName] = useState(getDocumentNameFromWindow());
 ```
 
 3. LoginPageComponent
@@ -541,17 +534,21 @@ const [documentName, setDocumentName] = useState<string>('');
 This component manages the state of the user name and the list of available documents. It uses useState hooks and also interacts with the SpreadSheetClient to fetch and update data. For instance, it uses useEffect hooks with short intervals to frequently update the state from the SpreadSheetClient, ensuring that the UI reflects the latest data.
 
 ```typescript
-const [documents, setDocuments] = useState<string[]>([]);
-const [userName, setUserName] = useState<string>('');
+function LoginPageComponent({ spreadSheetClient }: LoginPageProps): JSX.Element {
+  const [userName, setUserName] = useState(window.sessionStorage.getItem('userName') || "");
+  const [documents, setDocuments] = useState<string[]>([]);
 
-useEffect(() => {
-  const intervalId = setInterval(() => {
-    const docs = spreadSheetClient.getDocuments();
-    setDocuments(docs);
-  }, 250);
-
-  return () => clearInterval(intervalId);
-}, []);
+  // SpreadSheetClient is fetching the documents from the server so we should
+  // check every 1/20 of a second to see if the documents have been fetched
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const sheets = spreadSheetClient.getSheets();
+      if (sheets.length > 0) {
+        setDocuments(sheets);
+      }
+    }, 50);
+    return () => clearInterval(interval);
+  });
 ```
 
 4. SpreadSheet Component
@@ -559,11 +556,28 @@ useEffect(() => {
 This component manages the state of the spreadsheet itself, including the current formula, result, cell values, and editing status. It uses multiple useState hooks and frequently updates its state by calling the SpreadSheetClient.
 
 ```typescript
-const [formulaValue, setFormulaValue] = useState<string>('');
-const [resultValue, setResultValue] = useState<string>('');
-const [cellsValues, setCellsValues] = useState<string[][]>([]);
-const [currentCell, setCurrentCell] = useState<string>('');
-const [currentlyEditing, setCurrentlyEditing] = useState<boolean>(false);
+function SpreadSheet({ documentName, spreadSheetClient }: SpreadSheetProps) {
+  const [formulaString, setFormulaString] = useState(spreadSheetClient.getFormulaString())
+  const [resultString, setResultString] = useState(spreadSheetClient.getResultString())
+  const [cells, setCells] = useState(spreadSheetClient.getSheetDisplayStringsForGUI());
+  const [statusString, setStatusString] = useState(spreadSheetClient.getEditStatusString());
+  const [currentCell, setCurrentCell] = useState(spreadSheetClient.getWorkingCellLabel());
+  const [currentlyEditing, setCurrentlyEditing] = useState(spreadSheetClient.getEditStatus());
+  const [userName, setUserName] = useState(window.sessionStorage.getItem('userName') || "");
+  const [serverSelected, setServerSelected] = useState("localhost");
+
+
+function updateDisplayValues(): void {
+  spreadSheetClient.userName = userName;
+  spreadSheetClient.documentName = documentName;
+  setFormulaString(spreadSheetClient.getFormulaString());
+  setResultString(spreadSheetClient.getResultString());
+  setStatusString(spreadSheetClient.getEditStatusString());
+  setCells(spreadSheetClient.getSheetDisplayStringsForGUI());
+  setCurrentCell(spreadSheetClient.getWorkingCellLabel());
+  setCurrentlyEditing(spreadSheetClient.getEditStatus());
+
+}
 ```
 
 5. Session Storage
@@ -573,6 +587,7 @@ The application uses browser session storage to persist the user name across pag
 Because session storage persists data for the duration of the browser session (including page reloads), the username remains available even if the user refreshes the page or navigates away and back to the application.
 
 ```typescript
+let userName = (event.target as HTMLInputElement).value;
 window.sessionStorage.setItem('userName', userName);
 ```
 
@@ -995,15 +1010,20 @@ In summary, cell ownership is tracked on the server, processed and formatted on 
 The user interacts with the interface, such as clicking to load a document, it triggers a function in LoginPageComponent.tsx that prepares an HTTP request.
 
 ```typescript
-const handleLogin = async (userName: string) => {
-  const success = await spreadSheetClient.getDocument(userName);
-  if (success) {
-    setUserName(userName);
-    window.sessionStorage.setItem('userName', userName);
-  } else {
-    // Handle error
+function loadDocument(documentName: string) {
+    // set the document name
+    spreadSheetClient.documentName = documentName;
+    // reload the page
+
+    // the href needs to be updated.   Remove /documnents from the end of the URL
+    const href = window.location.href;
+    const index = href.lastIndexOf('/');
+    let newURL = href.substring(0, index);
+    newURL = newURL + "/" + documentName
+    window.history.pushState({}, '', newURL);
+    window.location.reload();
+
   }
-};
 ```
 
 #### Step 2: Sends the HTTP Request 
@@ -1011,34 +1031,27 @@ const handleLogin = async (userName: string) => {
 In SpreadSheetClient.ts, the getDocument method sends a request to the server and get the document from the server.
 
 ```typescript
-public async getDocument(userName: string): Promise<boolean> {
-  const getDocumentEndpoint = `${this._baseURL}/documents/`;
-  const body = {
-    userName: userName,
-    documentName: this._documentName
-  };
-
-  try {
-    const response = await fetch(getDocumentEndpoint, {
+public getDocument(name: string, user: string) {
+  // put the user name in the body
+  if (name === "documents") {
+    return;  // This is not ready for production but for this assignment will do
+  }
+  const userName = user;
+  const fetchURL = `${this._baseURL}/documents/${name}`;
+  fetch(fetchURL, {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify(body),
-    });
+      body: JSON.stringify({ "userName": userName })
+  })
+      .then(response => {
+          return response.json() as Promise<DocumentTransport>;
+      }).then((document: DocumentTransport) => {
+          this._updateDocument(document);
 
-    if (response.ok) {
-      const document = await response.json();
-      this._updateDocument(document);
-      return true;
-    } else {
-      this._errorMessage = `Failed to get document: ${response.status} ${response.statusText}`;
-      return false;
-    }
-  } catch (error) {
-    this._errorMessage = `Failed to get document: ${error}`;
-    return false;
-  }
+      });
+
 }
 ```
 
@@ -1047,21 +1060,19 @@ public async getDocument(userName: string): Promise<boolean> {
 In DocumentServer.ts, the server handles the request:
 
 ```typescript
-app.put('/documents/', (req: express.Request, res: express.Response) => {
-  let userName = req.body.userName;
-  let documentName = req.body.documentName;
-  if (!userName) {
-    res.status(400).send('userName is required');
-    return;
-  }
-  if (!documentName) {
-    res.status(400).send('documentName is required');
-    return;
-  }
-  console.log('get document');
-  let document = documentHolder.getDocument(documentName, userName);
-  res.status(200).json(document);
-});
+app.put('/documents/:name', (req: express.Request, res: express.Response) => {
+    console.log('PUT /documents/:name');
+    const name = req.params.name;
+    // get the userName from the body
+    console.log(`PUT /documents/:name ${name}`);
+    const userName = req.body.userName;
+    if (!userName) {
+        res.status(400).send('userName is required');
+        return;
+    }
+
+    // is this name valid?
+    const documentNames = documentHolder.getDocumentNames();
 ```
 
 #### Step 4: Processing the request:
@@ -1069,13 +1080,14 @@ app.put('/documents/', (req: express.Request, res: express.Response) => {
 In DocumentHolder.ts, the server processes the request to retrieve the document:
 
 ```typescript
-public getDocument(documentName: string, userName: string): DocumentTransport {
-  let document = this._documents.get(documentName);
-  if (!document) {
-    document = new SpreadSheetController(documentName);
-    this._documents.set(documentName, document);
-  }
-  return document.documentContainer();
+public getDocumentJSON(name: string, userName: string): string {
+  let document = this._documents.get(name);
+
+  // get the json string for the controler
+  const documentContainer = document!.documentContainer(userName);
+  // convert to JSON
+  const documentJSON = JSON.stringify(documentContainer);
+  return documentJSON;
 }
 ```
 
@@ -1084,7 +1096,10 @@ public getDocument(documentName: string, userName: string): DocumentTransport {
 The server sends the response back to the frontend In DocumentServer.ts.
 
 ```typescript
-res.status(200).json(document);
+// get the document
+const document = documentHolder.getDocumentJSON(name, userName);
+
+res.status(200).send(document);
 ```
 
 #### Step 6: Frontend Receives the Response
@@ -1092,13 +1107,27 @@ res.status(200).json(document);
 In SpreadSheetClient.ts, the frontend processes the response:
 
 ```typescript
-if (response.ok) {
-  const document = await response.json();
-  this._updateDocument(document);
-  return true;
-} else {
-  this._errorMessage = `Failed to get document: ${response.status} ${response.statusText}`;
-  return false;
+public getDocument(name: string, user: string) {
+    // put the user name in the body
+    if (name === "documents") {
+        return;  // This is not ready for production but for this assignment will do
+    }
+    const userName = user;
+    const fetchURL = `${this._baseURL}/documents/${name}`;
+    fetch(fetchURL, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ "userName": userName })
+    })
+        .then(response => {
+            return response.json() as Promise<DocumentTransport>;
+        }).then((document: DocumentTransport) => {
+            this._updateDocument(document);
+
+        });
+
 }
 ```
 
@@ -1107,10 +1136,14 @@ if (response.ok) {
 In App.tsx, It will update the webpage based on the new document data.
 
 ```typescript
-const handleSetDocument = (documentName: string) => {
-  setDocumentName(documentName);
-  resetURL(documentName);
-};
+return (
+    <div className="App">
+      <header className="App-header">
+        <SpreadSheet documentName={documentName} spreadSheetClient={spreadSheetClient} />
+      </header>
+
+    </div>
+  );
 ```
 
 ### Frontend Handle Errors Returned by the Server
