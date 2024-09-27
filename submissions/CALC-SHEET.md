@@ -34,16 +34,19 @@ SpreadSheetController class manages the data and business logic.
 
 ```typescript
 export class SpreadSheetController {
-  private _sheetMemory: SheetMemory;
+  /** The memory for the sheet */
+  private _memory: SheetMemory;
+  private _contributingUsers: Map<string, ContributingUser> = new Map<string, ContributingUser>();
+  private _cellsBeingEdited: Map<string, string> = new Map<string, string>();
   private _calculationManager: CalculationManager;
-  private _contributingUsers: Map<string, ContributingUser>;
-
-  constructor(private _document: string) {
-    this._sheetMemory = new SheetMemory();
-    this._calculationManager = new CalculationManager(this._sheetMemory);
-    this._contributingUsers = new Map<string, ContributingUser>();
+  private _errorOccurred: string = '';
+  /**
+   * constructor
+   * */
+  constructor(columns: number, rows: number) {
+    this._memory = new SheetMemory(columns, rows);
+    this._calculationManager = new CalculationManager();
   }
-
   // ... other methods
 }
 ```
@@ -59,14 +62,28 @@ React components, like the SpreadSheet component, serve as the View in the MVC p
 The React components interact with the Model (represented by SpreadSheetClient and ultimately SpreadSheetController) to fetch and update data. For instance:
 
 ```typescript
-const SpreadSheet: React.FC<SpreadSheetProps> = ({ documentName }) => {
-  const [formulaValue, setFormulaValue] = useState<string>('');
-  const [resultValue, setResultValue] = useState<string>('');
-  const [statusString, setStatusString] = useState<string>('');
-  const [cellsValues, setCellsValues] = useState<string[][]>([]);
-  const [currentCell, setCurrentCell] = useState<string>('');
-  const [currentlyEditing, setCurrentlyEditing] = useState<boolean>(false);
-  const [userName, setUserName] = useState<string>('');
+function SpreadSheet({ documentName, spreadSheetClient }: SpreadSheetProps) {
+  const [formulaString, setFormulaString] = useState(spreadSheetClient.getFormulaString())
+  const [resultString, setResultString] = useState(spreadSheetClient.getResultString())
+  const [cells, setCells] = useState(spreadSheetClient.getSheetDisplayStringsForGUI());
+  const [statusString, setStatusString] = useState(spreadSheetClient.getEditStatusString());
+  const [currentCell, setCurrentCell] = useState(spreadSheetClient.getWorkingCellLabel());
+  const [currentlyEditing, setCurrentlyEditing] = useState(spreadSheetClient.getEditStatus());
+  const [userName, setUserName] = useState(window.sessionStorage.getItem('userName') || "");
+  const [serverSelected, setServerSelected] = useState("localhost");
+
+
+  function updateDisplayValues(): void {
+    spreadSheetClient.userName = userName;
+    spreadSheetClient.documentName = documentName;
+    setFormulaString(spreadSheetClient.getFormulaString());
+    setResultString(spreadSheetClient.getResultString());
+    setStatusString(spreadSheetClient.getEditStatusString());
+    setCells(spreadSheetClient.getSheetDisplayStringsForGUI());
+    setCurrentCell(spreadSheetClient.getWorkingCellLabel());
+    setCurrentlyEditing(spreadSheetClient.getEditStatus());
+
+  }
 
   // ... other code
 
@@ -87,24 +104,28 @@ The DocumentServer does act as a controller, handling HTTP requests and coordina
 Client-side Controller:
 
 ```typescript
-export class SpreadSheetClient {
-  private _serverPort: number = 3005;
-  private _baseURL: string = `http://localhost:${this._serverPort}`;
-  private _documentName: string = '';
-  private _userName: string = '';
+app.put('/documents/:name', (req: express.Request, res: express.Response) => {
+    console.log('PUT /documents/:name');
+    const name = req.params.name;
+    // get the userName from the body
+    console.log(`PUT /documents/:name ${name}`);
+    const userName = req.body.userName;
+    if (!userName) {
+        res.status(400).send('userName is required');
+        return;
+    }
+    // is this name valid?
+    const documentNames = documentHolder.getDocumentNames();
 
-  // ... other properties and methods
+    if (documentNames.indexOf(name) === -1) {
+        console.log(`Document ${name} not found, creating it`);
+        documentHolder.createDocument(name, 5, 8, userName);
+    }
+    // get the document
+    const document = documentHolder.getDocumentJSON(name, userName);
 
-  public async getDocument(userName: string): Promise<boolean> {
-    // ... implementation
-  }
-
-  public async createDocument(userName: string): Promise<boolean> {
-    // ... implementation
-  }
-
-  // ... other methods
-}
+    res.status(200).send(document);
+});
 ```
 
 #### Client-side Controller:
@@ -112,30 +133,28 @@ export class SpreadSheetClient {
 The SpreadSheetClient class also acts as a controller on the client side, This class manages the communication between the React components and the server, handling API calls and local state updates.
 
 ```typescript
-export class SpreadSheetClient {
-  private _serverPort: number = 3005;
-  private _baseURL: string = `http://localhost:${this._serverPort}`;
-  private _documentName: string = '';
-  private _userName: string = '';
-  private _document: DocumentTransport;
-  private _errorOccurred: boolean = false;
-  private _errorMessage: string = '';
-  private _timerID: NodeJS.Timeout | null = null;
+    public addToken(token: string): void {
+        const body = {
+            "userName": this._userName,
+            "token": token
+        };
 
-  constructor() {
-    this._document = {} as DocumentTransport;
-  }
+        const requestAddTokenURL = `${this._baseURL}/document/addtoken/${this._documentName}`;
+        fetch(requestAddTokenURL, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        })
+            .then(response => {
 
-  public async getDocument(userName: string): Promise<boolean> {
-    // ... implementation
-  }
-
-  public async createDocument(userName: string): Promise<boolean> {
-    // ... implementation
-  }
-
-  // ... other methods
-}
+                return response.json() as Promise<DocumentTransport>;
+            }
+            ).then((document: DocumentTransport) => {
+                this._updateDocument(document);
+            });
+    }
 ```
 
 SpreadSheetController as a Model-Controller Hybrid:
@@ -143,21 +162,25 @@ SpreadSheetController as a Model-Controller Hybrid:
 The SpreadSheetController class, while primarily acting as a model, also has some controller-like responsibilities. This class manages the business logic and state of the spreadsheet, but also controls how operations are performed on the data.
 
 ```typescript
-export class SpreadSheetController {
-  private _sheetMemory: SheetMemory;
-  private _calculationManager: CalculationManager;
-  private _contributingUsers: Map<string, ContributingUser>;
+addToken(token: string, user: string): void {
+    // is the user editing a cell
+    const userData = this._contributingUsers.get(user)!;
+    if (!userData.isEditing) {
+      return;
+    }
 
-  constructor(private _document: string) {
-    this._sheetMemory = new SheetMemory();
-    this._calculationManager = new CalculationManager(this._sheetMemory);
-    this._contributingUsers = new Map<string, ContributingUser>();
+    // add the token to the formula
+    userData.formulaBuilder.addToken(token);
+    let cellBeingEdited = this._contributingUsers.get(user)?.cellLabel;
+
+
+    let cell = this._memory.getCellByLabel(cellBeingEdited!);
+    cell.setFormula(userData.formulaBuilder.getFormula());
+    this._memory.setCellByLabel(cellBeingEdited!, cell);
+
+    this._calculationManager.evaluateSheet(this._memory);
   }
-
-  // ... other methods
-}
 ```
-
 # Part 2: Analyzing the Backend (NodeJS)
 
 ## Examine the RESTful API
