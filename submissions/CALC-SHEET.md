@@ -1,16 +1,6 @@
 # Understanding the Project Structure
 
-## **Explore Design Patterns 1**
-
-Identify and document at least three design patterns used in the client-server architecture. Examples of common patterns might include the following. Note that not 3dall of these are necessarily be in here, and there may be some that are in the code but not mentioned here.:
-
-- **Singleton** for managing single instances of services.
-
-- **Observer** or **Publisher-Subscriber** for handling real-time communication between the client and server.
-
-- **Model-View-Controller (MVC)** for separating concerns in the backend.
-
-- Provide examples of where and how these patterns are implemented in the code.
+## **Explore Design Patterns **
 
 1. Singleton Pattern:
 
@@ -50,8 +40,6 @@ class SpreadSheetController {
     this._calculationManager = new CalculationManager(this._sheetMemory);
     this._contributingUsers = new ContributingUser();
   }
-
-  // ... other methods
 }
 ```
 
