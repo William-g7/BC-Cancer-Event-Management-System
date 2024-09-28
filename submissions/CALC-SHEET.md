@@ -280,22 +280,6 @@ The backend uses the DocumentHolder class to manage the actual data operations, 
 
 Before processing requests, the server checks for required fields such as userName in the request body. If the userName is missing, the server responds with an HTTP 400 error, indicating that the request is invalid.
 
-```typescript
-app.put('/documents/', (req: express.Request, res: express.Response) => {
-  let userName = req.body.userName;
-  let documentName = req.body.documentName;
-  if (!userName) {
-    res.status(400).send('userName is required');
-    return;
-  }
-  if (!documentName) {
-    res.status(400).send('documentName is required');
-    return;
-  }
-  // ... rest of the code
-});
-```
-
 ### Processing Flow:
 
 Each API endpoint calls methods in the DocumentHolder class to perform the necessary business logic, such as creating documents, editing cells, or managing tokens.
