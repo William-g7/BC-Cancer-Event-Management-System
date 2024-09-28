@@ -328,10 +328,6 @@ There is no evidence of encryption, tokenization, or other secure transmission m
 The server uses basic middleware for logging and CORS:
 
 ```typescript
-// Add CORS middleware
-app.use(cors());
-
-// Add middleware to parse the body of the request
 app.use(bodyParser.json());
 
 // Add a middleware function to log incoming requests
@@ -340,7 +336,6 @@ app.use((req, res, next) => {
         console.log(`${req.method} ${req.url}`);
     }
     next();
-});
 ```
 
 This middleware logs incoming requests when in debug mode.
