@@ -187,61 +187,38 @@ addToken(token: string, user: string): void {
 
 ### CRUD
 
-The CRUD (Create, Read, Update, Delete) operations in this spreadsheet application are primarily handled by the **DocumentHolder** class(is this because we do not have a database in this project?), which manages multiple SpreadSheetController instances.
-
 #### Create:
-New documents are created when the application loads existing JSON files from the document folder:
 
 **POST /documents/create/**
 
-This endpoint creates a new document. The client sends a userName, and if the document name doesn't already exist on the server, the backend creates a new document.
-
 ```typescript
-app.post('/documents/create/', (req: express.Request, res: express.Response) => {
-  let userName = req.body.userName;
-  let documentName = req.body.documentName;
-  if (!userName) {
-    res.status(400).send('userName is required');
-    return;
-  }
-  if (!documentName) {
-    res.status(400).send('documentName is required');
-    return;
-  }
-  console.log('create document');
-  let document = documentHolder.createDocument(documentName, userName);
-  if (!document) {
-    res.status(400).send('document already exists');
-    return;
-  }
-  res.status(200).json(document);
+app.post('/documents/create/:name', (req: express.Request, res: express.Response) => {
+    const name = req.params.name;
+
+    // get the userName from the body
+    const userName = req.body.userName;
+
+    // is this name valid?
+    const documentNames = documentHolder.getDocumentNames();
+    if (documentNames.indexOf(name) === -1) {
+        const documentOK = documentHolder.createDocument(name, 5, 8, userName);
+    }
+    documentHolder.requestViewAccess(name, 'A1', userName);
+    const documentJSON = documentHolder.getDocumentJSON(name, userName);
+
+    res.status(200).send(documentJSON);
+
 });
 ```
 
 #### Read DATA
-**GET /documents**: Returns a list of all document names.
-**: Retrieves the content of a specific document based on the document name and the user's details.
+**GET /documents**:
 
 ```typescript
+// GET /documents
 app.get('/documents', (req: express.Request, res: express.Response) => {
-  const documents = documentHolder.getDocuments();
-  res.status(200).json(documents);
-});
-
-app.put('/documents/', (req: express.Request, res: express.Response) => {
-  let userName = req.body.userName;
-  let documentName = req.body.documentName;
-  if (!userName) {
-    res.status(400).send('userName is required');
-    return;
-  }
-  if (!documentName) {
-    res.status(400).send('documentName is required');
-    return;
-  }
-  console.log('get document');
-  let document = documentHolder.getDocument(documentName, userName);
-  res.status(200).json(document);
+    const documentNames = documentHolder.getDocumentNames();
+    res.send(documentNames);
 });
 ```
 
@@ -249,56 +226,55 @@ app.put('/documents/', (req: express.Request, res: express.Response) => {
 PUT /documents/ Updates a document's content or creates a new document if it doesn't exist. If the document exists, it retrieves it; otherwise, it creates a new one.
 PUT /document/addcell/ :Adds a new cell to the document.
 
-```typescript
-app.put('/documents/', (req: express.Request, res: express.Response) => {
-  let userName = req.body.userName;
-  let documentName = req.body.documentName;
-  if (!userName) {
-    res.status(400).send('userName is required');
-    return;
-  }
-  if (!documentName) {
-    res.status(400).send('documentName is required');
-    return;
-  }
-  console.log('get document');
-  let document = documentHolder.getDocument(documentName, userName);
-  res.status(200).json(document);
-});
-```
+- add token to a cell:
 
 ```typescript
-app.put('/document/addtoken/', (req: express.Request, res: express.Response) => {
-  let userName = req.body.userName;
-  let documentName = req.body.documentName;
-  let cellName = req.body.cellName;
-  let token = req.body.token;
-  if (!userName) {
-    res.status(400).send('userName is required');
-    return;
-  }
-  if (!documentName) {
-    res.status(400).send('documentName is required');
-    return;
-  }
-  if (!cellName) {
-    res.status(400).send('cellName is required');
-    return;
-  }
-  if (!token) {
-    res.status(400).send('token is required');
-    return;
-  }
-  console.log('add token');
-  let result = documentHolder.addToken(documentName, userName, cellName, token);
-  res.status(200).json(result);
-});
+   app.put('/document/addtoken/:name', (req: express.Request, res: express.Response) => {
+       // ...
+       const resultJSON = documentHolder.addToken(name, token, userName);
+       res.status(200).send(resultJSON);
+   });
+```
+- add a cell reference
+
+```typescript
+    app.put('/document/addcell/:name', (req: express.Request, res: express.Response) => {
+       // ...
+       const resultJSON = documentHolder.addCell(name, cell, userName);
+       res.status(200).send(resultJSON);
+   });
+```
+- Requesting edit access to a cell
+
+```typescript
+    app.put('/document/cell/edit/:name', (req: express.Request, res: express.Response) => {
+       // ...
+       const result = documentHolder.requestEditAccess(name, cell, userName);
+       // ...
+   });
 ```
 
 #### Delete Data
-PUT /document/clear/formula/ : Clears the formula data for a document.
-PUT /document/removetoken/: Removes a token from a specific document.
-How the server validates and processes client requests before responding.
+- Removing a token from a cell
+
+```typescript
+   app.put('/document/removetoken/:name', (req: express.Request, res: express.Response) => {
+       // ...
+       const resultJSON = documentHolder.removeToken(name, userName);
+       res.status(200).send(resultJSON);
+   });
+```
+- Clearing a formula
+
+```typescript
+    app.put('/document/clear/formula/:name', (req: express.Request, res: express.Response) => {
+       // ...
+       const resultJSON = documentHolder.clearFormula(name, userName);
+       res.status(200).send(resultJSON);
+   });
+```
+The backend uses the DocumentHolder class to manage the actual data operations, while the Express server handles the HTTP routing and request/response processing. Each endpoint typically includes validation (e.g., checking if the document exists, if the username is provided) before performing the requested operation.
+
 
 ### Validation:
 
