@@ -356,7 +356,7 @@ The backend does not currently implement any logic for differentiating between u
 In the current backend implementation, there is no explicit mechanism for securing sensitive user data. The userName is transmitted in plain text within the request body:
 
 ```typescript
-let userName = req.body.userName;
+const userName = req.body.userName;
 ```
 
 There is no evidence of encryption, tokenization, or other secure transmission methods (like HTTPS or data encryption) being used to protect sensitive information. Additionally, sensitive data such as user passwords or tokens are not managed, stored, or protected by cryptographic measures such as hashing or encryption.Without these security mechanisms, the backend is vulnerable to common security risks such as man-in-the-middle attacks or unauthorized access.
@@ -372,12 +372,14 @@ The server uses basic middleware for logging and CORS:
 app.use(cors());
 
 // Add middleware to parse the body of the request
-app.use(express.json());
+app.use(bodyParser.json());
 
-// Add middleware to log the requests
+// Add a middleware function to log incoming requests
 app.use((req, res, next) => {
-  console.log(`${req.method} ${req.path}`);
-  next();
+    if (debug) {
+        console.log(`${req.method} ${req.url}`);
+    }
+    next();
 });
 ```
 
