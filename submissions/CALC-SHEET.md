@@ -783,13 +783,17 @@ useEffect(() => {
 The updateDisplayValues() function updates the client-side state with the latest data from the spreadSheetClient:
 
 ```typescript
-const updateDisplayValues = (): void => {
-  ...
-  setFormulaValue(spreadSheetClient.getFormulaString());
-  setResultValue(spreadSheetClient.getResultString());
-  setCellsValues(spreadSheetClient.getSheetDisplayStrings());
-  ...
-};
+function updateDisplayValues(): void {
+    spreadSheetClient.userName = userName;
+    spreadSheetClient.documentName = documentName;
+    setFormulaString(spreadSheetClient.getFormulaString());
+    setResultString(spreadSheetClient.getResultString());
+    setStatusString(spreadSheetClient.getEditStatusString());
+    setCells(spreadSheetClient.getSheetDisplayStringsForGUI());
+    setCurrentCell(spreadSheetClient.getWorkingCellLabel());
+    setCurrentlyEditing(spreadSheetClient.getEditStatus());
+
+  }
 ```
 
 #### Server Communication
