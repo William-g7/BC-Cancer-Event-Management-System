@@ -361,57 +361,39 @@ app.use((req, res, next) => {
 
 This middleware logs incoming requests when in debug mode.
 
-### Authentication and Session Management
-
-There is no robust authentication or session management implemented. The server relies on a userName parameter passed in request bodies, but there's no verification of this user identity:
-
-```typescript
-app.put('/documents/', (req: express.Request, res: express.Response) => {
-  let userName = req.body.userName;
-  let documentName = req.body.documentName;
-  if (!userName) {
-    res.status(400).send('userName is required');
-    return;
-  }
-  if (!documentName) {
-    res.status(400).send('documentName is required');
-    return;
-  }
-  console.log('get document');
-  let document = documentHolder.getDocument(documentName, userName);
-  res.status(200).json(document);
-});
-```
-
 ### Data Validation:
 
 Basic data validation is performed, primarily checking for the presence of required fields:
 
 ```typescript
-app.put('/document/addtoken/', (req: express.Request, res: express.Response) => {
-  let userName = req.body.userName;
-  let documentName = req.body.documentName;
-  let cellName = req.body.cellName;
-  let token = req.body.token;
-  if (!userName) {
-    res.status(400).send('userName is required');
-    return;
-  }
-  if (!documentName) {
-    res.status(400).send('documentName is required');
-    return;
-  }
-  if (!cellName) {
-    res.status(400).send('cellName is required');
-    return;
-  }
-  if (!token) {
-    res.status(400).send('token is required');
-    return;
-  }
-  console.log('add token');
-  let result = documentHolder.addToken(documentName, userName, cellName, token);
-  res.status(200).json(result);
+app.put('/documents/:name', (req: express.Request, res: express.Response) => {
+    console.log('PUT /documents/:name');
+    const name = req.params.name;
+    // get the userName from the body
+    console.log(`PUT /documents/:name ${name}`);
+    const userName = req.body.userName;
+    if (!userName) {
+        res.status(400).send('userName is required');
+        return;
+    }
+    // is this name valid?
+    const documentNames = documentHolder.getDocumentNames();
+
+    if (documentNames.indexOf(name) === -1) {
+        console.log(`Document ${name} not found, creating it`);
+        documentHolder.createDocument(name, 5, 8, userName);
+    }
+    // get the document
+    const document = documentHolder.getDocumentJSON(name, userName);
+
+    res.status(200).send(document);
+});
+
+app.get('/debug', (req: express.Request, res: express.Response) => {
+    debug = !debug
+    console.log(`debug is ${debug}`);
+    res.status(200).send(`debug is ${debug}`);
+
 });
 ```
 
