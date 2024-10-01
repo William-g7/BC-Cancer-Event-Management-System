@@ -1,7 +1,7 @@
 # Retrospective Document Template
 
 ## Team Name
-[Insert Team Name Here]
+PuppyLover
 
 ## Date
 Week 3 September 23
@@ -18,42 +18,46 @@ Week 3 September 23
 ## Overview
 Briefly describe the purpose of this retrospective and what you aim to achieve.
 
----
+--- 
 
 ## What Went Well
 List the things that went well during the project.
--
--
--
+- finish the report for the cal-sheet project 
+- list all the wants and needs we read from the client's video
+- organize their needs into three main stages
+- have productive questions to ask to the clients about the software
 
 ---
 
 ## What Could Be Improved
 List the areas where there is room for improvement.
--
--
--
+- Be more careful about the version control in git
+- Be more comfortable of the MD file
 
 ---
 
 ## Action Items
 Identify actionable steps that can be taken to improve future projects.
-1.
-2.
+1. may be better to rely more on AI to work more efficiently
+2. 
 3.
 
 ---
 
 ## Individual Self-Assessments
-### [Team Member 1]
+### [Shiyuan Chen]
 - **Achievements and Contributions:**
-  -
+  - analyze the conditions and needs of bc cancer staff
+  - help list the questions to be asked to the clients
+  - finish the report for the cal-sheet project
 - **Challenges Faced:**
-  -
+  - organize the enormous wants and needs
+  - manage the format of the MD file
 - **Areas for Improvement:**
-  -
+  - may be better to rely more on AI to work more efficiently
+  - learn how to use git more properly, avoid data missing and overlapping
 - **Feedback and Suggestions:**
-  -
+  - read and watch instructions to git use more carefully
 
 ### [Team Member 2]
 - **Achievements and Contributions:**
