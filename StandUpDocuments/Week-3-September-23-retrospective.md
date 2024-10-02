@@ -7,16 +7,15 @@ PuppyLover
 Week 3 September 23
 
 ## Participants
-- [Team Member 1]
-- [Team Member 2]
-- [Team Member 3]
-- [Team Member 4]
-- [Team Member 5]
+- Shiyuan Chen
+- Yan Wang
+- Xing Gao
+- Zhenziye Lin
 
 ---
 
 ## Overview
-Briefly describe the purpose of this retrospective and what you aim to achieve.
+The goal of this retrospective is to review our accomplishments in the past week, assess our progress in learning and project development, and identify any areas that need attention. By reflecting on these aspects, we aim to improve team efficiency and leverage each member's strengths to their fullest potential.
 
 --- 
 
@@ -39,8 +38,9 @@ List the areas where there is room for improvement.
 ## Action Items
 Identify actionable steps that can be taken to improve future projects.
 1. may be better to rely more on AI to work more efficiently
-2. 
-3.
+2. more coding practice on JavaScript and TypeScript
+3. get familiar with some design tools like Figma
+4. seek knowledge about data processing
 
 ---
 
@@ -59,16 +59,22 @@ Identify actionable steps that can be taken to improve future projects.
 - **Feedback and Suggestions:**
   - read and watch instructions to git use more carefully
 
-### [Team Member 2]
+### [Yan Wang]
 - **Achievements and Contributions:**
-  -
+  - Collaborated with a team member to complete the frontend analysis for the first assignment.
+  - Watched BC Cancer client videos and took detailed memos.
+  - Participated in team meetings to discuss high-level problems faced by BC Cancer.
+  - Continued learning and enhancing knowledge in frontend development.
 - **Challenges Faced:**
-  -
+  - Managing time between project work and learning new frontend tools, causing some delays in progress.
+  - Still adjusting to Git version control, leading to occasional bugs when modifying files.
 - **Areas for Improvement:**
-  -
+  - Better time management to balance learning and project building, potentially by scheduling dedicated time for each.
+  - Enhance Git proficiency.
 - **Feedback and Suggestions:**
-  -
-
+  - Ensure thorough reviews of the work after completion to reduce errors and maintain quality.
+  - Continue learning and experimenting with frontend tools, sharing knowledge and difficulties with team members for better collaboration and problem-solving.
+    
 ### [Team Member 3]
 - **Achievements and Contributions:**
   -
