@@ -92,15 +92,26 @@ Identify actionable steps that can be taken to improve future projects.
   - Continue fostering open communication among team members to solve blockers more quickly.
 
 
-### [Team Member 4]
+### [ZHENZIYE LIN]
 - **Achievements and Contributions:**
-  -
+  - Assisted in documenting client needs for the BC Cancer project and organizing them into different stages.
+  - Contributed to discussions regarding client requirements and played a key role in identifying the most critical areas for focus.
+  - Worked on backend development, specifically setting up initial architecture for server-side components.
 - **Challenges Faced:**
-  -
+  - Faced challenges in understanding and integrating complex requirements from the client into the technical solution.
+  - Had some difficulties balancing backend work with learning new tools such as TypeScript.
 - **Areas for Improvement:**
-  -
+  - Improve backend development skills, particularly by focusing on mastering Express.js and integrating it more smoothly into the project.
+  - Better time management to handle both development tasks and learning requirements efficiently.
 - **Feedback and Suggestions:**
-  -
+  - Suggest setting aside specific time for learning new tools and technologies to avoid slowing down project progress.
+  - Propose refining communication between frontend and backend developers to ensure seamless integration and avoid misunderstandings.
+
+
+
+
+
+
 
 
 ---
