@@ -75,15 +75,22 @@ Identify actionable steps that can be taken to improve future projects.
   - Ensure thorough reviews of the work after completion to reduce errors and maintain quality.
   - Continue learning and experimenting with frontend tools, sharing knowledge and difficulties with team members for better collaboration and problem-solving.
     
-### [Team Member 3]
+### [Xing Gao]
 - **Achievements and Contributions:**
-  -
+  - Contributed to understanding the structure of the cal-sheet project and continued to deepen my knowledge of React and TypeScript.
+  - Assisted in analyzing the BC Cancer client's requirements and documenting them for future use.
+  - Collaborated with team members to develop productive questions for the client and participated in report writing for the cal-sheet project.
+  - Helped organize client needs into three stages, ensuring clarity in project scope.
 - **Challenges Faced:**
-  -
+  - Struggled with managing time between learning new technologies and making progress on the project.
+  - Had difficulties with understanding the project’s codebase due to its complexity and outdated structure, making it harder to contribute efficiently.
 - **Areas for Improvement:**
-  -
+  - Aim to speed up the learning process of React and TypeScript to make my contributions more effective in the future.
+  - Improve familiarity with Git version control and ensure more efficient collaboration within the team.
 - **Feedback and Suggestions:**
-  -
+  - Consider structuring the codebase more clearly to improve overall project efficiency.
+  - Continue fostering open communication among team members to solve blockers more quickly.
+
 
 ### [Team Member 4]
 - **Achievements and Contributions:**
@@ -95,26 +102,21 @@ Identify actionable steps that can be taken to improve future projects.
 - **Feedback and Suggestions:**
   -
 
-### [Team Member 5]
-- **Achievements and Contributions:**
-  -
-- **Challenges Faced:**
-  -
-- **Areas for Improvement:**
-  -
-- **Feedback and Suggestions:**
-  -
 
 ---
 
 ## Overall Team Assessment
 Reflect on the team’s performance as a whole.
 - **Team Strengths:**
-  -
+  - Our team has shown great collaboration, especially in identifying client needs and organizing them effectively for the project. We also made great strides in formulating questions for the BC Cancer clients.
+  - Team members support each other well, and the atmosphere is conducive to shared learning and development.
 - **Areas for Improvement:**
-  -
+  - We need to improve version control practices and familiarize ourselves with tools like Git to avoid issues such as data loss or overlapping edits.
+  - Increasing the efficiency of our learning process for key technologies such as React, TypeScript, and Express.js would help us meet project deadlines with better outcomes.
 - **Suggestions for Future Projects:**
-  -
+  - Implement more structured learning sessions for critical technologies to reduce the learning curve and enhance overall productivity.
+  - Further enhance team communication through more regular check-ins and better use of collaboration tools.
+
 
 ---
 
