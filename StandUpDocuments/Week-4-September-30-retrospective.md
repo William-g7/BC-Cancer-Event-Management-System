@@ -87,8 +87,6 @@ Identify actionable steps that can be taken to improve future projects.
   - Continue to actively engage in team discussions, and share any concerns or difficulties to ensure everyone stays on track.
 
 
-
-
 ### [Zhenziye Lin]
 - **Achievements and Contributions:**
   - Conducted research on best practices for UI/UX design relevant to the BC Cancer project.
@@ -114,11 +112,14 @@ Identify actionable steps that can be taken to improve future projects.
 ## Overall Team Assessment
 Reflect on the team’s performance as a whole.
 - **Team Strengths:**
-  -
+  - Strong engagement and participation from all team members, with everyone contributing to the discussions and project tasks.
+  - Progress in technical understanding and design, especially regarding the initial phases of the BC Cancer project.
 - **Areas for Improvement:**
-  -
+  - There is a need to improve technical skills in certain areas, such as databases, API integration, and JavaScript/TypeScript.
+  - Communication between team members can be enhanced to ensure everyone is aligned on tasks and project details, particularly in sharing technical knowledge.
 - **Suggestions for Future Projects:**
-  -
+  - Regularly review the project’s workflow and technical requirements to ensure the design and development phases are aligned and progress smoothly.
+  - Set more specific, measurable goals and timelines to track progress and ensure tasks are completed on time.
 
 ---
 
