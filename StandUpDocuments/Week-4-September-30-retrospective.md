@@ -38,8 +38,8 @@ List the areas where there is room for improvement.
 ## Action Items
 Identify actionable steps that can be taken to improve future projects.
 1. communicate with prof more about the projects and skills
-2.
-3.
+2. Participate in more coding practice sessions, especially focusing on Rreact and TypeScript.
+3. Improve team coordination by setting clearer milestones and deadlines for tasks.
 
 ---
 
@@ -71,15 +71,21 @@ Identify actionable steps that can be taken to improve future projects.
   - Pair less experienced team members with those who have more knowledge in specific areas, such as database and APIs, to facilitate guided learning.
   - Establish clear, achievable goals for learning and project milestones to keep everyone focused and motivated.
 
-### [Team Member 3]
+### [Xing Gao]
 - **Achievements and Contributions:**
-  -
+  - Participated in the Reconciliation Day event with team members, which helped strengthen bonds and improve collaboration.
+  - Actively joined team meetings, sharing thoughts and discussing challenges encountered in daily learning.
+  - Collaborated with the team to discuss the workflow and requirements of the BC Cancer project.
+
 - **Challenges Faced:**
-  -
+  - Experienced feelings of apprehension, finding the detailed aspects of JavaScript and TypeScript challenging to fully grasp.
+
 - **Areas for Improvement:**
-  -
+  - Work on building confidence when learning complex topics, and dedicate more focused study time to mastering JavaScript and TypeScript.
+
 - **Feedback and Suggestions:**
-  -
+  - Continue to actively engage in team discussions, and share any concerns or difficulties to ensure everyone stays on track.
+
 
 ### [Team Member 4]
 - **Achievements and Contributions:**
