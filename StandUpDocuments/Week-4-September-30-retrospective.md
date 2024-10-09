@@ -1,38 +1,37 @@
 # Retrospective Document Template
 
 ## Team Name
-[Insert Team Name Here]
+PuppyLover
 
 ## Date
 Week 4 September 30
 
 ## Participants
-- [Team Member 1]
-- [Team Member 2]
-- [Team Member 3]
-- [Team Member 4]
-- [Team Member 5]
+- Shiyuan Chen
+- Yan Wang
+- Xing Gao
+- Zhenziye Lin
 
 ---
 
 ## Overview
-Briefly describe the purpose of this retrospective and what you aim to achieve.
+The purpose of this retrospective is to document our activities. By doing so, we can track each other's progress, which will help us set clear goals and improve time management.
 
 ---
 
 ## What Went Well
 List the things that went well during the project.
--
--
--
+- We successfully completed the initial design of the BC Cancer project.
+- Every team member was actively engaged and made meaningful contributions.
+- Our understanding of code and code design has significantly improved.
 
 ---
 
 ## What Could Be Improved
 List the areas where there is room for improvement.
--
--
--
+- Technical skills(including Database, APIs).
+- Speed of learning and adapting to new concepts.
+- Communication between team members to ensure clarity and alignment on tasks.
 
 ---
 
