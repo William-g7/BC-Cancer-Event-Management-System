@@ -37,22 +37,24 @@ List the areas where there is room for improvement.
 
 ## Action Items
 Identify actionable steps that can be taken to improve future projects.
-1.
+1. communicate with prof more about the projects and skills
 2.
 3.
 
 ---
 
 ## Individual Self-Assessments
-### [Team Member 1]
+### [Shiyuan Chen]
 - **Achievements and Contributions:**
-  -
+  - Host meetings to solve the quiz with team members
+  - Discuss the working flow of BC cancer with team members
+  - develop the wireframe for discussion
 - **Challenges Faced:**
-  -
+  - an unclear understanding of the real working flow of BC cancer
 - **Areas for Improvement:**
-  -
+  - try to talk more with Juancho
 - **Feedback and Suggestions:**
-  -
+  - learn some basic info about the organizer like bc cancer
 
 ### [Team Member 2]
 - **Achievements and Contributions:**
