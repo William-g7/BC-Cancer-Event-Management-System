@@ -56,15 +56,20 @@ Identify actionable steps that can be taken to improve future projects.
 - **Feedback and Suggestions:**
   - learn some basic info about the organizer like bc cancer
 
-### [Team Member 2]
+### [Yan Wang]
 - **Achievements and Contributions:**
-  -
+  - Participated in the holiday event with team members.
+  - Actively engaged in regular meetings, contributing ideas and feedback for the project.
+  - Began learning about database.
 - **Challenges Faced:**
-  -
+  - Lack of sufficient knowledge to fully understand the demo codebase.
+  - Limited details with the BC Cancer working process, which led to design difficulties.
 - **Areas for Improvement:**
-  -
+  - Accelerate the learning process to better grasp the necessary skills.
+  - Increase communication frequency with team members to share technical knowledge.
 - **Feedback and Suggestions:**
-  -
+  - Pair less experienced team members with those who have more knowledge in specific areas, such as database and APIs, to facilitate guided learning.
+  - Establish clear, achievable goals for learning and project milestones to keep everyone focused and motivated.
 
 ### [Team Member 3]
 - **Achievements and Contributions:**
