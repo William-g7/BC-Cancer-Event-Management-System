@@ -55,15 +55,20 @@ Identify actionable steps that can be taken to improve future projects.
 - **Feedback and Suggestions:**
   -
 
-### [Team Member 2]
+### [Yan Wang]
 - **Achievements and Contributions:**
-  -
+  - Completed the technology section of the project presentation.
+  - Accelerated learning in JavaScript and TypeScript.
+  - Actively participated in group meetings, sharing valuable insights about the project.
 - **Challenges Faced:**
-  -
+  - Lack of expertise in advanced frontend and backend technologies, such as Redux and Websockets.
+  - Managing time effectively with multiple learning tasks.
 - **Areas for Improvement:**
-  -
+  - If possible, deepen understanding of Redux and Websockets to strengthen full-stack development skills.
+  - Improve time management strategies to balance learning and project work.
 - **Feedback and Suggestions:**
-  -
+  - Regular coding practice as preparation for the BC Cancer project.
+  - Increase sessions of project discussions to ensure alignment and address challenges early.
 
 ### [Xing Gao]
 - **Achievements and Contributions:**
