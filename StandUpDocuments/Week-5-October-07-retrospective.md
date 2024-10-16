@@ -88,16 +88,25 @@ Identify actionable steps that can be taken to improve future projects.
   - Continue holding regular team meetings to address challenges as they arise and ensure steady progress.
   - Set up smaller, focused study sessions for more difficult topics like TypeScript and Jest testing.
 
-
-### [Xing Gao]
+### [Zhenziye Lin]
 - **Achievements and Contributions:**
-  - 
+  - Conducted research on best practices for UI/UX design relevant to the BC Cancer project.
+  - Created initial mockups and prototypes that facilitated team discussions.
+  - Assisted in organizing team meetings and ensuring all voices were heard.
+
 - **Challenges Faced:**
-  - 
+  - Struggled with integrating feedback from team members into the design process effectively.
+  - Faced difficulties in understanding the technical constraints of the project, which impacted design decisions.
+
 - **Areas for Improvement:**
-  - 
+  - Enhance understanding of technical specifications related to the project.
+  - Develop skills in using design tools and software more efficiently.
+
 - **Feedback and Suggestions:**
-  - 
+  - Engage more with developers to better understand the technical aspects that inform design decisions.
+  - Schedule regular design review sessions to incorporate feedback more systematically.
+
+
 
 
 ---
