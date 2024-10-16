@@ -105,11 +105,14 @@ Identify actionable steps that can be taken to improve future projects.
 ## Overall Team Assessment
 Reflect on the team’s performance as a whole.
 - **Team Strengths:**
-  -
+  - The team demonstrated strong collaboration, particularly in analyzing client requirements and proposing multiple solutions for the BC Cancer project.
+  - Our ability to create wireframes based on the client’s needs showcased our ability to translate project goals into actionable designs.
 - **Areas for Improvement:**
-  -
+  - The team needs to deepen its understanding of more advanced TypeScript features, especially when it comes to handling complex scenarios.
+  - Transitioning from design (wireframes) to code could be smoother. We need to work on better integrating our designs into actual implementation.
 - **Suggestions for Future Projects:**
-  -
+  - Establish clearer guidelines for translating wireframes into working code to avoid potential mismatches or misinterpretations during implementation.
+  - Ensure better time management by allocating specific roles and responsibilities to team members, which will help balance workload and learning new skills without overwhelming any individual.
 
 ---
 
