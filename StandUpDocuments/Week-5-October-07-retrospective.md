@@ -45,15 +45,16 @@ Identify actionable steps that can be taken to improve future projects.
 ---
 
 ## Individual Self-Assessments
-### [Team Member 1]
+### Shiyuan
 - **Achievements and Contributions:**
-  -
+  - finish the wireframe design
+  - prepare the presentation file about future plans
 - **Challenges Faced:**
-  -
+  - keep every file up to date at the same time
 - **Areas for Improvement:**
-  -
+  - apply some ideas about database earlier to the project, learn something more about database management
 - **Feedback and Suggestions:**
-  -
+  - prepare some code design beforehand to reduce redundant design details
 
 ### [Yan Wang]
 - **Achievements and Contributions:**
