@@ -45,15 +45,17 @@ Identify actionable steps that can be taken to improve future projects.
 ---
 
 ## Individual Self-Assessments
-### [Team Member 1]
+### [Shiyuan Chen]
 - **Achievements and Contributions:**
-  -
+  - prepare presentation files for the design
+  - set up a timeline for future work
+  - confirm the first-round design for the project
 - **Challenges Faced:**
-  -
+  - make the design as clean and direct as possible
 - **Areas for Improvement:**
-  -
+  - presentation skills
 - **Feedback and Suggestions:**
-  -
+  - 
 
 ### [Team Member 2]
 - **Achievements and Contributions:**
