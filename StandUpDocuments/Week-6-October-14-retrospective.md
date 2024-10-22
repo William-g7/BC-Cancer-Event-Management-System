@@ -1,39 +1,36 @@
 # Retrospective Document Template
 
 ## Team Name
-[Insert Team Name Here]
+PuppyLover
 
 ## Date
 Week 6 October 14
 
 ## Participants
-- [Team Member 1]
-- [Team Member 2]
-- [Team Member 3]
-- [Team Member 4]
-- [Team Member 5]
+- Shiyuan Chen 
+- Yan Wang
+- Xing Gao
+- Zhenziye Lin
 
 ---
 
 ## Overview
-Briefly describe the purpose of this retrospective and what you aim to achieve.
+The purpose of this retrospective is to document our learning process over the past week and our progress on the BC Cancer project. In this document, we will analyze our strengths and areas that require further development to improve teamwork and ensure project success.
 
 ---
 
 ## What Went Well
 List the things that went well during the project.
--
--
--
+- Successfully completed the BC Cancer project proposal
+- Held a meeting with the professor and received valuable feedback
+- Task distribution was clear, and all team members completed their work on time
 
 ---
 
 ## What Could Be Improved
 List the areas where there is room for improvement.
--
--
--
-
+- Further develop technology skills to better execute the proposed wireframe
+- Hold more regular meetings during the implementation of the codebase.
 ---
 
 ## Action Items
@@ -57,15 +54,20 @@ Identify actionable steps that can be taken to improve future projects.
 - **Feedback and Suggestions:**
   - 
 
-### [Team Member 2]
+### [Yan Wang]
 - **Achievements and Contributions:**
-  -
+  - Simplified the technology part presentation, making it more concise
+  - Practiced the presentation with team members
+  - Continuing to learn JavaScript and TypeScript
 - **Challenges Faced:**
-  -
+  - Handling complex logic in code implementation
+  - Limited experience with full-stack testing
 - **Areas for Improvement:**
-  -
+  - Enhance code design skills
+  - Improve ability to break down large problems into smaller, manageable tasks
 - **Feedback and Suggestions:**
-  -
+  - Maintain active communication when working on the codebase
+  - Follow timelines and improve proficiency with Git for better collaboration
 
 ### [Team Member 3]
 - **Achievements and Contributions:**
@@ -78,16 +80,6 @@ Identify actionable steps that can be taken to improve future projects.
   -
 
 ### [Team Member 4]
-- **Achievements and Contributions:**
-  -
-- **Challenges Faced:**
-  -
-- **Areas for Improvement:**
-  -
-- **Feedback and Suggestions:**
-  -
-
-### [Team Member 5]
 - **Achievements and Contributions:**
   -
 - **Challenges Faced:**
