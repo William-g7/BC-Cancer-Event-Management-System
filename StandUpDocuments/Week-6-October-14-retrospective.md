@@ -52,7 +52,7 @@ List the areas where there is room for improvement.
 - **Areas for Improvement:**
   - presentation skills
 - **Feedback and Suggestions:**
-  - 
+  - prepare well before actual coding the project (have some meetings and draw diagrams)
 
 ### [Yan Wang]
 - **Achievements and Contributions:**
