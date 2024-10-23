@@ -88,15 +88,24 @@ List the areas where there is room for improvement.
   - Consider breaking down complex tasks into smaller, more manageable steps to avoid feeling overwhelmed.
 
 
-### [Team Member 4]
+### [Zhenziye Lin]
 - **Achievements and Contributions:**
-  -
+  - Developed the initial front-end wireframe for the project.
+  - Coordinated with team members to ensure alignment on project goals and timelines.
+  - Conducted research on relevant technologies to improve project execution.
+
 - **Challenges Faced:**
-  -
+  - Navigating unfamiliar technology stacks and ensuring proper implementation.
+  - Balancing project work with other academic commitments.
+
 - **Areas for Improvement:**
-  -
+  - Enhance understanding of back-end technologies to better integrate with the front-end.
+  - Improve time management skills to allocate sufficient time for both learning and project tasks.
+
 - **Feedback and Suggestions:**
-  -
+  - Encourage team members to share insights and resources for new technologies.
+  - Consider implementing pair programming sessions to facilitate knowledge sharing and support.
+
 
 ---
 
