@@ -22,8 +22,8 @@ October 21
 ## What would we do better next time
 List the areas where you want to improve your presentation
 
-- **Practice for Smoother Delivery** Although our team collaboration was strong, additional practice runs would help improve our confidence and timing. This would ensure each segment transitions seamlessly and that we all stay within our allotted time, making the overall presentation even more polished and engaging.
+- **Practice for Smoother Delivery**: Although our team collaboration was strong, additional practice runs would help improve our confidence and timing. This would ensure each segment transitions seamlessly and that we all stay within our allotted time, making the overall presentation even more polished and engaging.
   
-- **Addressing Potential Risks and Contingencies** Including an outline of potential risks and contingency plans would strengthen our presentation. This would show that we've considered possible challenges in our project and have prepared strategies to handle them, demonstrating thorough planning and foresight.
+- **Addressing Potential Risks and Contingencies**: Including an outline of potential risks and contingency plans would strengthen our presentation. This would show that we've considered possible challenges in our project and have prepared strategies to handle them, demonstrating thorough planning and foresight.
 
-- **Break Down Complex Problems into Smaller Steps** We realized that breaking down big problems into smaller, manageable steps could help simplify our explanation. This approach would allow us to demonstrate each stage of our project in a clear and digestible way, making it easier to understand our solution process and technical decisions.
+- **Break Down Complex Problems into Smaller Steps**: We realized that breaking down big problems into smaller, manageable steps could help simplify our explanation. This approach would allow us to demonstrate each stage of our project in a clear and digestible way, making it easier to understand our solution process and technical decisions.
