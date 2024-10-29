@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, Grid, Typography, Card, CardContent, CardMedia } from "@mui/material";
+import { Grid, Typography, Card, CardContent, CardMedia } from "@mui/material";
 
 const events = [
   { id: 1, date: "4 Feb 2025", title: "Thanks Giving Party" },

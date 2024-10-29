@@ -1,14 +1,12 @@
 import React from 'react';
-import { Box } from '@mui/system';
+import DonorSelectionTable from './DonorSelectionTable.tsx';
 import Sidebar from './Sidebar.tsx';
+import { Box } from '@mui/system';
 import Header from './Header.tsx';
-import EventCard from './EventCard.tsx';
 
-
-const EventPage: React.FC = () => {
-    
+const DonorSelectionPage: React.FC = () => {
     return (
-        <Box sx={{ display: "flex" }}>
+      <Box sx={{ display: "flex" }}>
          <Box
             sx={{
             width: '250px', // Sidebar width
@@ -16,7 +14,6 @@ const EventPage: React.FC = () => {
           >
         <Sidebar />
         </Box>
-
         <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', position: 'relative' }}>
         {/* Header at the top right of the page */}
         <Box
@@ -32,10 +29,11 @@ const EventPage: React.FC = () => {
           <Header />
         </Box>
         </Box>
-          <EventCard />
-         </Box>
+        <Box sx={{marginTop: '60px', marginLeft: '30px'}}>
+          <DonorSelectionTable />
+        </Box>
+      </Box>
     );
 }
 
-export default EventPage;
-
+export default DonorSelectionPage;

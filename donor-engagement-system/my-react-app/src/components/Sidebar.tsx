@@ -54,7 +54,7 @@ const Sidebar: React.FC = () => {
         BC CANCER
       </Typography>
 
-      <img src="cat.png" alt="BC Cancer Logo" style={{width: '100%', display: 'flex', borderRadius: '300%'}} />
+      <img src="/cat.png" alt="BC Cancer Logo" style={{ width: '80%', display: 'block', margin: '0 auto', borderRadius: '200%' }} />
 
       <List>
         {menuItems.map((item, index) => (
