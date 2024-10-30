@@ -63,15 +63,25 @@ The purpose of this retrospective is to document our weekly activities, reflect 
 - **Feedback and Suggestions:**
   -
 
-### [Team Member 3]
+### [Xing Gao]
 - **Achievements and Contributions:**
-  -
+  - Took the lead in developing the database side of the project.
+  - Collaborated with team members to create and refine the database UML diagram, ensuring alignment with the project’s requirements.
+  - Designed and implemented the database structure after multiple discussions and deliberations with the team.
+  - Successfully deployed the database on AWS RDS to facilitate remote development and access for all team members.
+
 - **Challenges Faced:**
-  -
+  - Faced some initial difficulties in optimizing the database structure to meet all the project’s needs efficiently.
+  - Ensured smooth integration with AWS RDS while considering potential performance issues during remote development.
+
 - **Areas for Improvement:**
-  -
+  - Further refine the database design to enhance performance and scalability as the project grows.
+  - Increase familiarity with AWS RDS configuration and security settings to ensure seamless deployment and access.
+
 - **Feedback and Suggestions:**
-  -
+  - Continue to maintain regular discussions with the team regarding the database design to ensure all components are well integrated.
+  - Explore automated testing and monitoring for the database to catch potential issues early.
+
 
 
 
