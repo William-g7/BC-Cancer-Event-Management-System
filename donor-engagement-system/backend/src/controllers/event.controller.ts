@@ -2,6 +2,7 @@ import { Pool } from 'mysql2/promise';
 import { EventService } from '../service/event.service';
 import { Request, Response } from 'express';
 import { FundraiserService } from '../service/fundraiser.service';
+import { CustomRequest } from '../types/custom-request';
 
 export class EventController {
     constructor(
@@ -35,14 +36,23 @@ export class EventController {
     };
 
     /**
-     * @route   GET /api/fundraisers/:id/events
+     * @route   GET /api/events
      * @desc    Get all events associated with a specific fundraiser
      * @param   req.params.id - Fundraiser ID
      * @returns {Array} List of events with relations
      */
     getFundraiserEvents = async (req: Request, res: Response): Promise<void> => {
         try {
-            const accountId = parseInt(req.params.id);
+            const accountId = (req as CustomRequest).user?.id;
+
+            if (!accountId) {
+                res.status(401).json({
+                    success: false,
+                    error: 'User not authenticated'
+                });
+                return;
+            }
+
             const fundraiserId = await this.fundraiserService.getFundraiserIdByAccountId(accountId);
             const events = await this.eventService.getFundraiserEventsWithRelations(fundraiserId);
     
@@ -60,14 +70,23 @@ export class EventController {
     }
 
     /**
-     * @route   GET /api/fundraisers/:id/dashboard
-     * @desc    Get dashboard data for a specific fundraiser
-     * @param   req.params.id - Account ID
+     * @route   GET /api/dashboard
+     * @desc    Get dashboard data for the authenticated fundraiser
      * @returns {Object} Dashboard events data
      */
     getDashboardData = async (req: Request, res: Response): Promise<void> => {
         try {
-            const accountId = parseInt(req.params.id);
+            // Get user from the request (set by checkUser middleware)
+            const accountId = (req as CustomRequest).user?.id;
+            
+            if (!accountId) {
+                res.status(401).json({
+                    success: false,
+                    error: 'User not authenticated'
+                });
+                return;
+            }
+
             const fundraiserId = await this.fundraiserService.getFundraiserIdByAccountId(accountId);
             const dashboardData = await this.eventService.getDashboardEvents(fundraiserId);
 

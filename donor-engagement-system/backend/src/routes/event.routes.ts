@@ -12,10 +12,16 @@ const eventController = new EventController(
     new FundraiserService(pool)
 );
 
-// Event list routes
-router
-    .route('/events')
-    .get(checkUser, eventController.getFundraiserEvents);
+// Get events for a fundraiser's dashboard
+router.get('/events', checkUser, eventController.getFundraiserEvents);
 
-// Export router
+// Get single event by ID
+router.get('/events/:id', checkUser, eventController.getEventById);
+
+// Get dashboard data for a fundraiser
+router.get('/dashboard', checkUser, eventController.getDashboardData);
+
+// Apply error handler to all routes
+router.use(errorHandler);
+
 export default router;

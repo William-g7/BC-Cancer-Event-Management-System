@@ -10,10 +10,6 @@ export class EventService {
         return api.post<Event>('/events', event);
     }
 
-    async updateEvent(id: number, event: Partial<Event>): Promise<Event> {
-        return api.put<Event>(`/events/${id}`, event);
-    }
-
     async deleteEvent(id: number): Promise<void> {
         return api.delete<void>(`/events/${id}`);
     }

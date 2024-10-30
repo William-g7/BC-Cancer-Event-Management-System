@@ -1,38 +1,49 @@
 import { Request, Response, NextFunction } from 'express';
-
-// Types
-export interface CustomRequest extends Request {
-    user?: {
-        name: string;
-        role: 'FUNDRAISER' | 'COORDINATOR';
-    };
-}
-
-// Simple user role mapping
-const USER_ROLES: Record<string, 'FUNDRAISER' | 'COORDINATOR'> = {
-    'john': 'FUNDRAISER',
-    'emma': 'COORDINATOR',
-    'sarah': 'FUNDRAISER'
-};
+import { CustomRequest } from '../types/custom-request';
+import pool from '../config/database';
+import { Account } from '../types/account.types';
 
 // Check user from header
-export const checkUser = (req: CustomRequest, res: Response, next: NextFunction) => {
+export const checkUser = async (req: CustomRequest, res: Response, next: NextFunction) => {
     const username = req.headers['x-user-name'] as string;
 
-    if (!username || !USER_ROLES[username]) {
+    if (!username) {
         return res.status(401).json({ 
             success: false, 
-            message: 'Invalid user' 
+            message: 'Username is required' 
         });
     }
 
-    // Add user info to request
-    req.user = {
-        name: username,
-        role: USER_ROLES[username]
-    };
+    try {
+        // Find user in database using MySQL pool
+        const [users] = await pool.query(
+            'SELECT id, name, role FROM account WHERE name = ?',
+            [username]
+        ) as [Account[], any];
 
-    next();
+        const user = users[0] as Account | undefined;
+
+        if (!user) {
+            return res.status(401).json({ 
+                success: false, 
+                message: 'Invalid user' 
+            });
+        }
+
+        // Add user info to request
+        req.user = {
+            id: user.id,
+            name: user.name,
+            role: user.role
+        };
+
+        next();
+    } catch (error) {
+        return res.status(500).json({ 
+            success: false, 
+            message: 'Database error' 
+        });
+    }
 };
 
 // Basic error handler

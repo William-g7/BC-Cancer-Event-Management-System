@@ -5,6 +5,13 @@ interface RequestOptions extends RequestInit {
 }
 
 class Api {
+  private username: string = localStorage.getItem('username') || '';
+
+  public setUsername(username: string) {
+    this.username = username;
+    localStorage.setItem('username', username);
+  }
+
   private async request<T>(endpoint: string, options: RequestOptions = {}): Promise<T> {
     const { params, ...requestOptions } = options;
     
@@ -16,9 +23,10 @@ class Api {
       });
     }
 
-    // Default headers
+    // Default headers with login name
     const headers = {
       'Content-Type': 'application/json',
+      'X-User-Name': this.username,
       ...options.headers,
     };
 
