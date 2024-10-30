@@ -1,7 +1,7 @@
 # Retrospective Document Template
 
 ## Team Name
-[Insert Team Name Here]
+Puppy Lover
 
 ## Date
 Week 7 October 21
@@ -16,31 +16,29 @@ Week 7 October 21
 ---
 
 ## Overview
-Briefly describe the purpose of this retrospective and what you aim to achieve.
+The purpose of this retrospective is to document our weekly activities, reflect on our achievements, and identify areas for improvement. By doing so, we can set clearer goals and enhance our time management and collaboration skills.
 
 ---
 
 ## What Went Well
-List the things that went well during the project.
--
--
--
+-We strengthened our understanding of Jest testing and TypeScript, applying this knowledge to improve code quality.
+-The team effectively collaborated on the BC Cancer project, making progress on the wireframes and outlining an actionable plan for implementation.
+-Everyone actively participated in discussions and brainstorming, especially around inclusive design, allowing us to
 
 ---
 
 ## What Could Be Improved
-List the areas where there is room for improvement.
--
--
--
+-Increase our understanding of complex TypeScript functionalities to tackle more challege
+-Improve communication within the team to ensure task alignment and clarity, particularly when dividing responsibilities.
+-Enhance our speed in adapting to new technical concepts, especially in database management and API integration, to streamline the project development process.
 
 ---
 
 ## Action Items
-Identify actionable steps that can be taken to improve future projects.
-1.
-2.
-3.
+1.Dedicate time each week to deepen TypeScript and testing skills, focusing on specific case studies or problems we encounter in the project.
+2.Implement a brief check-in system during meetings to verify task clarity and alignment, ensuring everyone understands their responsibilities.
+3.Allocate time for studying database and API-related topics together as a team to build up our technical foundation in these areas.
+
 
 ---
 
