@@ -7,11 +7,11 @@
 Week 7 October 21
 
 ## Participants
-- [Team Member 1]
-- [Team Member 2]
-- [Team Member 3]
-- [Team Member 4]
-- [Team Member 5]
+- Shiyuan Chen 
+- Yan Wang
+- Xing Gao
+- Zhenziye Lin
+
 
 ---
 
@@ -85,15 +85,20 @@ Identify actionable steps that can be taken to improve future projects.
 - **Feedback and Suggestions:**
   -
 
-### [Team Member 5]
+### Team Member 5: Zhenziye Lin
 - **Achievements and Contributions:**
-  -
+  - Returned to school and joined team meetings, catching up on previously missed content and gaining a deeper understanding of the project. Clarified the responsibilities for both frontend and backend tasks. Benefited greatly from discussions with team members, including insights for project improvements.
+
 - **Challenges Faced:**
-  -
+  - Limited familiarity with databases, necessitating further study in database concepts and SQL.
+
 - **Areas for Improvement:**
-  -
+  - Focus on learning SQL, dedicating more time to the course, and increasing communication with team members to promptly address uncertainties.
+
 - **Feedback and Suggestions:**
-  -
+  - Going forward, incorporating regular mini-sessions focused on database queries and backend structure could enhance learning. Additionally, pairing up with a team member for quick Q&A sessions would encourage more knowledge-sharing and support mutual growth.
+
+
 
 ---
 
