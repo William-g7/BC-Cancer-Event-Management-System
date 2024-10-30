@@ -1,20 +1,17 @@
 // src/types/event.types.ts
 import { DateTime } from 'luxon';
-import { Fundraiser } from './fundtaiser';
 
 export interface Event {
-    event_id: number;
+    id: number;
     name: string;
     start_time: DateTime;
     end_time: DateTime;
     location: string;
-    description?: string;
-    estimate_invitation: number;
-    total_selected: number;
-    created_at: DateTime;
-    updated_at: DateTime;
-    assigned_fundraisers: Fundraiser[];
-    lead_fundraiser: Fundraiser;    
+    description: string | null;
+    organizer_id: number;
+    deadline: DateTime;
+    expected_selection: number;
+    selected_count: number;
 }
 
 export interface CreateEventDTO {
@@ -23,5 +20,9 @@ export interface CreateEventDTO {
     end_time: DateTime;
     location: string;
     description?: string;
-    estimate_invitation: number;
+    organizer_id: number;
+    deadline: DateTime;
+    expected_selection: number;
+    selected_count: number;
 }
+
