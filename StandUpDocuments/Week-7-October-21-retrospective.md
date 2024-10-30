@@ -75,17 +75,9 @@ Identify actionable steps that can be taken to improve future projects.
 - **Feedback and Suggestions:**
   -
 
-### [Team Member 4]
-- **Achievements and Contributions:**
-  -
-- **Challenges Faced:**
-  -
-- **Areas for Improvement:**
-  -
-- **Feedback and Suggestions:**
-  -
 
-### Team Member 5: Zhenziye Lin
+
+### Zhenziye Lin
 - **Achievements and Contributions:**
   - Returned to school and joined team meetings, catching up on previously missed content and gaining a deeper understanding of the project. Clarified the responsibilities for both frontend and backend tasks. Benefited greatly from discussions with team members, including insights for project improvements.
 
