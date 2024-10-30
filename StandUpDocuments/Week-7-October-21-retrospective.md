@@ -21,23 +21,23 @@ The purpose of this retrospective is to document our weekly activities, reflect 
 ---
 
 ## What Went Well
--We strengthened our understanding of Jest testing and TypeScript, applying this knowledge to improve code quality.
--The team effectively collaborated on the BC Cancer project, making progress on the wireframes and outlining an actionable plan for implementation.
--Everyone actively participated in discussions and brainstorming, especially around inclusive design, allowing us to
+- We strengthened our understanding of Jest testing and TypeScript, applying this knowledge to improve code quality.
+- The team effectively collaborated on the BC Cancer project, making progress on the wireframes and outlining an actionable plan for implementation.
+- Everyone actively participated in discussions and brainstorming, especially around inclusive design, allowing us to align closely with the client's requirements.
 
 ---
 
 ## What Could Be Improved
--Increase our understanding of complex TypeScript functionalities to tackle more challege
--Improve communication within the team to ensure task alignment and clarity, particularly when dividing responsibilities.
--Enhance our speed in adapting to new technical concepts, especially in database management and API integration, to streamline the project development process.
+- Increase our understanding of complex TypeScript functionalities to tackle more challenging use cases.
+- Improve communication within the team to ensure task alignment and clarity, particularly when dividing responsibilities.
+- Enhance our speed in adapting to new technical concepts, especially in database management and API integration, to streamline the project development process.
 
 ---
 
 ## Action Items
-1.Dedicate time each week to deepen TypeScript and testing skills, focusing on specific case studies or problems we encounter in the project.
-2.Implement a brief check-in system during meetings to verify task clarity and alignment, ensuring everyone understands their responsibilities.
-3.Allocate time for studying database and API-related topics together as a team to build up our technical foundation in these areas.
+1. Dedicate time each week to deepen TypeScript and testing skills, focusing on specific case studies or problems we encounter in the project.
+2. Implement a brief check-in system during meetings to verify task clarity and alignment, ensuring everyone understands their responsibilities.
+3. Allocate time for studying database and API-related topics together as a team to build up our technical foundation in these areas.
 
 
 ---
