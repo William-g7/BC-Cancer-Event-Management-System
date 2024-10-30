@@ -13,13 +13,13 @@ const eventController = new EventController(
 );
 
 // Get events for a fundraiser's dashboard
-router.get('/events', checkUser, eventController.getFundraiserEvents);
+router.get('/api/events', checkUser, eventController.getFundraiserEvents);
 
 // Get single event by ID
-router.get('/events/:id', checkUser, eventController.getEventById);
+router.get('/api/events/:id', checkUser, eventController.getEventById);
 
 // Get dashboard data for a fundraiser
-router.get('/dashboard', checkUser, eventController.getDashboardData);
+router.get('/api/dashboard', checkUser, eventController.getDashboardEvents);
 
 // Apply error handler to all routes
 router.use(errorHandler);

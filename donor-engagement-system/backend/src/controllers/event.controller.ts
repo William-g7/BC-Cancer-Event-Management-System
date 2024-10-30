@@ -74,7 +74,7 @@ export class EventController {
      * @desc    Get dashboard data for the authenticated fundraiser
      * @returns {Object} Dashboard events data
      */
-    getDashboardData = async (req: Request, res: Response): Promise<void> => {
+    getDashboardEvents = async (req: Request, res: Response): Promise<void> => {
         try {
             // Get user from the request (set by checkUser middleware)
             const accountId = (req as CustomRequest).user?.id;
