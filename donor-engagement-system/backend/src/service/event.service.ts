@@ -1,52 +1,94 @@
 import { Pool } from 'mysql2/promise';
-import { 
-    Event, 
-    CreateEventDTO, 
-} from '../types/event.types';
+import { Event } from '../types/event.types';
+import { Fundraiser } from '../types/fundraiser.types';
+import { EventRepository } from '../repositories/event.repository';
+import { DateTime } from 'luxon';
 
 export class EventService {
     constructor(private pool: Pool) {}
 
-    async getEvents(): Promise<Event[]> {
-        const connection = await this.pool.getConnection();
-        const [events] = await connection.execute('SELECT * FROM events');
-        return events as Event[];
-    }
-
-    async createEvent(data: CreateEventDTO): Promise<Event> {
-        const connection = await this.pool.getConnection();
-        try {
-            await connection.beginTransaction();
-
-            const [result] = await connection.execute(
-                `INSERT INTO events (
-                    name, start_time, end_time, location, 
-                    description, estimate_invitation
-                ) VALUES (?, ?, ?, ?, ?, ?)`,
-                [
-                    data.name,
-                    data.start_time,
-                    data.end_time,
-                    data.location,
-                    data.description,
-                    data.estimate_invitation,
-                ]
-            );
-
-            const [event] = await connection.execute(
-                'SELECT * FROM events WHERE id = ?',
-                [(result as any).insertId]
-            );
-
-            await connection.commit();
-            return event[0] as Event;
-        } catch (error) {
-            await connection.rollback();
-            throw new ApiError('EVENT_CREATE_FAILED', 'Failed to create event');
-        } finally {
-            connection.release();
+    async getEventWithRelations(eventId: number): Promise<Event & { 
+        assigned_fundraisers: Fundraiser[], 
+        organizer: Fundraiser 
+    }> {
+        const eventRepository = new EventRepository(this.pool);
+        
+        // Get base event
+        const event = await eventRepository.findById(eventId);
+        if (!event) {
+            throw new Error(`Event with id ${eventId} not found`);
         }
+
+        // Get assigned fundraisers
+        const assignedFundraisers = await eventRepository.getEventFundraisers(eventId);
+
+        // Get organizer
+        const organizer = await eventRepository.getEventOrganizer(event.organizer_id);
+        if (!organizer) {
+            throw new Error(`Organizer with id ${event.organizer_id} not found`);
+        }
+
+        // Combine the data
+        return {
+            ...event,
+            assigned_fundraisers: assignedFundraisers,
+            organizer: organizer
+        };
     }
 
-}
+    async getFundraiserEventsWithRelations(fundraiserId: number): Promise<(Event & {
+        assigned_fundraisers: Fundraiser[],
+        organizer: Fundraiser
+    })[]> {
+        const eventRepository = new EventRepository(this.pool);
+        
+        // Get base events
+        const events = await eventRepository.getFundraiserEvents(fundraiserId);
 
+        // Map each event to include relations
+        const eventsWithRelations = await Promise.all(events.map(async (event) => {
+            const assignedFundraisers = await eventRepository.getEventFundraisers(event.id);
+            const organizer = await eventRepository.getEventOrganizer(event.organizer_id);
+            
+            if (!organizer) {
+                throw new Error(`Organizer with id ${event.organizer_id} not found`);
+            }
+
+            return {
+                ...event,
+                assigned_fundraisers: assignedFundraisers,
+                organizer: organizer
+            };
+        }));
+
+        return eventsWithRelations;
+    }
+
+    async getDashboardEvents(fundraiserId: number): Promise<(Event & {
+        assigned_fundraisers: Fundraiser[],
+        organizer: Fundraiser
+    })[]> {
+        const eventRepository = new EventRepository(this.pool);
+        const events = await eventRepository.getFundraiserEvents(fundraiserId);
+        const today = DateTime.now();
+        const filteredEvents = events.filter(event => event.start_time > today);
+        
+        // Map filtered events to include relations
+        const eventsWithRelations = await Promise.all(filteredEvents.map(async (event) => {
+            const assignedFundraisers = await eventRepository.getEventFundraisers(event.id);
+            const organizer = await eventRepository.getEventOrganizer(event.organizer_id);
+            
+            if (!organizer) {
+                throw new Error(`Organizer with id ${event.organizer_id} not found`);
+            }
+
+            return {
+                ...event,
+                assigned_fundraisers: assignedFundraisers,
+                organizer: organizer
+            };
+        }));
+
+        return eventsWithRelations;
+    }
+}

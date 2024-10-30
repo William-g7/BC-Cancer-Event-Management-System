@@ -1,4 +1,4 @@
-import { DateTime } from "luxon";
+import { DateTime } from 'luxon';
 
 export enum Role {
     FUNDRAISER = 'FUNDRAISER',
@@ -6,11 +6,10 @@ export enum Role {
 }
 
 export interface Account {
-    account_id: number;
+    id: number;
     name: string;
-    email: string;
+    password_hash: string;
     role: Role;
     created_at: DateTime;
-    updated_at: DateTime;
 }
 

@@ -3,27 +3,25 @@ import { EventController } from '../controllers/event.controller';
 import { checkUser, errorHandler } from '../middleware/index';
 import pool from '../config/database';
 import { EventService } from '../service/event.service';
+import { FundraiserService } from '../service/fundraiser.service';
 
 const router = Router();
-const eventController = new EventController(pool, new EventService(pool));
+const eventController = new EventController(
+    pool, 
+    new EventService(pool), 
+    new FundraiserService(pool)
+);
 
-// Event list routes
-router
-    .route('/events')
-    .get(checkUser, eventController.getEvents)
-    .post(checkUser, eventController.createEvent);
+// Get events for a fundraiser's dashboard
+router.get('/events', checkUser, eventController.getFundraiserEvents);
 
-// Single event routes
-router
-    .route('/events/:id')
-    .get(checkUser, eventController.getEventById)
-    .put(checkUser, eventController.updateEvent)
-    .delete(checkUser, eventController.deleteEvent);
+// Get single event by ID
+router.get('/events/:id', checkUser, eventController.getEventById);
 
-// Event selection routes
-router
-    .route('/events/:id/selections')
-    .get(checkUser, eventController.getEventSelections);
+// Get dashboard data for a fundraiser
+router.get('/dashboard', checkUser, eventController.getDashboardData);
 
-// Export router
+// Apply error handler to all routes
+router.use(errorHandler);
+
 export default router;

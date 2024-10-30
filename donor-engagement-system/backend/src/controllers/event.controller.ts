@@ -1,106 +1,105 @@
-// src/controllers/event.controller.ts
-import { Request, Response } from 'express';
 import { Pool } from 'mysql2/promise';
-import {
-    Event,
-    CreateEventDTO,
-} from '../types/event.types';
 import { EventService } from '../service/event.service';
+import { Request, Response } from 'express';
+import { FundraiserService } from '../service/fundraiser.service';
+import { CustomRequest } from '../types/custom-request';
 
 export class EventController {
-    constructor(private pool: Pool, private eventService: EventService) {}
-    // GET /events
-    getEvents = async (req: Request, res: Response) => {
+    constructor(
+        private pool: Pool, 
+        private eventService: EventService, 
+        private fundraiserService: FundraiserService
+    ) {}
+
+    /**
+     * @route   GET /api/events/:id
+     * @desc    Get a single event by ID with its relations (organizer and assigned fundraisers)
+     * @param   req.params.id - Event ID
+     * @returns {Object} Event data with relations
+     */
+    getEventById = async (req: Request, res: Response): Promise<void> => {
         try {
-            // Controller calls service method
-            const events = await this.eventService.getEvents();
+            const eventId = parseInt(req.params.id);
+            const event = await this.eventService.getEventWithRelations(eventId);
+            
+            res.json({
+                success: true,
+                data: event
+            });
+        } catch (error) {
+            console.error('Error fetching event:', error);
+            res.status(500).json({
+                success: false,
+                error: error instanceof Error ? error.message : 'An unknown error occurred'
+            });
+        }
+    };
+
+    /**
+     * @route   GET /api/events
+     * @desc    Get all events associated with a specific fundraiser
+     * @param   req.params.id - Fundraiser ID
+     * @returns {Array} List of events with relations
+     */
+    getFundraiserEvents = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const accountId = (req as CustomRequest).user?.id;
+
+            if (!accountId) {
+                res.status(401).json({
+                    success: false,
+                    error: 'User not authenticated'
+                });
+                return;
+            }
+
+            const fundraiserId = await this.fundraiserService.getFundraiserIdByAccountId(accountId);
+            const events = await this.eventService.getFundraiserEventsWithRelations(fundraiserId);
     
             res.json({
                 success: true,
                 data: events
             });
         } catch (error) {
-            console.error('Error fetching events:', error);
+            console.error('Error fetching fundraiser events:', error);
             res.status(500).json({
                 success: false,
-                error: 'Failed to fetch events'
-            });
-        }
-    };
-
-    // GET /events/:id
-    getEventById = async (req: Request, res: Response) => {
-        try {
-            
-
-        } catch (error) {
-            console.error('Error fetching event:', error);
-            res.status(500).json({
-                success: false,
-                error: 'Failed to fetch event'
-            });
-        }
-    };
-
-    // POST /events
-    async createEvent(req: Request, res: Response) {
-        try {
-            const username = req.headers['x-user-name'] as string;
-            const eventData = req.body;
-
-            // Controller just passes data to service
-            const newEvent = await this.eventService.createEvent(eventData, username);
-
-            res.status(201).json({
-                success: true,
-                data: newEvent
-            });
-        } catch (error) {
-            res.status(500).json({
-                success: false,
-                error: error.message
+                error: error instanceof Error ? error.message : 'An unknown error occurred'
             });
         }
     }
-    // PUT /events/:id
-    updateEvent = async (req: Request, res: Response) => {
+
+    /**
+     * @route   GET /api/dashboard
+     * @desc    Get dashboard data for the authenticated fundraiser
+     * @returns {Object} Dashboard events data
+     */
+    getDashboardData = async (req: Request, res: Response): Promise<void> => {
         try {
+            // Get user from the request (set by checkUser middleware)
+            const accountId = (req as CustomRequest).user?.id;
             
+            if (!accountId) {
+                res.status(401).json({
+                    success: false,
+                    error: 'User not authenticated'
+                });
+                return;
+            }
 
+            const fundraiserId = await this.fundraiserService.getFundraiserIdByAccountId(accountId);
+            const dashboardData = await this.eventService.getDashboardEvents(fundraiserId);
+
+            res.json({
+                success: true,
+                data: dashboardData
+            });
         } catch (error) {
-            console.error('Error updating event:', error);
+            console.error('Error fetching dashboard data:', error);
             res.status(500).json({
                 success: false,
-                error: 'Failed to update event'
+                error: error instanceof Error ? error.message : 'An unknown error occurred'
             });
         }
-    };
-
-    // GET /events/:id/selections
-    getEventSelections = async (req: Request, res: Response) => {
-        try {
-            
-
-        } catch (error) {
-            console.error('Error fetching event selections:', error);
-            res.status(500).json({
-                success: false,
-                error: 'Failed to fetch event selections'
-            });
-        }
-    };
-
-    // DELETE /events/:id
-    deleteEvent = async (req: Request, res: Response) => {
-        try {
-        
-
-        } catch (error) {
-            console.error('Error deleting event:', error);
-            res.status(500).json({
-                success: false,
-                error: 'Failed to delete event'
-            });
-        }
-    };
+    }
 }
