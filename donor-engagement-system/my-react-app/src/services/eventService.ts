@@ -1,20 +1,14 @@
-import { api } from '../utils/api';
-import { Event } from '../types/event';
+import { api } from '../utils/api.ts';
+import { Event } from '../types/event.ts';
 
 export class EventService {
-    async getDashboardEvents(fundraiserId: number): Promise<Event[]> {
-        return api.get<Event[]>('/events', { fundraiserId });
-    }
-
-    async createEvent(event: Omit<Event, 'id'>): Promise<Event> {
-        return api.post<Event>('/events', event);
-    }
-
-    async deleteEvent(id: number): Promise<void> {
-        return api.delete<void>(`/events/${id}`);
+    async getDashboardEvents(): Promise<Event[]> {
+        const response = await api.get<{success: boolean, data: Event[]}>('/dashboard');
+        return response.data || [];
     }
 
     async getEventById(id: number): Promise<Event> {
-        return api.get<Event>(`/events/${id}`);
+        const response = await api.get<{success: boolean, data: Event}>(`/events/${id}`);
+        return response.data;
     }
 } 

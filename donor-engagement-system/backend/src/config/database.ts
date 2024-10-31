@@ -6,23 +6,25 @@ import mysql, { Pool, PoolOptions } from 'mysql2/promise';
 // Connection pool configuration
 const poolConfig: PoolOptions = {
     // Basic configuration
-    host: process.env.DB_HOST || 'localhost',
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_DATABASE || 'donor_engagement',
+    host: process.env.DB_HOST || 'donor-engagement-system-db.c5s2qkg2wpk5.us-east-1.rds.amazonaws.com',
+    user: process.env.DB_USER || 'puppylover',
+    password: process.env.DB_PASSWORD || 'puppylover5500',
+    database: process.env.DB_DATABASE || 'donor_engagement_system',
 
     // Pool specific configuration
-    connectionLimit: 10,      // Maximum number of connections in the pool
-    queueLimit: 0,           // Maximum number of connection requests the pool will queue
+    connectionLimit: 20,      // Maximum number of connections in the pool
+    queueLimit: 100,           // Maximum number of connection requests the pool will queue
     waitForConnections: true, // Wait for available connection when limit is reached
 
     // Additional options
     enableKeepAlive: true,   // Keep connections alive
     keepAliveInitialDelay: 10000, // How often to send keepalive packets
     timezone: '-07:00',      // GMT-7 timezone
-
     // Debug (disable in production)
-    debug: process.env.NODE_ENV !== 'production',
+    debug: false,
+
+    // Additional recommended settings
+    connectTimeout: 10000,     // 10 seconds
 }
 
 // Create the pool

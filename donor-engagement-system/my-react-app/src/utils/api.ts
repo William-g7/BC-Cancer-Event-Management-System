@@ -1,11 +1,11 @@
-const API_URL = process.env.VITE_API_URL || 'http://localhost:3000/api';
+const API_URL = 'http://localhost:5001/api';
 
 interface RequestOptions extends RequestInit {
   params?: Record<string, string | number>;
 }
 
 class Api {
-  private username: string = localStorage.getItem('username') || '';
+  private username: string = localStorage.getItem('username') || 'Alice Smith';
 
   public setUsername(username: string) {
     this.username = username;
@@ -26,7 +26,7 @@ class Api {
     // Default headers with login name
     const headers = {
       'Content-Type': 'application/json',
-      'X-User-Name': this.username,
+      'X-User-Name': this.username || 'Alice Smith',
       ...options.headers,
     };
 
@@ -37,6 +37,9 @@ class Api {
       });
 
       if (!response.ok) {
+        console.log('Full response:', response);
+        const errorBody = await response.json().catch(() => ({}));
+        console.log('Error body:', errorBody);
         throw new Error(`API Error: ${response.status} ${response.statusText}`);
       }
 

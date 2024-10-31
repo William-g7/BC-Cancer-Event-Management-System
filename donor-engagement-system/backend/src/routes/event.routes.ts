@@ -19,7 +19,7 @@ router.get('/events', checkUser, eventController.getFundraiserEvents);
 router.get('/events/:id', checkUser, eventController.getEventById);
 
 // Get dashboard data for a fundraiser
-router.get('/dashboard', checkUser, eventController.getDashboardData);
+router.get('/dashboard', checkUser, eventController.getDashboardEvents);
 
 // Apply error handler to all routes
 router.use(errorHandler);

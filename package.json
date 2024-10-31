@@ -5,6 +5,7 @@
     "luxon": "^3.5.0"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/node": "^22.8.4"
   }
 }

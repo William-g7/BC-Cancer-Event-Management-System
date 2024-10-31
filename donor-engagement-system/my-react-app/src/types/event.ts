@@ -13,4 +13,4 @@ export interface Event {
     selected_count: number;
     assigned_fundraisers?: Fundraiser[];
     organizer?: Fundraiser;
-} 
+}

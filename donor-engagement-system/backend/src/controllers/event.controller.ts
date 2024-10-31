@@ -74,10 +74,11 @@ export class EventController {
      * @desc    Get dashboard data for the authenticated fundraiser
      * @returns {Object} Dashboard events data
      */
-    getDashboardData = async (req: Request, res: Response): Promise<void> => {
+    getDashboardEvents = async (req: Request, res: Response): Promise<void> => {
         try {
             // Get user from the request (set by checkUser middleware)
             const accountId = (req as CustomRequest).user?.id;
+            console.log('Account ID:', accountId);
             
             if (!accountId) {
                 res.status(401).json({
@@ -87,8 +88,13 @@ export class EventController {
                 return;
             }
 
+            console.log('Getting fundraiser ID for account:', accountId);
             const fundraiserId = await this.fundraiserService.getFundraiserIdByAccountId(accountId);
+            console.log('Fundraiser ID:', fundraiserId);
+
+            console.log('Getting dashboard events for fundraiser:', fundraiserId);
             const dashboardData = await this.eventService.getDashboardEvents(fundraiserId);
+            console.log('Dashboard data:', dashboardData);
 
             res.json({
                 success: true,
@@ -96,6 +102,9 @@ export class EventController {
             });
         } catch (error) {
             console.error('Error fetching dashboard data:', error);
+            if (error instanceof Error) {
+                console.error('Error stack:', error.stack);
+            }
             res.status(500).json({
                 success: false,
                 error: error instanceof Error ? error.message : 'An unknown error occurred'
