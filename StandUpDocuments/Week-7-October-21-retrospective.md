@@ -1,110 +1,128 @@
 # Retrospective Document Template
 
 ## Team Name
-[Insert Team Name Here]
+Puppy Lover
 
 ## Date
 Week 7 October 21
 
 ## Participants
-- [Team Member 1]
-- [Team Member 2]
-- [Team Member 3]
-- [Team Member 4]
-- [Team Member 5]
+- Shiyuan Chen 
+- Yan Wang
+- Xing Gao
+- Zhenziye Lin
+
 
 ---
 
 ## Overview
-Briefly describe the purpose of this retrospective and what you aim to achieve.
+The purpose of this retrospective is to document our weekly activities, reflect on our achievements, and identify areas for improvement. By doing so, we can set clearer goals and enhance our time management and collaboration skills.
 
 ---
 
 ## What Went Well
-List the things that went well during the project.
--
--
--
+- We strengthened our understanding of Jest testing and TypeScript, applying this knowledge to improve code quality.
+- The team effectively collaborated on the BC Cancer project, making progress on the wireframes and outlining an actionable plan for implementation.
+- Everyone actively participated in discussions and brainstorming, especially around inclusive design, allowing us to align closely with the client's requirements.
 
 ---
 
 ## What Could Be Improved
-List the areas where there is room for improvement.
--
--
--
+- Increase our understanding of complex TypeScript functionalities to tackle more challenging use cases.
+- Improve communication within the team to ensure task alignment and clarity, particularly when dividing responsibilities.
+- Enhance our speed in adapting to new technical concepts, especially in database management and API integration, to streamline the project development process.
 
 ---
 
 ## Action Items
-Identify actionable steps that can be taken to improve future projects.
-1.
-2.
-3.
+1. Dedicate time each week to deepen TypeScript and testing skills, focusing on specific case studies or problems we encounter in the project.
+2. Implement a brief check-in system during meetings to verify task clarity and alignment, ensuring everyone understands their responsibilities.
+3. Allocate time for studying database and API-related topics together as a team to build up our technical foundation in these areas.
+
 
 ---
 
 ## Individual Self-Assessments
-### [Team Member 1]
+### [shiyuan]
 - **Achievements and Contributions:**
-  -
+  - Set up Express.js server with TypeScript configuration and proper middleware chain
+  - Implemented comprehensive type system for data models including events, notes and accounts
+  - Developed API utility class for consistent server communication
+  - Implemented note and event data models with proper DateTime handling using Luxon
 - **Challenges Faced:**
-  -
+  - Team members at different levels with TypeScript/React
+  - Maintaining consistent structure between frontend and backend
 - **Areas for Improvement:**
-  -
-- **Feedback and Suggestions:**
-  -
+  - Communication between team members can be enhanced to ensure everyone is aligned on tasks and project details, particularly in sharing technical knowledge.
+- **Suggestions for Future Projects:**
+  - Regularly review the project’s workflow and technical requirements to ensure the design and development phases are aligned and progress smoothly.
+  - Set more specific, measurable goals and timelines to track progress and ensure tasks are completed on time.
 
-### [Team Member 2]
+### [Yan Wang]
 - **Achievements and Contributions:**
-  -
+  - Initiated code development for the frontend of the BC Cancer project
+  - Gained knowledge in CSS and the UI library during implementation
+  - Actively contributed insights in group meetings
 - **Challenges Faced:**
-  -
+  - Balancing time between project work and learning new skills
+  - Limited knowledge of the entire client-to-server workflow
 - **Areas for Improvement:**
-  -
+  - Develop a deeper understanding of full-stack processes
+  - Improve time management strategies to balance learning and implementation tasks
 - **Feedback and Suggestions:**
-  -
+  - Establish a weekly study session to share our learnings 
+  - Stick to the project timeline to ensure timely completion
 
-### [Team Member 3]
+### [Xing Gao]
 - **Achievements and Contributions:**
-  -
-- **Challenges Faced:**
-  -
-- **Areas for Improvement:**
-  -
-- **Feedback and Suggestions:**
-  -
+  - Took the lead in developing the database side of the project.
+  - Collaborated with team members to create and refine the database UML diagram, ensuring alignment with the project’s requirements.
+  - Designed and implemented the database structure after multiple discussions and deliberations with the team.
+  - Successfully deployed the database on AWS RDS to facilitate remote development and access for all team members.
 
-### [Team Member 4]
-- **Achievements and Contributions:**
-  -
 - **Challenges Faced:**
-  -
-- **Areas for Improvement:**
-  -
-- **Feedback and Suggestions:**
-  -
+  - Faced some initial difficulties in optimizing the database structure to meet all the project’s needs efficiently.
+  - Ensured smooth integration with AWS RDS while considering potential performance issues during remote development.
 
-### [Team Member 5]
-- **Achievements and Contributions:**
-  -
-- **Challenges Faced:**
-  -
 - **Areas for Improvement:**
-  -
+  - Further refine the database design to enhance performance and scalability as the project grows.
+  - Increase familiarity with AWS RDS configuration and security settings to ensure seamless deployment and access.
+
 - **Feedback and Suggestions:**
-  -
+  - Continue to maintain regular discussions with the team regarding the database design to ensure all components are well integrated.
+  - Explore automated testing and monitoring for the database to catch potential issues early.
+
+
+
+
+### Zhenziye Lin
+- **Achievements and Contributions:**
+  - Returned to school and joined team meetings, catching up on previously missed content and gaining a deeper understanding of the project. Clarified the responsibilities for both frontend and backend tasks. Benefited greatly from discussions with team members, including insights for project improvements.
+
+- **Challenges Faced:**
+  - Limited familiarity with databases, necessitating further study in database concepts and SQL.
+
+- **Areas for Improvement:**
+  - Focus on learning SQL, dedicating more time to the course, and increasing communication with team members to promptly address uncertainties.
+
+- **Feedback and Suggestions:**
+  - Going forward, incorporating regular mini-sessions focused on database queries and backend structure could enhance learning. Additionally, pairing up with a team member for quick Q&A sessions would encourage more knowledge-sharing and support mutual growth.
+
+
 
 ---
 
 ## Overall Team Assessment
 Reflect on the team’s performance as a whole.
 - **Team Strengths:**
-  -
+  - Strong collaborative spirit: The team effectively worked together, with each member contributing their expertise, whether in frontend, database management, or project planning
+  - Commitment to learning: Each team member demonstrated a commitment to gaining new skills, such as TypeScript, Jest testing, CSS, which collectively improved the project's code quality and design
 - **Areas for Improvement:**
-  -
+  - Enhanced technical proficiency: The team needs to deepen understanding of advanced TypeScript functionalities, database management, and API integration
+  - Faster adaptation to new concepts: The team could benefit from a structured learning plan to adapt more quickly to unfamiliar technical concepts, which would help maintain momentum on project deliverables
 - **Suggestions for Future Projects:**
-  -
+  - Set up regular knowledge-sharing sessions: Weekly study sessions or mini-training sessions on key topics (e.g., SQL, API integration, TypeScript) would foster continuous learning and allow team members to address gaps together
+  - Implement a check-in system for alignment: Brief check-ins during meetings to review task assignments and ensure everyone understands their roles would help prevent miscommunication and improve task alignment
 
 ---
 

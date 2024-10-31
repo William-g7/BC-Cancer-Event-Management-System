@@ -1,23 +1,24 @@
+// src/App.tsx
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'; 
-import LoginPage from "./components/LoginPage.tsx"; // Import LoginPage
-import DashboardPage from "./components/DashboardPage.tsx"; // Import DashboardPage
-import EventPage from "./components/EventPage.tsx"; // Import EventPage
-import DonorSelectionPage from "./components/DonorSelectionPage.tsx"; // Import DonorSelectionPage
+import LoginPage from "./components/LoginPage.tsx";
+import DashboardPage from "./components/DashboardPage.tsx";
+import EventPage from "./components/EventPage.tsx";
+import DonorSelectionPage from "./components/DonorSelectionPage.tsx";
+import DonorNotePage from "./components/DonorNotePage.tsx"; // 导入 DonorNotePage
+
 
 const App: React.FC = () => {
   return (
-   <Router>
+    <Router>
       <MainContent />
-  </Router>
+    </Router>
   );
 }
 
 const MainContent: React.FC = () => {
-  
-
   return (
-    <div style={{marginRight: '500px'}}>
+    <div style={{ marginRight: '500px' }}>
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} /> 
         <Route path="/login" element={<LoginPage />} />
@@ -25,8 +26,8 @@ const MainContent: React.FC = () => {
         <Route path="/events" element={<EventPage />} />
         <Route path="/event/:id" element={<EventPage />} /> 
         <Route path="/event/:id/donor-selection" element={<DonorSelectionPage />} />
+        <Route path="/donor/:id" element={<DonorNotePage />} /> {/* 设置 DonorNotePage 路由 */}
       </Routes>
-
     </div>
   );
 };
