@@ -43,15 +43,20 @@ The purpose of this retrospective is to document our weekly activities, reflect 
 ---
 
 ## Individual Self-Assessments
-### [Team Member 1]
+### [shiyuan]
 - **Achievements and Contributions:**
-  -
+  - Set up Express.js server with TypeScript configuration and proper middleware chain
+  - Implemented comprehensive type system for data models including events, notes and accounts
+  - Developed API utility class for consistent server communication
+  - Implemented note and event data models with proper DateTime handling using Luxon
 - **Challenges Faced:**
-  -
+  - Team members at different levels with TypeScript/React
+  - Maintaining consistent structure between frontend and backend
 - **Areas for Improvement:**
-  -
-- **Feedback and Suggestions:**
-  -
+  - Communication between team members can be enhanced to ensure everyone is aligned on tasks and project details, particularly in sharing technical knowledge.
+- **Suggestions for Future Projects:**
+  - Regularly review the project’s workflow and technical requirements to ensure the design and development phases are aligned and progress smoothly.
+  - Set more specific, measurable goals and timelines to track progress and ensure tasks are completed on time.
 
 ### [Yan Wang]
 - **Achievements and Contributions:**
