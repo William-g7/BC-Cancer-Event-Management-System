@@ -16,7 +16,6 @@ const poolConfig: PoolOptions = {
     // Additional options
     enableKeepAlive: true,   // Keep connections alive
     keepAliveInitialDelay: 10000, // How often to send keepalive packets
-    timezone: 'America/Vancouver',      // Automatically handles DST changes
 
     // Debug (disable in production)
     debug: false,

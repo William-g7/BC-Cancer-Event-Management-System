@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Grid, Typography } from '@mui/material';
 import Sidebar from './Sidebar.tsx';
 import Header from './Header.tsx';
-import Events from './Events.tsx';
+import DashboardEvents from './DashboardEvents.tsx';
 import Notification from './Notification.tsx';
 
 const DashboardPage: React.FC = () => {
@@ -38,7 +38,7 @@ const DashboardPage: React.FC = () => {
             FUNDRAISER DASHBOARD
             </Typography>
           <Grid item xs={12}>
-            <Events />
+            <DashboardEvents />
           </Grid>
 
           {/* Notification area */}

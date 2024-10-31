@@ -9,7 +9,7 @@ export const login = async (req: Request, res: Response) => {
         console.log(username);
         // check if the username is in the database
         const [users] = await pool.query(
-            'SELECT name FROM account WHERE name = ?',
+            'SELECT name FROM Accounts WHERE name = ?',
             [username]
         ) as [Account[], any];
 
