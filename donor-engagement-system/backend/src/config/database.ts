@@ -1,3 +1,6 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 import mysql, { Pool, PoolOptions } from 'mysql2/promise';
 
 // Connection pool configuration
@@ -16,7 +19,7 @@ const poolConfig: PoolOptions = {
     // Additional options
     enableKeepAlive: true,   // Keep connections alive
     keepAliveInitialDelay: 10000, // How often to send keepalive packets
-    timezone: '+00:00',      // UTC timezone
+    timezone: '-07:00',      // GMT-7 timezone
 
     // Debug (disable in production)
     debug: process.env.NODE_ENV !== 'production',
