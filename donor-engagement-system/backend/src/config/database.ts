@@ -1,3 +1,6 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 import mysql, { Pool, PoolOptions } from 'mysql2/promise';
 
 // Connection pool configuration

@@ -1,3 +1,4 @@
+
 import { DateTime } from "luxon";
 
 export interface DonorNote {
@@ -12,4 +13,6 @@ export interface CreateNoteDTO {
     donor_id: number;
     account_id: number;
     content: string;
+    created_at: DateTime;
+
 }
