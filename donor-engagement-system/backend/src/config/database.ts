@@ -1,7 +1,8 @@
-import mysql, { Pool, PoolOptions } from 'mysql2/promise';
 import * as dotenv from 'dotenv';
-
 dotenv.config();
+
+import mysql, { Pool, PoolOptions } from 'mysql2/promise';
+
 // Connection pool configuration
 const poolConfig: PoolOptions = {
     // Basic configuration

@@ -1,19 +1,13 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
+    "module": "CommonJS",
+    "esModuleInterop": true,
     "target": "ES2020",
     "moduleResolution": "node",
-    "esModuleInterop": true,
-    "strict": true,
-    "skipLibCheck": true,
-    "resolveJsonModule": true,
     "outDir": "./dist",
     "baseUrl": ".",
-    "paths": {
-      "*": ["node_modules/*"]
-    }
+    "strict": true
   },
-  "include": [
-    "backend/**/*.ts"
-  ]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
 }
