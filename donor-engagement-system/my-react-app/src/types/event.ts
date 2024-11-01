@@ -1,6 +1,6 @@
 import { Fundraiser } from './fundraiser';
 
-export interface Event {
+export interface EventData {
     id: number;
     name: string;
     start_time: string;

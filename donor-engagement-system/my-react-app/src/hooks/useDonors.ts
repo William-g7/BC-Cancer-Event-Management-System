@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Donor } from '../types/donor.ts';
+import { EventData } from '../types/event.ts';
 
 export const useDonors = (fetchDonorsFunction: () => Promise<Donor[]>) => {
   const [donors, setDonors] = useState<Donor[]>([]);
@@ -29,8 +30,8 @@ export const useDonors = (fetchDonorsFunction: () => Promise<Donor[]>) => {
 
 }
 
-export const useEventAndDonors = (fetchFunction: () => Promise<{ event: Event, donors: Donor[] }>) => {
-    const [data, setData] = useState<{ event: Event | null, donors: Donor[] }>({ event: null, donors: [] });
+export const useEventAndDonors = (fetchFunction: () => Promise<{ event: EventData, donors: Donor[] }>) => {
+    const [data, setData] = useState<{ event: EventData | null, donors: Donor[] }>({ event: null, donors: [] });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
   

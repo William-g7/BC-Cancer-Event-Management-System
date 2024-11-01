@@ -7,7 +7,7 @@ import { DonorService } from '../services/donorService.ts';
 import { useParams } from 'react-router-dom';
 import { EventService } from '../services/eventService.ts';
 import { useEventAndDonors } from '../hooks/useDonors.ts';
-import { Event } from '../types/event.ts';
+import { EventData } from '../types/event';
 
 const donorService = new DonorService();
 const eventService = new EventService();
@@ -22,7 +22,7 @@ const DonorSelectionTable: React.FC = () => {
       eventService.getEventById(parseInt(id)),
       donorService.getDonorsByEvent(parseInt(id))
     ]);
-    return { event: eventData, donors: donorsData };
+    return { event: eventData as EventData, donors: donorsData };
   }, [id]);
 
   const { data, loading, error } = useEventAndDonors(fetchEventAndDonors);
