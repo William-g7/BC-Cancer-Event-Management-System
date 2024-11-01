@@ -2,6 +2,7 @@ import { Pool } from 'mysql2/promise';
 import { Event } from '../types/event.types';
 import { Fundraiser } from '../types/fundraiser.types';
 import { EventRepository } from '../repositories/event.repository';
+import { FundraiserRepository } from '../repositories/fundraiser.repository';
 import { DateTime } from 'luxon';
 
 export class EventService {
@@ -12,7 +13,7 @@ export class EventService {
         organizer: Fundraiser 
     }> {
         const eventRepository = new EventRepository(this.pool);
-        
+        const fundraiserRepository = new FundraiserRepository(this.pool);
         // Get base event
         const event = await eventRepository.findById(eventId);
         if (!event) {
@@ -23,7 +24,7 @@ export class EventService {
         const assignedFundraisers = await eventRepository.getEventFundraisers(eventId);
 
         // Get organizer
-        const organizer = await eventRepository.getEventOrganizer(event.organizer_id);
+        const organizer = await fundraiserRepository.findByAccountId(event.organizer_id);
         if (!organizer) {
             throw new Error(`Organizer with id ${event.organizer_id} not found`);
         }
@@ -41,14 +42,14 @@ export class EventService {
         organizer: Fundraiser
     })[]> {
         const eventRepository = new EventRepository(this.pool);
-        
+        const fundraiserRepository = new FundraiserRepository(this.pool);
         // Get base events
         const events = await eventRepository.getFundraiserEvents(fundraiserId);
 
         // Map each event to include relations
         const eventsWithRelations = await Promise.all(events.map(async (event) => {
             const assignedFundraisers = await eventRepository.getEventFundraisers(event.id);
-            const organizer = await eventRepository.getEventOrganizer(event.organizer_id);
+            const organizer = await fundraiserRepository.findByAccountId(event.organizer_id);
             
             if (!organizer) {
                 throw new Error(`Organizer with id ${event.organizer_id} not found`);
@@ -69,6 +70,7 @@ export class EventService {
         organizer: Fundraiser
     })[]> {
         const eventRepository = new EventRepository(this.pool);
+        const fundraiserRepository = new FundraiserRepository(this.pool);
         const events = await eventRepository.getFundraiserEvents(fundraiserId);
         const today = DateTime.now();
         const filteredEvents = events.filter(event => event.start_time > today);
@@ -76,7 +78,7 @@ export class EventService {
         // Map filtered events to include relations
         const eventsWithRelations = await Promise.all(filteredEvents.map(async (event) => {
             const assignedFundraisers = await eventRepository.getEventFundraisers(event.id);
-            const organizer = await eventRepository.getEventOrganizer(event.organizer_id);
+            const organizer = await fundraiserRepository.findByAccountId(event.organizer_id);
             
             if (!organizer) {
                 throw new Error(`Organizer with id ${event.organizer_id} not found`);

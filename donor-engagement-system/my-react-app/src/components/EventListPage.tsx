@@ -23,7 +23,13 @@ const EventListPage: React.FC = () => {
                     <Header />
                 </Box>
 
-                <Box sx={{ marginTop: '64px', marginLeft: '20px' }}>
+                <Box sx={{ 
+                    marginTop: '64px', 
+                    marginLeft: '20px',
+                    marginRight: '20px',
+                    width: 'calc(100% - 40px)',  // Take up full width minus margins
+                    maxWidth: '1600px'  // Optional: set a maximum width if needed
+                }}>
                     <EventList />
                 </Box>
             </Box>

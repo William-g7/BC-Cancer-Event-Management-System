@@ -17,7 +17,7 @@ import { EventService } from '../services/eventService.ts';
 const eventService = new EventService();
 
 const EventList: React.FC = () => {
-  console.log('EventList component rendering');
+
   const fetchEvents = React.useCallback(() => {
     console.log('fetchEvents called');
     return eventService.getEvents();
@@ -28,7 +28,6 @@ const EventList: React.FC = () => {
   console.log('Current state:', { events, loading, error });
 
   if (loading) {
-    console.log('Loading state');
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
         <CircularProgress />
@@ -37,7 +36,6 @@ const EventList: React.FC = () => {
   }
 
   if (error) {
-    console.log('Error state:', error);
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
         <Typography color="error">{error}</Typography>
@@ -45,7 +43,6 @@ const EventList: React.FC = () => {
     );
   }
 
-  console.log('Rendering events:', events);
   return (
     <div>
       <Typography variant="h4" gutterBottom>

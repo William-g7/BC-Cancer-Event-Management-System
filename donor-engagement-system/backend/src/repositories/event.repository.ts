@@ -52,22 +52,13 @@ export class EventRepository {
 
     async getEventFundraisers(eventId: number): Promise<Fundraiser[]> {
         const [fundraisers] = await this.pool.execute(`
-            SELECT f.id, f.account_id
+            SELECT f.id, f.account_id, a.name, a.role
             FROM Fundraisers f
             INNER JOIN Event_Fundraisers ef ON f.id = ef.fundraiser_id
+            INNER JOIN Accounts a ON f.account_id = a.id
             WHERE ef.event_id = ?
         `, [eventId]) as [Fundraiser[], any];
         
         return fundraisers;
-    }
-
-    async getEventOrganizer(organizerId: number): Promise<Fundraiser | null> {
-        const [fundraisers] = await this.pool.execute(`
-            SELECT id, account_id
-            FROM Fundraisers
-            WHERE id = ?
-        `, [organizerId]) as [Fundraiser[], any];
-        
-        return fundraisers[0] || null;
     }
 }

@@ -7,7 +7,6 @@ import EventPage from "./components/EventPage.tsx";
 import DonorSelectionPage from "./components/DonorSelectionPage.tsx";
 import DonorNotePage from "./components/DonorNotePage.tsx"; // 导入 DonorNotePage
 import EventListPage from "./components/EventListPage.tsx";
-import EventList from './components/EventList.tsx';
 const App: React.FC = () => {
   return (
     <Router>
