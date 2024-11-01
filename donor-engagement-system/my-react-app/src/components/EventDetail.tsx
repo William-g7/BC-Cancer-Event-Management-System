@@ -33,7 +33,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 
-const EventCard: React.FC = () => {
+const EventDetail: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>(); // Get the event ID from the URL
   const event = events.find(event => event.id.toString() === id); 
@@ -132,5 +132,5 @@ const EventCard: React.FC = () => {
     );
   }
 
-export default EventCard;
+export default EventDetail;
 

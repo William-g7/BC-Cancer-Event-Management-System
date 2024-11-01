@@ -11,4 +11,9 @@ export class EventService {
         const response = await api.get<{success: boolean, data: Event}>(`/events/${id}`);
         return response.data;
     }
+
+    async getEvents(): Promise<Event[]> {
+        const response = await api.get<{success: boolean, data: Event[]}>('/events');
+        return response.data || [];
+    }
 } 

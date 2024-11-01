@@ -20,7 +20,6 @@ export const useEvents = (fetchEvents: () => Promise<Event[]>) => {
         setLoading(false);
       }
     };
-
     getEvents();
   }, [fetchEvents]);
 
