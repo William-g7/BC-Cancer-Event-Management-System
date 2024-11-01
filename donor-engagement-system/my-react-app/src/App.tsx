@@ -24,7 +24,7 @@ const MainContent: React.FC = () => {
         <Route path="/dashboard" element={<DashboardPage />} /> 
         <Route path="/events" element={<EventListPage />} />
         <Route path="/event/:id" element={<EventPage />} /> 
-        <Route path="/event/:id/donor-selection" element={<DonorSelectionPage />} />
+        <Route path="/event/:id/selections" element={<DonorSelectionPage />} />
         <Route path="/donor/:id" element={<DonorNotePage />} /> {/* 设置 DonorNotePage 路由 */}
       </Routes>
     </div>

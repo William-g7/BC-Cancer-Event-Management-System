@@ -30,7 +30,7 @@ const EventDetail: React.FC = () => {
   const { event, loading, error } = useSingleEvent(fetchEvent);
 
   const handleClick = () => {
-    navigate(`/event/${id}/donor-selection`);
+    navigate(`/event/${id}/selections`);
   }
 
   if (loading) {

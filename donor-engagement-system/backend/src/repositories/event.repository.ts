@@ -61,4 +61,23 @@ export class EventRepository {
         
         return fundraisers;
     }
+
+    async createEvent(event: CreateEventDTO): Promise<Event> {
+        const [result] = await this.pool.execute(`
+            INSERT INTO Events (name, start_time, end_time, location, description, organizer_id) VALUES (?, ?, ?, ?, ?, ?)
+        `, [event.name, event.start_time, event.end_time, event.location, event.description, event.organizer_id]) as [any[], any];
+        return result[0];
+    }
+
+    async createEventFundraiser(eventId: number, fundraiserId: number): Promise<void> {
+        await this.pool.execute(`
+            INSERT INTO Event_Fundraisers (event_id, fundraiser_id) VALUES (?, ?)
+        `, [eventId, fundraiserId]);
+    }
+
+    async createDonorSelection(eventId: number, donorId: number): Promise<void> {
+        await this.pool.execute(`
+            INSERT INTO Donor_Selections (event_id, donor_id) VALUES (?, ?)
+        `, [eventId, donorId]);
+    }
 }
