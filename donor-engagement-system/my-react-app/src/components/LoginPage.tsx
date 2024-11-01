@@ -9,23 +9,18 @@ import Input from '@mui/joy/Input';
 import Button from '@mui/joy/Button';
 import Link from '@mui/joy/Link';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import useLogin from '../hooks/useLogin.ts'; // Import the useLogin hook
 
 const LoginPage: React.FC = () => {
-  const navigate = useNavigate(); // Initialize useNavigate
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [error, setError] = useState<string | null>(null);
 
-  const handleLogin = () => {
-    if (!email || !password) {
-      setError('Both fields are required.');
-    } else {
-      // Implement login logic here
-      console.log('Logged in with:', { email, password });
-      navigate('/dashboard'); // Redirect to the event page
-    }
+  const { handleLogin, loading, error } = useLogin(); // Use the useLogin hook
+  const [username, setUsername] = useState(''); // Updated to use state
+  const [password, setPassword] = useState(''); // Updated to use state
+  
+  const onLogin = () => {
+    handleLogin(username, password); // Call the handleLogin function
   };
+
 
   return (
     <div>
@@ -59,13 +54,13 @@ const LoginPage: React.FC = () => {
             </Typography>
           </div>
           <FormControl>
-            <FormLabel>Email</FormLabel>
+            <FormLabel>Username</FormLabel> {/* Changed to Username */}
             <Input
-              name="email"
-              type="email"
-              placeholder="johndoe@email.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              name="username" // Updated name
+              type="text" // Changed type to text
+              placeholder="johndoe"
+              value={username} // Updated to use username
+              onChange={(e) => setUsername(e.target.value)} // Updated to set username
             />
           </FormControl>
           <FormControl>
@@ -86,14 +81,15 @@ const LoginPage: React.FC = () => {
           )}
           
           <Button
-            onClick={handleLogin}
+            onClick={onLogin} // Call the new onLogin function
+            disabled={loading} // Disable button while loading
             sx={{
               mt: 2,
               backgroundColor: 'primary.main',
-              ':hover': { backgroundColor: 'primary.dark' }, // Darken on hover
+              ':hover': { backgroundColor: 'primary.dark' },
             }}
           >
-            Log in
+            {loading ? 'Logging in...' : 'Log in'} {/* Show loading text */}
           </Button>
         </Sheet>
       </main>
