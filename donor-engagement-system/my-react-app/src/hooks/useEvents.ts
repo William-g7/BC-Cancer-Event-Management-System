@@ -25,3 +25,28 @@ export const useEvents = (fetchEvents: () => Promise<Event[]>) => {
 
   return { events, loading, error };
 };
+
+export const useSingleEvent = (fetchEvent: () => Promise<Event>) => {
+  const [event, setEvent] = useState<Event | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const getEvent = async () => {
+      try {
+        setLoading(true);
+        const data = await fetchEvent();
+        setEvent(data);
+      } catch (err) {
+        console.error('Error fetching event:', err);
+        setError(err instanceof Error ? err.message : 'Failed to fetch event');
+        setEvent(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getEvent();
+  }, [fetchEvent]);
+
+  return { event, loading, error };
+};

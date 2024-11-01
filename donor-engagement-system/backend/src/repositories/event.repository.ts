@@ -8,7 +8,7 @@ export class EventRepository {
     // Pure database operations
     async findById(eventId: number): Promise<Event | null> {
         const [events] = await this.pool.execute(`
-            SELECT * FROM events WHERE event_id = ?
+            SELECT * FROM Events WHERE id = ?
         `, [eventId]) as [Event[], any];
         return events[0] || null;
     }

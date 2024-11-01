@@ -9,15 +9,18 @@ import {
   Paper, 
   Typography,
   Box,
-  CircularProgress
+  CircularProgress,
+  IconButton
 } from '@mui/material';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { useEvents } from '../hooks/useEvents.ts';
 import { EventService } from '../services/eventService.ts';
+import { useNavigate } from 'react-router-dom';
 
 const eventService = new EventService();
 
 const EventList: React.FC = () => {
-
+  const navigate = useNavigate();
   const fetchEvents = React.useCallback(() => {
     console.log('fetchEvents called');
     return eventService.getEvents();
@@ -25,7 +28,9 @@ const EventList: React.FC = () => {
   
   const { events, loading, error } = useEvents(fetchEvents);
   
-  console.log('Current state:', { events, loading, error });
+  const handleEventClick = (id: number) => {
+    navigate(`/event/${id}`);
+  };
 
   if (loading) {
     return (
@@ -44,26 +49,96 @@ const EventList: React.FC = () => {
   }
 
   return (
-    <div>
+    <div style={{ width: '100%' }}>
       <Typography variant="h4" gutterBottom>
         All Events
       </Typography>
       
-      <TableContainer component={Paper}>
-        <Table>
+      <TableContainer 
+        component={Paper} 
+        sx={{ 
+          boxShadow: 'none',
+          width: '100%',
+          overflowX: 'auto'
+        }}
+      >
+        <Table sx={{ minWidth: 1200 }}>
           <TableHead>
             <TableRow>
-              <TableCell>Event Name</TableCell>
-              <TableCell>Start Time</TableCell>
-              <TableCell>End Time</TableCell>
-              <TableCell>Location</TableCell>
-              <TableCell>Description</TableCell>
-              <TableCell>Organizer</TableCell>
+              <TableCell sx={{ width: '50px' }}>Favorite</TableCell>
+              <TableCell 
+                sx={{ 
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  '&:hover': { backgroundColor: '#f5f5f5' }
+                }}
+              >
+                Event Name
+              </TableCell>
+              <TableCell 
+                sx={{ 
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  '&:hover': { backgroundColor: '#f5f5f5' }
+                }}
+              >
+                Organizer
+              </TableCell>
+              <TableCell 
+                sx={{ 
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  '&:hover': { backgroundColor: '#f5f5f5' }
+                }}
+              >
+                Start Time
+              </TableCell>
+              <TableCell 
+                sx={{ 
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  '&:hover': { backgroundColor: '#f5f5f5' }
+                }}
+              >
+                End Time
+              </TableCell>
+              <TableCell 
+                sx={{ 
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  '&:hover': { backgroundColor: '#f5f5f5' }
+                }}
+              >
+                Location
+              </TableCell>
+              <TableCell 
+                sx={{ 
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  '&:hover': { backgroundColor: '#f5f5f5' }
+                }}
+              >
+                Description
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {events.map((event) => (
-              <TableRow key={event.id}>
+              <TableRow 
+                key={event.id}
+                onClick={() => handleEventClick(event.id)}
+                sx={{ 
+                  '&:hover': { 
+                    backgroundColor: '#f5f5f5',
+                    cursor: 'pointer'
+                  }
+                }}
+              >
+                <TableCell onClick={(e) => e.stopPropagation()}>
+                  <IconButton size="small">
+                    <StarBorderIcon fontSize="small" />
+                  </IconButton>
+                </TableCell>
                 <TableCell>{event.name}</TableCell>
                 <TableCell>{event.organizer?.name || 'N/A'}</TableCell>
                 <TableCell>{new Date(event.start_time).toLocaleDateString()}</TableCell>

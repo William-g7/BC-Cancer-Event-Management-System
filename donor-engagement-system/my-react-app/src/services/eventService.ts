@@ -8,7 +8,7 @@ export class EventService {
     }
 
     async getEventById(id: number): Promise<Event> {
-        const response = await api.get<{success: boolean, data: Event}>(`/events/${id}`);
+        const response = await api.get<{success: boolean, data: Event}>(`/event/${id}`);
         return response.data;
     }
 

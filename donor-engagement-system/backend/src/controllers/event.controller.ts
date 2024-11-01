@@ -12,7 +12,7 @@ export class EventController {
     ) {}
 
     /**
-     * @route   GET /api/events/:id
+     * @route   GET /api/event/:id
      * @desc    Get a single event by ID with its relations (organizer and assigned fundraisers)
      * @param   req.params.id - Event ID
      * @returns {Object} Event data with relations
