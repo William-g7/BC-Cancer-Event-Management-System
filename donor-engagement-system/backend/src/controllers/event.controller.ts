@@ -105,4 +105,33 @@ export class EventController {
             });
         }
     }
+
+    /**
+     * @route   POST /api/new-event
+     * @desc    Create a new event
+     * @returns {Object} New event data
+     */
+    createEvent = async (req: Request, res: Response): Promise<void> => {
+        try {
+            // Get user from the request (set by checkUser middleware)
+            const accountId = (req as CustomRequest).user?.id;
+            
+            if (!accountId) {
+                res.status(401).json({
+                    success: false,
+                    error: 'User not authenticated'
+                });
+                return;
+            }
+
+            const fundraiserId = await this.fundraiserService.getFundraiserIdByAccountId(accountId);
+        } catch (error) {
+            console.error('Error creating event:', error);
+            res.status(500).json({
+                success: false,
+                error: error instanceof Error ? error.message : 'An unknown error occurred'
+            });
+        }
+    }
 }
+
