@@ -5,7 +5,7 @@ interface RequestOptions extends RequestInit {
 }
 
 class Api {
-  private username: string = localStorage.getItem('username') || 'Alice Smith';
+  private username: string = localStorage.getItem('username') || 'Invalid User';
 
   public setUsername(username: string) {
     this.username = username;
@@ -26,9 +26,11 @@ class Api {
     // Default headers with login name
     const headers = {
       'Content-Type': 'application/json',
-      'X-User-Name': this.username || 'Alice Smith',
+      'X-User-Name': this.username || 'Invalid User',
       ...options.headers,
     };
+
+  
 
     try {
       const response = await fetch(url.toString(), {
@@ -37,10 +39,12 @@ class Api {
       });
 
       if (!response.ok) {
+        const errorMessage = `API Error: ${response.status} ${response.statusText}`;
         console.log('Full response:', response);
         const errorBody = await response.json().catch(() => ({}));
         console.log('Error body:', errorBody);
-        throw new Error(`API Error: ${response.status} ${response.statusText}`);
+        
+        
       }
 
       // Return null for 204 No Content
