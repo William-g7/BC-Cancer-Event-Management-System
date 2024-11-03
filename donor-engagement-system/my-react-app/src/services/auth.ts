@@ -1,4 +1,5 @@
-import { api } from '../utils/api';
+import { api } from '../utils/api.ts';
+import { useNavigate } from 'react-router-dom';
 
 interface LoginResponse {
     success: boolean;
@@ -8,25 +9,20 @@ interface LoginResponse {
     };
 }
 
-export const login = async (username: string) => {
-    try {
-        const response = await api.post<LoginResponse>('/auth/login', {
-            username  
-        });
-
-        if (response.success && response.user) {
-            // Set username for API requests
+export class AuthService {
+    async login(username: string, password: string): Promise<LoginResponse> {
+        try {
             api.setUsername(username);
-            
-            // Store username for persistence
-            localStorage.setItem('username', username);
-            
-            return response.user;
-        } else {
-            throw new Error(response.message || 'Invalid username');
+            console.log('Attempting to log in with:', { username, password }); // Debugging log
+            const response = await api.post<LoginResponse>('/login', { username, password });
+            console.log('Login response:', response); // Debugging log
+            if (response.success) {
+                return response;
+            } 
+        } catch (error) {
+            console.error('Login failed:', error);
+            return { success: false, message: 'Invalid User or Invalid Password! Please try it again!' };
         }
-    } catch (error) {
-        console.error('Login error:', error);
-        throw error;
     }
-}; 
+}
+   
