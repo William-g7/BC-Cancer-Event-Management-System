@@ -94,7 +94,7 @@
 
 - D. Both B and C
 
-**Answer:** X
+**Answer:** D
 
 ### 9. In the context of the eCommerce system example, which functions would benefit from being executed asynchronously?
 
