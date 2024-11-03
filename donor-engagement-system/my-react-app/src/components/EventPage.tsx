@@ -2,7 +2,7 @@ import React from 'react';
 import { Box } from '@mui/system';
 import Sidebar from './Sidebar.tsx';
 import Header from './Header.tsx';
-import EventTable from './EventTable.tsx';
+import EventDetail from './EventDetail.tsx';
 
 
 const EventPage: React.FC = () => {
@@ -32,7 +32,7 @@ const EventPage: React.FC = () => {
           <Header />
         </Box>
         </Box>
-          <EventTable />
+          <EventDetail />
          </Box>
     );
 }

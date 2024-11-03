@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { errorHandler } from './middleware';
 import eventRoutes from './routes/event.routes';
+import donorRoutes from './routes/donor.routes';
 import loginRoutes from './routes/loginRoutes';
 
 const app = express();
@@ -18,6 +19,7 @@ app.use(express.json());
 
 // Mount routes with /api prefix
 app.use('/api', eventRoutes);
+app.use('/api', donorRoutes);
 
 app.use('/api', loginRoutes);
 

@@ -12,7 +12,7 @@ export class EventController {
     ) {}
 
     /**
-     * @route   GET /api/events/:id
+     * @route   GET /api/event/:id
      * @desc    Get a single event by ID with its relations (organizer and assigned fundraisers)
      * @param   req.params.id - Event ID
      * @returns {Object} Event data with relations
@@ -78,7 +78,6 @@ export class EventController {
         try {
             // Get user from the request (set by checkUser middleware)
             const accountId = (req as CustomRequest).user?.id;
-            console.log('Account ID:', accountId);
             
             if (!accountId) {
                 res.status(401).json({
@@ -88,13 +87,8 @@ export class EventController {
                 return;
             }
 
-            console.log('Getting fundraiser ID for account:', accountId);
             const fundraiserId = await this.fundraiserService.getFundraiserIdByAccountId(accountId);
-            console.log('Fundraiser ID:', fundraiserId);
-
-            console.log('Getting dashboard events for fundraiser:', fundraiserId);
-            const dashboardData = await this.eventService.getDashboardEvents(fundraiserId);
-            console.log('Dashboard data:', dashboardData);
+            const dashboardData = await this.eventService.getDashboardEvents(fundraiserId)
 
             res.json({
                 success: true,
