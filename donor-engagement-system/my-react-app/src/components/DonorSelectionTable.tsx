@@ -64,6 +64,7 @@ const DonorSelectionTable: React.FC = () => {
       </Typography>
       <Typography variant="subtitle2" color="black" fontSize={20}>Total Invitation: 100 </Typography>
       <Typography variant="subtitle2" color="black" fontSize={20}>Total Selected: 10 </Typography>
+      <Typography variant="subtitle2" color="black" fontSize={20}>Your Selection: </Typography>
 
       <Box sx={{ height: 500, width: 1400 }}>
         <DataGrid
@@ -91,6 +92,8 @@ const DonorSelectionTable: React.FC = () => {
         />
       </Box>
 
+      <Typography variant="subtitle2" color="black" fontSize={20}>Other Donors: </Typography>
+
       <Box sx={{ position: 'absolute', marginTop: 80, marginLeft: 100 }}>
         <Button variant="contained" sx={{ width: '180px', height: '40px', backgroundColor: 'gray' }} onClick={() => console.log('Save Current')}>
           Save Current
@@ -100,6 +103,7 @@ const DonorSelectionTable: React.FC = () => {
         </Button>
       </Box>
     </Box>
+    
   );
 };
 

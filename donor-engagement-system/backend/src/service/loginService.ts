@@ -1,6 +1,5 @@
 import { Role, Account } from '../types/account.types';
 import  {AccountRepository} from '../repositories/accountRepository';
-import bcrypt from 'bcrypt';
 import { Pool } from 'mysql2/promise';
 
 export class LoginService {
