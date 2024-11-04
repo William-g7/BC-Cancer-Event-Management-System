@@ -4,6 +4,7 @@ import { errorHandler } from './middleware';
 import eventRoutes from './routes/event.routes';
 import donorRoutes from './routes/donor.routes';
 import loginRoutes from './routes/loginRoutes';
+import noteRoutes from './routes/note.routes';
 
 const app = express();
 
@@ -20,8 +21,8 @@ app.use(express.json());
 // Mount routes with /api prefix
 app.use('/api', eventRoutes);
 app.use('/api', donorRoutes);
-
 app.use('/api', loginRoutes);
+app.use('/api', noteRoutes);
 
 // Global error handler - should be last
 app.use(errorHandler);
