@@ -71,15 +71,25 @@ Identify actionable steps that can be taken to improve future projects.
   - Continue deepening understanding of the project's technology stack
 
 
-### [Team Member 3]
+### [Xing Gao]
+### [Xing Gao]
 - **Achievements and Contributions:**
-  -
+  - Continued developing the database structure for the project, refining the design to ensure scalability and alignment with project requirements.
+  - Collaborated closely with team members to finalize the UML diagram and database schema, discussing key design choices to address both current and future project needs.
+  - Deployed updates to AWS RDS, allowing seamless remote access for all team members and facilitating integration with other project components.
+
 - **Challenges Faced:**
-  -
+  - Encountered challenges with optimizing database queries for performance, particularly with larger datasets anticipated in future phases.
+  - Experienced some initial difficulties with AWS RDS configurations, including security and connection management, which required additional troubleshooting.
+
 - **Areas for Improvement:**
-  -
+  - Work on optimizing database performance by exploring indexing and query refinement techniques.
+  - Continue building proficiency with AWS RDS management, focusing on security practices and efficient configuration.
+
 - **Feedback and Suggestions:**
-  -
+  - Regular team discussions on database and backend practices would help reinforce knowledge across team members, allowing us to approach challenges collaboratively.
+  - Establish a shared documentation resource for database configurations, query templates, and best practices to support efficient development and knowledge retention.
+
 
 ### Zhenziye Lin
 - **Achievements and Contributions:**
