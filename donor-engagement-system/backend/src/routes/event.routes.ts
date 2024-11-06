@@ -16,10 +16,10 @@ const eventController = new EventController(
 router.get('/events', checkUser, eventController.getFundraiserEvents);
 
 // Get single event by ID
-router.get('/events/:id', checkUser, eventController.getEventById);
+router.get('/event/:id', checkUser, eventController.getEventById);
 
 // Get dashboard data for a fundraiser
-router.get('/dashboard', checkUser, eventController.getDashboardData);
+router.get('/dashboard', checkUser, eventController.getDashboardEvents);
 
 // Apply error handler to all routes
 router.use(errorHandler);

@@ -43,25 +43,35 @@ The purpose of this retrospective is to document our weekly activities, reflect 
 ---
 
 ## Individual Self-Assessments
-### [Team Member 1]
+### [shiyuan]
 - **Achievements and Contributions:**
-  -
+  - Set up Express.js server with TypeScript configuration and proper middleware chain
+  - Implemented comprehensive type system for data models including events, notes and accounts
+  - Developed API utility class for consistent server communication
+  - Implemented note and event data models with proper DateTime handling using Luxon
 - **Challenges Faced:**
-  -
+  - Team members at different levels with TypeScript/React
+  - Maintaining consistent structure between frontend and backend
 - **Areas for Improvement:**
-  -
-- **Feedback and Suggestions:**
-  -
+  - Communication between team members can be enhanced to ensure everyone is aligned on tasks and project details, particularly in sharing technical knowledge.
+- **Suggestions for Future Projects:**
+  - Regularly review the project’s workflow and technical requirements to ensure the design and development phases are aligned and progress smoothly.
+  - Set more specific, measurable goals and timelines to track progress and ensure tasks are completed on time.
 
-### [Team Member 2]
+### [Yan Wang]
 - **Achievements and Contributions:**
-  -
+  - Initiated code development for the frontend of the BC Cancer project
+  - Gained knowledge in CSS and the UI library during implementation
+  - Actively contributed insights in group meetings
 - **Challenges Faced:**
-  -
+  - Balancing time between project work and learning new skills
+  - Limited knowledge of the entire client-to-server workflow
 - **Areas for Improvement:**
-  -
+  - Develop a deeper understanding of full-stack processes
+  - Improve time management strategies to balance learning and implementation tasks
 - **Feedback and Suggestions:**
-  -
+  - Establish a weekly study session to share our learnings 
+  - Stick to the project timeline to ensure timely completion
 
 ### [Xing Gao]
 - **Achievements and Contributions:**
@@ -105,11 +115,14 @@ The purpose of this retrospective is to document our weekly activities, reflect 
 ## Overall Team Assessment
 Reflect on the team’s performance as a whole.
 - **Team Strengths:**
-  -
+  - Strong collaborative spirit: The team effectively worked together, with each member contributing their expertise, whether in frontend, database management, or project planning
+  - Commitment to learning: Each team member demonstrated a commitment to gaining new skills, such as TypeScript, Jest testing, CSS, which collectively improved the project's code quality and design
 - **Areas for Improvement:**
-  -
+  - Enhanced technical proficiency: The team needs to deepen understanding of advanced TypeScript functionalities, database management, and API integration
+  - Faster adaptation to new concepts: The team could benefit from a structured learning plan to adapt more quickly to unfamiliar technical concepts, which would help maintain momentum on project deliverables
 - **Suggestions for Future Projects:**
-  -
+  - Set up regular knowledge-sharing sessions: Weekly study sessions or mini-training sessions on key topics (e.g., SQL, API integration, TypeScript) would foster continuous learning and allow team members to address gaps together
+  - Implement a check-in system for alignment: Brief check-ins during meetings to review task assignments and ensure everyone understands their roles would help prevent miscommunication and improve task alignment
 
 ---
 

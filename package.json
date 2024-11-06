@@ -2,12 +2,10 @@
   "dependencies": {
     "@mui/material": "^6.1.5",
     "@mui/x-data-grid": "^7.22.0",
-    "dotenv": "^16.4.5",
-    "luxon": "^3.5.0",
-    "mysql2": "^3.11.3"
+    "luxon": "^3.5.0"
   },
   "devDependencies": {
-    "@types/node": "^22.8.4",
-    "ts-node": "^10.9.2"
+    "@types/cors": "^2.8.17",
+    "@types/node": "^22.8.4"
   }
 }

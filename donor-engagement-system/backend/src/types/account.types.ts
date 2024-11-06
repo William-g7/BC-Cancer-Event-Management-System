@@ -10,6 +10,5 @@ export interface Account {
     name: string;
     password_hash: string;
     role: Role;
-    created_at: DateTime;
 }
 

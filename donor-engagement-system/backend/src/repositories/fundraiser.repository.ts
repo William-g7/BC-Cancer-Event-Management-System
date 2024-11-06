@@ -6,7 +6,10 @@ export class FundraiserRepository {
 
     async findByAccountId(accountId: number): Promise<Fundraiser | null> {
         const [fundraisers] = await this.pool.execute(`
-            SELECT * FROM fundraisers WHERE account_id = ?
+            SELECT f.id, f.account_id, a.name, a.role
+            FROM Fundraisers f
+            INNER JOIN Accounts a ON f.account_id = a.id
+            WHERE f.account_id = ?
         `, [accountId]) as [Fundraiser[], any];
         return fundraisers[0] || null;
     }   

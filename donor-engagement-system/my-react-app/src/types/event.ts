@@ -1,6 +1,6 @@
 import { Fundraiser } from './fundraiser';
 
-export interface Event {
+export interface EventData {
     id: number;
     name: string;
     start_time: string;
@@ -13,4 +13,4 @@ export interface Event {
     selected_count: number;
     assigned_fundraisers?: Fundraiser[];
     organizer?: Fundraiser;
-} 
+}
