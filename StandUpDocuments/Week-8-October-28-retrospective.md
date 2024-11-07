@@ -46,15 +46,17 @@ Identify actionable steps that can be taken to improve future projects.
 ---
 
 ## Individual Self-Assessments
-### [Team Member 1]
+### [Shiyuan Chen]
 - **Achievements and Contributions:**
-  -
+  - design the architecture of the backend server and apply a controller-service-repository pattern to the whole project
+  - finish features of show dashboard, show event lists and show donor lists
 - **Challenges Faced:**
-  -
+  - it is hard to test and debug so many files all together
 - **Areas for Improvement:**
-  -
+  - improve the documentation of the project
+  - improve the error handling of the functions
 - **Feedback and Suggestions:**
-  -
+  - The API that Juancho gives us has no function for searching for a particular donor, which can be very inconvenient. We have to change our solution to a full warehouse project.
 
 ### [Yan Wang]
 - **Achievements and Contributions:**
