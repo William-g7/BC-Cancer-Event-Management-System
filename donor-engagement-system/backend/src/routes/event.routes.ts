@@ -21,6 +21,9 @@ router.get('/event/:id', checkUser, eventController.getEventById);
 // Get dashboard data for a fundraiser
 router.get('/dashboard', checkUser, eventController.getDashboardEvents);
 
+// Create a new Event
+router.post('/event/new-event', checkUser, eventController.createEvent)
+
 // Apply error handler to all routes
 router.use(errorHandler);
 

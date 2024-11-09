@@ -1,6 +1,6 @@
 import { Pool } from 'mysql2/promise';
 import { EventService } from '../service/event.service';
-import { Request, Response } from 'express';
+import e, { Request, Response } from 'express';
 import { FundraiserService } from '../service/fundraiser.service';
 import { CustomRequest } from '../types/custom-request';
 
@@ -107,16 +107,16 @@ export class EventController {
     }
 
     /**
-     * @route   POST /api/new-event
+     * @route   POST /api//event/new-event
      * @desc    Create a new event
      * @returns {Object} New event data
      */
-    createEvent = async (req: Request, res: Response): Promise<void> => {
+    createEvent = async (req: CustomRequest, res: Response): Promise<void> => {
         try {
-            // Get user from the request (set by checkUser middleware)
-            const accountId = (req as CustomRequest).user?.id;
-            
-            if (!accountId) {
+
+            const account_id = (req as CustomRequest).user?.id;
+
+            if (!account_id) {
                 res.status(401).json({
                     success: false,
                     error: 'User not authenticated'
@@ -124,7 +124,29 @@ export class EventController {
                 return;
             }
 
-            const fundraiserId = await this.fundraiserService.getFundraiserIdByAccountId(accountId);
+            const fundraiserId = await this.fundraiserService.getFundraiserIdByAccountId(account_id);
+            const eventData = {
+                ...req.body,
+                organizer_id: fundraiserId
+            };
+
+            // Validate required fields
+            if (!eventData.name || !eventData.start_time || !eventData.end_time || 
+                !eventData.location || !eventData.deadline || !eventData.expected_selection) {
+                res.status(400).json({
+                    success: false,
+                    error: 'Missing required fields'
+                });
+                return;
+            }
+
+            const newEventId = await this.eventService.createEvent(eventData);
+            const newEventWithRelations = await this.eventService.getEventWithRelations(newEventId);
+
+            res.status(201).json({
+                success: true,
+                data: newEventWithRelations
+            });
         } catch (error) {
             console.error('Error creating event:', error);
             res.status(500).json({

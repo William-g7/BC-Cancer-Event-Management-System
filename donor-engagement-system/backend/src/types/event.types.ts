@@ -16,13 +16,12 @@ export interface Event {
 
 export interface CreateEventDTO {
     name: string;
-    start_time: DateTime;
-    end_time: DateTime;
+    start_time: string | DateTime;
+    end_time: string | DateTime;
     location: string;
-    description?: string;
+    description?: string | null;
     organizer_id: number;
-    deadline: DateTime;
+    deadline: string | DateTime;
     expected_selection: number;
-    selected_count: number;
+    selected_count?: number;
 }
-

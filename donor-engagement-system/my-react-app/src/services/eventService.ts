@@ -16,4 +16,9 @@ export class EventService {
         const response = await api.get<{success: boolean, data: EventData[]}>('/events');
         return response.data || [];
     }
+
+    async createEvent(event: EventData): Promise<EventData> {
+        const response = await api.post<{success: boolean, data: EventData}>('/event/new-event', event);
+        return response.data;
+    }
 } 

@@ -93,4 +93,33 @@ export class EventService {
 
         return eventsWithRelations;
     }
+
+    async createEvent(event: Event): Promise<number> {
+        const eventRepository = new EventRepository(this.pool);
+        // insert event into Events table
+        const newEventId = await eventRepository.createEvent(event);
+
+        // find the event with the new id
+        const newEvent = await eventRepository.findById(newEventId);
+
+        if (!newEvent) {
+            throw new Error(`Event with id ${newEventId} not found`);
+        }
+        // select donors for the event
+        const donorIds = await eventRepository.selectDonorIdsForEvent(newEvent.location, newEvent.expected_selection);
+        // find the fundraiser for each donor
+        for (const donorId of donorIds) {   
+            const fundraiserId = await eventRepository.findFundraiserIdFromDonorId(donorId);
+            if (!fundraiserId) {
+                throw new Error(`Fundraiser with id ${fundraiserId} not found`);
+            }
+            // assign the fundraiser to the event
+            const eventFundraiserId = await eventRepository.insertEventFundraiser(newEventId, fundraiserId);
+
+            // create the Selections table
+            await eventRepository.createSelections(donorId, newEventId, eventFundraiserId);
+        }
+
+        return newEventId;
+    }
 }
