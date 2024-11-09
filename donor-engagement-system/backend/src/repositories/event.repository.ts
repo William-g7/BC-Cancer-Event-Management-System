@@ -95,7 +95,7 @@ export class EventRepository {
             event.organizer_id,
             formatDateForMySQL(event.deadline),
             event.expected_selection,
-            event.selected_count || 0
+            0
         ];
 
         const [result] = await this.pool.execute(query, values) as [ResultSetHeader, any];
@@ -116,9 +116,13 @@ export class EventRepository {
 
     // select donor_ids for event parameters: city, number_of_donors
     async selectDonorIdsForEvent(city: string, number_of_donors: number): Promise<number[]> {
-        const [donors] = await this.pool.execute(`
-            SELECT * FROM Donors WHERE city = ? ORDER BY RAND() LIMIT ?
-        `, [city, number_of_donors]) as [any[], any];
+        const [donors] = await this.pool.execute(
+            `SELECT * FROM Donors 
+            WHERE LOWER(city) = LOWER(?) 
+            ORDER BY id ASC
+            LIMIT ${number_of_donors}`,
+            [city]
+        ) as [any[], any];
         return donors.map((donor: any) => donor.id);
     }
 
@@ -142,26 +146,49 @@ export class EventRepository {
 
     // assign fundraiser to event_fundraisers
     async insertEventFundraiser(eventId: number, fundraiserId: number): Promise<number> {
-        const [result] = await this.pool.execute(`
-            INSERT INTO Event_Fundraisers (
-                event_id, 
-                fundraiser_id, 
-                assigned_at
-            ) VALUES (?, ?, NOW())
-        `, [eventId, fundraiserId]) as [ResultSetHeader, any];
+        try {
+            // First check if the assignment already exists
+            const [existing] = await this.pool.execute(`
+                SELECT id FROM Event_Fundraisers 
+                WHERE event_id = ? AND fundraiser_id = ?
+            `, [eventId, fundraiserId]) as [any[], any];
 
-        return result.insertId;
+            if (existing.length > 0) {
+                // If already assigned, return existing ID
+                return existing[0].id;
+            }
+
+            // If not assigned, create new assignment
+            const [result] = await this.pool.execute(`
+                INSERT INTO Event_Fundraisers (
+                    event_id, 
+                    fundraiser_id, 
+                    assigned_at
+                ) VALUES (?, ?, NOW())
+            `, [eventId, fundraiserId]) as [ResultSetHeader, any];
+
+            return result.insertId;
+        } catch (error) {
+            console.error('Error in insertEventFundraiser:', error);
+            throw new Error('Failed to assign fundraiser to event');
+        }
     }
 
     //create Selections table
-    async createSelections(donor_id: number,  eventId: number, event_fundraiserId: number): Promise<void> {
-        await this.pool.execute(`
+    async createSelections(donorId: number, eventId: number, eventFundraiserId: number): Promise<void> {
+        const query = `
             INSERT INTO Selections (
                 event_id, 
                 event_fundraiser_id, 
                 donor_id,
-                status
+                state
             ) VALUES (?, ?, ?, "unselect")
-        `, [eventId, event_fundraiserId, donor_id]);
+        `;
+
+        await this.pool.execute(query, [
+            eventId,
+            eventFundraiserId,
+            donorId
+        ]);
     }
 }

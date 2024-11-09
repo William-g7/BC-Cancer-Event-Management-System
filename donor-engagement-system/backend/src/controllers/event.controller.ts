@@ -124,10 +124,11 @@ export class EventController {
                 return;
             }
 
-            const fundraiserId = await this.fundraiserService.getFundraiserIdByAccountId(account_id);
             const eventData = {
                 ...req.body,
-                organizer_id: fundraiserId
+                organizer_id: account_id,
+                deadline: req.body.end_time,
+                selected_count: 0
             };
 
             // Validate required fields

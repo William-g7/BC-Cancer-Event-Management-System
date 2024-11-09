@@ -17,7 +17,7 @@ export class EventService {
         // Get base event
         const event = await eventRepository.findById(eventId);
         if (!event) {
-            throw new Error(`Event with id ${eventId} not found`);
+            throw new Error(`Get Event Relations: Event with id ${eventId} not found`);
         }
 
         // Get assigned fundraisers
@@ -26,7 +26,7 @@ export class EventService {
         // Get organizer
         const organizer = await fundraiserRepository.findByAccountId(event.organizer_id);
         if (!organizer) {
-            throw new Error(`Organizer with id ${event.organizer_id} not found`);
+            throw new Error(`Get Event Relations: Organizer with id ${event.organizer_id} not found`);
         }
 
         // Combine the data
@@ -105,8 +105,14 @@ export class EventService {
         if (!newEvent) {
             throw new Error(`Event with id ${newEventId} not found`);
         }
+
+        // get the city from the location
+        const city = newEvent.location.split(',')
+            .map(part => part.trim())
+            .pop() || ''; // Get the last part after splitting by comma
+        
         // select donors for the event
-        const donorIds = await eventRepository.selectDonorIdsForEvent(newEvent.location, newEvent.expected_selection);
+        const donorIds = await eventRepository.selectDonorIdsForEvent(city, newEvent.expected_selection);
         // find the fundraiser for each donor
         for (const donorId of donorIds) {   
             const fundraiserId = await eventRepository.findFundraiserIdFromDonorId(donorId);

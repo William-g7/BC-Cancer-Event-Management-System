@@ -7,6 +7,7 @@ import EventPage from "./components/EventPage.tsx";
 import DonorSelectionPage from "./components/DonorSelectionPage.tsx";
 import DonorNotePage from "./components/DonorNotePage.tsx"; // 导入 DonorNotePage
 import EventListPage from "./components/EventListPage.tsx";
+import CreateEvent from "./components/CreateEvent.tsx";
 const App: React.FC = () => {
   return (
     <Router>
@@ -23,6 +24,7 @@ const MainContent: React.FC = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/dashboard" element={<DashboardPage />} /> 
         <Route path="/events" element={<EventListPage />} />
+        <Route path="/events/create" element={<CreateEvent />} />
         <Route path="/event/:id" element={<EventPage />} /> 
         <Route path="/event/:id/selections" element={<DonorSelectionPage />} />
         <Route path="/donor/:id" element={<DonorNotePage />} /> {/* 设置 DonorNotePage 路由 */}
