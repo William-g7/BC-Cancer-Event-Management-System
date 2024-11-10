@@ -17,11 +17,11 @@ export class EventRepository {
     async getFundraiserEvents(fundraiserId: number): Promise<Event[]> {
         try {
             const [events] = await this.pool.execute(`
-                SELECT e.* 
+                SELECT DISTINCT e.* 
                 FROM Events e
-                INNER JOIN Event_Fundraisers ef ON e.id = ef.event_id
-                WHERE ef.fundraiser_id = ?
-            `, [fundraiserId]) as [Event[], any];
+                LEFT JOIN Event_Fundraisers ef ON e.id = ef.event_id
+                WHERE ef.fundraiser_id = ? OR e.organizer_id = ?
+            `, [fundraiserId, fundraiserId]) as [Event[], any];
             return events;
         } catch (error) {
             console.error('Error fetching fundraiser events:', error);
@@ -32,11 +32,12 @@ export class EventRepository {
     async getDashboardEvents(fundraiserId: number): Promise<Event[]> {
         try {
             const [events] = await this.pool.execute(`
-                SELECT e.* 
+                SELECT DISTINCT e.* 
                 FROM Events e
-                INNER JOIN Event_Fundraisers ef ON e.id = ef.event_id
-                WHERE ef.fundraiser_id = ? AND e.start_time > NOW()
-            `, [fundraiserId]) as [Event[], any];
+                LEFT JOIN Event_Fundraisers ef ON e.id = ef.event_id
+                WHERE (ef.fundraiser_id = ? OR e.organizer_id = ?) 
+                AND e.start_time > NOW()
+            `, [fundraiserId, fundraiserId]) as [Event[], any];
             return events;
         } catch (error) {
             console.error('Error fetching dashboard events:', error);
@@ -50,8 +51,6 @@ export class EventRepository {
         `, [fundraiserId]) as [Event[], any];
         return events;
     }
-
-
 
     async getEventFundraisers(eventId: number): Promise<Fundraiser[]> {
         const [fundraisers] = await this.pool.execute(`
