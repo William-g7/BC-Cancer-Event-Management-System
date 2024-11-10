@@ -85,6 +85,9 @@ CREATE TABLE Selections (
     UNIQUE(event_id, donor_id, event_fundraiser_id) 
 );
 
+-- Drop the name index from Events table
+ALTER TABLE Events DROP INDEX name;
+
 DELIMITER //
 
 CREATE TRIGGER update_selected_count
@@ -101,6 +104,7 @@ BEGIN
 END //
 
 DELIMITER ;
+
 
 
 

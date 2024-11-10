@@ -106,3 +106,18 @@ INSERT INTO Selections (event_id, donor_id, event_fundraiser_id, state) VALUES
 (3, 19, 4, 'selected');
 
 
+-- 插入 pmm 数据
+INSERT INTO Accounts (name, password_hash, role) VALUES 
+('Gurtrude Schmidt', 'hashed_password_1', 'Fundraiser'),
+('Hiroshi Nakamura', 'hashed_password_2', 'Fundraiser'),
+('Maria González', 'hashed_password_3', 'Fundraiser'),
+('Parvati Patel', 'hashed_password_4', 'Fundraiser'),
+('Peter Smith', 'hashed_password_5', 'Fundraiser');
+
+-- 插入 Fundraisers 数据（Account 对应 Fundraiser）
+INSERT INTO Fundraisers (account_id) VALUES 
+(9),
+(10),
+(11),
+(12),
+(13);

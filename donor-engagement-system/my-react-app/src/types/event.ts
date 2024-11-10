@@ -14,3 +14,12 @@ export interface EventData {
     assigned_fundraisers?: Fundraiser[];
     organizer?: Fundraiser;
 }
+
+export interface CreateEventData {
+    name: string;
+    start_time: string;
+    end_time: string;
+    location: string;
+    description: string;
+    expected_selection: number;
+}

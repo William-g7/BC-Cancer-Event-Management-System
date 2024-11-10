@@ -1,5 +1,5 @@
 import { api } from '../utils/api.ts';
-import { EventData } from '../types/event.ts';
+import { EventData, CreateEventData } from '../types/event.ts';
 
 export class EventService {
     async getDashboardEvents(): Promise<EventData[]> {
@@ -15,5 +15,13 @@ export class EventService {
     async getEvents(): Promise<EventData[]> {
         const response = await api.get<{success: boolean, data: EventData[]}>('/events');
         return response.data || [];
+    }
+
+    async createEvent(event: CreateEventData): Promise<EventData> {
+        const response = await api.post<{success: boolean, data: EventData}>('/event/new-event', event);
+        if (!response.success) {
+            throw new Error('Failed to create event');
+        }
+        return response.data;
     }
 } 
