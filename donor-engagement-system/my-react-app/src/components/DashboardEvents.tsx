@@ -15,52 +15,61 @@ const DashboardEvents: React.FC = () => {
     navigate(`/event/${id}`);
   };
 
-  if (loading) {
-    return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
-        <CircularProgress />
-      </Box>
-    );
-  }
-
-  if (error) {
-    return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
-        <Typography color="error" variant="h6">
-          {error}
-        </Typography>
-      </Box>
-    );
-  }
-
   return (
-    <>
-      <Typography variant="h5" sx={{ marginBottom: 2, marginLeft: '0px' }}>
+    <Box sx={{ width: '930px' }}>
+      <Typography variant="h5" sx={{ marginBottom: 2 }}>
         Your Upcoming Events
       </Typography>
-      <Grid container spacing={2}>
-        {events.map((event) => (
-          <Grid item xs={12} sm={6} md={4} key={event.id}>
-            <Card onClick={() => handleEventClick(event.id)}
-                  sx={{ cursor: 'pointer' }}
-                  style={{border: "none", boxShadow: "none"}}>
-              <CardMedia
-                component="img"
-                alt={event.name}
-                height="200"
-                image="/calendar.png"
-              />
-              <CardContent sx={{ flexGrow: 1, padding: 2 }}>
-                <Typography variant="body2" color="text.secondary">
-                  {new Date(event.start_time).toLocaleDateString()}
-                </Typography>
-                <Typography sx={{ fontSize: 16}}>{event.name}</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-    </>
+      
+      {loading ? (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
+          <CircularProgress />
+        </Box>
+      ) : error ? (
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
+          <Typography color="error" variant="h6">
+            {error}
+          </Typography>
+        </Box>
+      ) : (
+        <Box sx={{ 
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: 2,
+          width: '100%'
+        }}>
+          {events.map((event) => (
+            <Box 
+              key={event.id}
+              sx={{
+                flex: '1 1 270px',
+                minWidth: '270px',
+                maxWidth: 'calc(33.333% - 16px)'
+              }}
+            >
+              <Card 
+                onClick={() => handleEventClick(event.id)}
+                sx={{ cursor: 'pointer' }}
+                style={{border: "none", boxShadow: "none"}}
+              >
+                <CardMedia
+                  component="img"
+                  alt={event.name}
+                  height="200"
+                  image="/calendar.png"
+                />
+                <CardContent sx={{ flexGrow: 1, padding: 2 }}>
+                  <Typography variant="body2" color="text.secondary">
+                    {new Date(event.start_time).toLocaleDateString()}
+                  </Typography>
+                  <Typography sx={{ fontSize: 16}}>{event.name}</Typography>
+                </CardContent>
+              </Card>
+            </Box>
+          ))}
+        </Box>
+      )}
+    </Box>
   );
 };
 
