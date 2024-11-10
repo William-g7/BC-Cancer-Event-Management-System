@@ -28,7 +28,7 @@ const EventListPage: React.FC = () => {
                 </Box>
 
 
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 16 }}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 12 }}>
                     <Typography variant="h4">
                         EVENTS
                     </Typography>
@@ -37,6 +37,8 @@ const EventListPage: React.FC = () => {
                         startIcon={<AddIcon />}
                         onClick={handleCreateEvent}
                         sx={{
+                            width: '210px',
+                            height: '40px',
                             backgroundColor: theme.palette.primary.main,
                             '&:hover': {
                                 backgroundColor: theme.palette.darkpurple.main

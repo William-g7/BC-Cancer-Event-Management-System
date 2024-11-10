@@ -22,14 +22,17 @@ declare module '@mui/material/styles' {
 }
 
 export const theme = createTheme({
+  
   typography: {
     fontFamily: '"Inter", "Helvetica", "Arial", sans-serif',
     h4: {
       fontSize: '1.5rem',
+      color: '#333D4E',
       fontWeight: 500,
     },
     h5: {
       fontSize: '1.25rem',
+      color: '#333D4E',
       fontWeight: 400,
     },
     h6: {
@@ -38,6 +41,7 @@ export const theme = createTheme({
     },
     body1: {
       fontSize: '1rem',
+      color: '#333D4E',
       fontWeight: 400,
     },
     body2: {

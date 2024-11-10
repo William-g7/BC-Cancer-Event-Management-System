@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useSingleEvent } from '../hooks/useEvents.ts';
 import { EventService } from '../services/eventService.ts';
+import { theme } from '../theme/theme.ts';
 
 const eventService = new EventService();
 
@@ -46,86 +47,147 @@ const EventDetail: React.FC = () => {
   }
 
   return (
-    <Box sx={{width: '80%', marginTop: '70px', marginRight: '20px' }}>
-      <Grid container spacing={2}>
-        <Grid item sx={{marginBottom: '20px', marginLeft: '-15px'}}>
-          <Typography variant="h4" fontWeight="bold">EVENTS / {event.name}</Typography>
-        </Grid>
+    <Box sx={{ width: '100%', position: 'relative', pb: 10 }}>
+      {/* Title section without button */}
+      <Box sx={{ 
+        mb: 4
+      }}>
+        <Typography variant="h4">EVENTS / {event.name}</Typography>
+      </Box>
 
-        <Grid container spacing={45} sx={{marginBottom: '15px'}}>
-          <Grid item xs={12} md={6} lg={4}>
-            <Typography variant="subtitle2" color="black" fontSize={20}>Name</Typography>
-            <Box sx={{ width: '300px', border: '2px solid black', padding: '8px', borderRadius: '4px' }}>
-              <Typography variant="body1" sx={{fontSize: 20}}>{event.name}</Typography>
+      {/* Form container */}
+      <Box sx={{ width: '100%' }}>
+        <Grid container spacing={3}>
+          {/* First row */}
+          <Grid item xs={4}>
+            <Typography sx={{ mb: 1 }}>Name</Typography>
+            <Box sx={{ 
+              p: 2,
+              border: `1px solid ${theme.palette.grey[500]}`,
+              borderRadius: 1,
+              backgroundColor: 'white'
+            }}>
+              <Typography>{event.name}</Typography>
             </Box>
           </Grid>
-          <Grid item xs={12} md={6} lg={4}>
-            <Typography variant="subtitle2" color="black" fontSize={20} sx={{whiteSpace: 'nowrap'}}>Starting time</Typography>
-            <Box sx={{ width: '300px', border: '2px solid black', padding: '8px', borderRadius: '4px' }}>
-              <Typography variant="body1" sx={{fontSize: 20}}>{new Date(event.start_time).toLocaleDateString()}</Typography>
+          <Grid item xs={4}>
+            <Typography sx={{ mb: 1 }}>Starting time</Typography>
+            <Box sx={{ 
+              p: 2,
+              border: `1px solid ${theme.palette.grey[500]}`,
+              borderRadius: 1,
+              backgroundColor: 'white'
+            }}>
+              <Typography>{new Date(event.start_time).toLocaleDateString()}</Typography>
             </Box>
           </Grid>
-          <Grid item xs={12} md={6} lg={4}>
-            <Typography variant="subtitle2" color="black" fontSize={20} sx={{whiteSpace: 'nowrap'}}>End time</Typography>
-            <Box sx={{ width: '300px', border: '2px solid black', padding: '8px', borderRadius: '4px' }}>
-              <Typography variant="body1" sx={{fontSize: 20}}>2024/10/14 22:00</Typography>
+          <Grid item xs={4}>
+            <Typography sx={{ mb: 1 }}>End time</Typography>
+            <Box sx={{ 
+              p: 2,
+              border: `1px solid ${theme.palette.grey[500]}`,
+              borderRadius: 1,
+              backgroundColor: 'white'
+            }}>
+              <Typography>{new Date(event.end_time).toLocaleDateString()}</Typography>
             </Box>
           </Grid>
-        </Grid>
-        <Grid container spacing={45}>
-          <Grid item xs={12} md={6} lg={4}>
-          </Grid>
-          <Grid item xs={12} md={6} lg={4}>
-            <Typography variant="subtitle2" color="black" fontSize={20} sx={{whiteSpace: 'nowrap'}}>Location</Typography>
-            <Box sx={{ width: '300px', border: '2px solid black', padding: '8px', borderRadius: '4px' }}>
-              <Typography variant="body1" sx={{fontSize: 20}}>488 Main Street, Vancouver</Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={6} lg={4}>
-            <Typography variant="subtitle2" color="black" fontSize={20} sx={{whiteSpace: 'nowrap'}}>number of invitation</Typography>
-            <Box sx={{width: '300px',border: '2px solid black', padding: '8px', borderRadius: '4px' }}>
-              <Typography variant="body1" sx={{fontSize: 20}}>100</Typography>
-            </Box>
-          </Grid>
-        </Grid>
 
-        <Grid container spacing={45}>
-          <Grid item lg={2}>
-            <Typography variant="subtitle2" color="black" fontSize={20}>Description</Typography>
-            <Box sx={{width: 1030, height: 150, border: '2px solid black', padding: '8px', borderRadius: '4px' }}>
-              <Typography variant="body1">
-                {event.description || 'No description'}
-              </Typography>
+          {/* Second row */}
+          <Grid item xs={4}>
+            <Typography sx={{ mb: 1 }}>Location</Typography>
+            <Box sx={{ 
+              p: 2,
+              border: `1px solid ${theme.palette.grey[500]}`,
+              borderRadius: 1,
+              backgroundColor: 'white'
+            }}>
+              <Typography>{event.location}</Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={4}>
+            <Typography sx={{ mb: 1 }}>Number of invitation</Typography>
+            <Box sx={{ 
+              p: 2,
+              border: `1px solid ${theme.palette.grey[500]}`,
+              borderRadius: 1,
+              backgroundColor: 'white'
+            }}>
+              <Typography>{event.expected_selection}</Typography>
+            </Box>
+          </Grid>
+
+          {/* Description field */}
+          <Grid item xs={12}>
+            <Typography sx={{ mb: 1 }}>Description</Typography>
+            <Box sx={{ 
+              p: 2,
+              border: `1px solid ${theme.palette.grey[500]}`,
+              borderRadius: 1,
+              backgroundColor: 'white',
+              minHeight: '100px'
+            }}>
+              <Typography>{event.description || 'No description'}</Typography>
+            </Box>
+          </Grid>
+
+          {/* Fundraisers section */}
+          <Grid item xs={12} sx={{ mt: 4 }}>
+            <Typography variant="h5" sx={{ mb: 2 }}>EVENT FUNDRAISERS</Typography>
+            <Box sx={{ 
+              backgroundColor: 'white'
+            }}>
+              {event.assigned_fundraisers?.map((fundraiser, index) => (
+                <Box key={index} sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                  <Box sx={{ 
+                    width: 40,
+                    height: 40,
+                    borderRadius: '50%',
+                    bgcolor: 'grey.500',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'white',
+                    mr: 2
+                  }}>
+                    {fundraiser.name ? fundraiser.name[0] : '?'}
+                  </Box>
+                  <Typography>
+                    {fundraiser.name}
+                  </Typography>
+                </Box>
+              ))}
+              {(!event.assigned_fundraisers || event.assigned_fundraisers.length === 0) && (
+                <Typography color="text.secondary">No fundraisers assigned</Typography>
+              )}
             </Box>
           </Grid>
         </Grid>
-      </Grid>
+      </Box>
 
-      <Grid container spacing={2} sx={{position: 'relative'}}>
-        <Grid item sx={{marginTop: '60px', marginBottom: '30px', marginLeft: '-15px'}}>
-          <Typography variant="h5" fontWeight="bold"  marginBottom={'20px'}>EVENT FUNDRAISERS</Typography>
-            <List>
-              <ListItem>
-                <ListItemAvatar>
-                  <Avatar sx={{ bgcolor: 'grey' }}>A</Avatar>
-                </ListItemAvatar>
-                <ListItemText primary="Ann Smith" />
-              </ListItem>
-              <ListItem>
-                <ListItemAvatar>
-                  <Avatar sx={{ bgcolor: 'grey' }}>J</Avatar>
-                </ListItemAvatar>
-                <ListItemText primary="John Wood" />
-              </ListItem>
-            </List>
-        </Grid>
-         <Grid sx={{position: 'absolute', bottom: -20, right: -330}}>
-          <Button onClick={handleClick} variant="contained" sx={{ width: '200px', height: '40px', backgroundColor: 'gray' }}>
-            Start Selection
-          </Button>
-        </Grid>  
-      </Grid>
-
+      {/* Fixed position button at bottom right */}
+      <Box sx={{
+        position: 'fixed',
+        bottom: 80,
+        right: 40,
+        zIndex: 1100
+      }}>
+        <Button
+          onClick={handleClick}
+          variant="contained"
+          sx={{
+            backgroundColor: theme.palette.green.main,
+            color: 'white',
+            width: '210px',
+            height: '40px',
+            '&:hover': {
+              backgroundColor: theme.palette.primary.main
+            }
+          }}
+        >
+          Start Selection
+        </Button>
+      </Box>
     </Box>
   );
 }

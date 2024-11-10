@@ -10,20 +10,36 @@ import { theme } from "../theme/theme.ts";
 const Sidebar: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [selectedItem, setSelectedItem] = useState("Home");
 
   const menuItems = useMemo(() => [
     { text: "Home", icon: <DashboardIcon />, path: "/dashboard" },
-    { text: "Events", icon: <EventIcon />, path: "/events" },
+    { text: "Events", icon: <EventIcon />, path: "/events", matchPaths: ["/events", "/event/"] },
     { text: "Calendar", icon: <CalendarTodayIcon />, path: "/calendar" },
     { text: "Message", icon: <ChatIcon />, path: "/message" },
     { text: "Settings", icon: <SettingsIcon />, path: "/settings" },
   ], []);
 
+  // Initialize selectedItem based on current path
+  const initialSelectedItem = useMemo(() => {
+    const currentPath = location.pathname;
+    const matchingItem = menuItems.find(item => {
+      if (item.matchPaths) {
+        return item.matchPaths.some(path => currentPath.startsWith(path));
+      }
+      return currentPath === item.path;
+    });
+    return matchingItem?.text || "Home";
+  }, []);
+
+  const [selectedItem, setSelectedItem] = useState(initialSelectedItem);
+
   // Update selected item based on current path
   useEffect(() => {
     const currentPath = location.pathname;
-    const matchingItem = menuItems.find(item => item.path === currentPath);
+    const matchingItem = menuItems.find(item => 
+      item.path === currentPath || 
+      (item.matchPaths && item.matchPaths.some(path => currentPath.startsWith(path)))
+    );
     if (matchingItem) {
       setSelectedItem(matchingItem.text);
     }
@@ -89,6 +105,7 @@ const Sidebar: React.FC = () => {
                   sx={{ 
                     '& .MuiTypography-root': { 
                       fontSize: '16px',
+                      color: 'white',
                       fontWeight: isSelected ? 600 : 400,
                       opacity: isSelected ? 1 : 0.7,
                       letterSpacing: '0.2px'

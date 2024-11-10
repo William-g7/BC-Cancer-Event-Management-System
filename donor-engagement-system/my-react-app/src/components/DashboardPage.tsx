@@ -16,7 +16,7 @@ const DashboardPage: React.FC = () => {
       </Box>
 
       {/* Main content */}
-      <Box sx={{ flexGrow: 1, p: 4 }}>
+      <Box sx={{ flexGrow: 1, marginLeft: '40px', marginRight:'30px' }}>
         {/* Header */}
         <Box sx={{ position: 'absolute',  right: 40 }}>
           <Header />
