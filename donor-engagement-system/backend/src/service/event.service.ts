@@ -24,7 +24,7 @@ export class EventService {
         const assignedFundraisers = await eventRepository.getEventFundraisers(eventId);
 
         // Get organizer
-        const organizer = await fundraiserRepository.findByAccountId(event.organizer_id);
+        const organizer = await fundraiserRepository.findByFundraiserId(event.organizer_id);
         if (!organizer) {
             throw new Error(`Get Event Relations: Organizer with id ${event.organizer_id} not found`);
         }

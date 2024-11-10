@@ -12,5 +12,15 @@ export class FundraiserRepository {
             WHERE f.account_id = ?
         `, [accountId]) as [Fundraiser[], any];
         return fundraisers[0] || null;
-    }   
+    }
+
+    async findByFundraiserId(fundraiserId: number): Promise<Fundraiser | null> {
+        const [fundraisers] = await this.pool.execute(`
+            SELECT f.id, f.account_id, a.name, a.role
+            FROM Fundraisers f
+            INNER JOIN Accounts a ON f.account_id = a.id
+            WHERE f.id = ?
+        `, [fundraiserId]) as [Fundraiser[], any];
+        return fundraisers[0] || null;
+    }
 }   

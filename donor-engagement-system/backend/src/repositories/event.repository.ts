@@ -51,6 +51,8 @@ export class EventRepository {
         return events;
     }
 
+
+
     async getEventFundraisers(eventId: number): Promise<Fundraiser[]> {
         const [fundraisers] = await this.pool.execute(`
             SELECT f.id, f.account_id, a.name, a.role
