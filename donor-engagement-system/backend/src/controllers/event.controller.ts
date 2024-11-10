@@ -54,6 +54,7 @@ export class EventController {
             }
 
             const fundraiserId = await this.fundraiserService.getFundraiserIdByAccountId(accountId);
+            console.log(fundraiserId);
             const events = await this.eventService.getFundraiserEventsWithRelations(fundraiserId);
     
             res.json({
@@ -114,9 +115,9 @@ export class EventController {
     createEvent = async (req: CustomRequest, res: Response): Promise<void> => {
         try {
 
-            const account_id = (req as CustomRequest).user?.id;
+            const accountId = (req as CustomRequest).user?.id;
 
-            if (!account_id) {
+            if (!accountId) {
                 res.status(401).json({
                     success: false,
                     error: 'User not authenticated'
@@ -124,9 +125,11 @@ export class EventController {
                 return;
             }
 
+            const fundraiserId = await this.fundraiserService.getFundraiserIdByAccountId(accountId);
+
             const eventData = {
                 ...req.body,
-                organizer_id: account_id,
+                organizer_id: fundraiserId,
                 deadline: req.body.end_time,
                 selected_count: 0
             };

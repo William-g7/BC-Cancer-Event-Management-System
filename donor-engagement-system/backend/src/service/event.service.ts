@@ -49,10 +49,10 @@ export class EventService {
         // Map each event to include relations
         const eventsWithRelations = await Promise.all(events.map(async (event) => {
             const assignedFundraisers = await eventRepository.getEventFundraisers(event.id);
-            const organizer = await fundraiserRepository.findByAccountId(event.organizer_id);
+            const organizer = await fundraiserRepository.findByFundraiserId(event.organizer_id);
             
             if (!organizer) {
-                throw new Error(`Organizer with id ${event.organizer_id} not found`);
+                throw new Error(`getFundraiserEventsWithRelations Error: Organizer with id ${event.organizer_id} not found`);
             }
 
             return {
@@ -78,7 +78,7 @@ export class EventService {
         // Map filtered events to include relations
         const eventsWithRelations = await Promise.all(filteredEvents.map(async (event) => {
             const assignedFundraisers = await eventRepository.getEventFundraisers(event.id);
-            const organizer = await fundraiserRepository.findByAccountId(event.organizer_id);
+            const organizer = await fundraiserRepository.findByFundraiserId(event.organizer_id);
             
             if (!organizer) {
                 throw new Error(`Organizer with id ${event.organizer_id} not found`);

@@ -17,10 +17,10 @@ export class EventRepository {
     async getFundraiserEvents(fundraiserId: number): Promise<Event[]> {
         try {
             const [events] = await this.pool.execute(`
-                SELECT DISTINCT e.* 
+                SELECT DISTINCT e.*
                 FROM Events e
                 LEFT JOIN Event_Fundraisers ef ON e.id = ef.event_id
-                WHERE ef.fundraiser_id = ? OR e.organizer_id = ?
+                WHERE e.organizer_id = ? OR ef.fundraiser_id = ?
             `, [fundraiserId, fundraiserId]) as [Event[], any];
             return events;
         } catch (error) {
