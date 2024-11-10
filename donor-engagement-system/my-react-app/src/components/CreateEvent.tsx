@@ -4,13 +4,19 @@ import { useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar.tsx';
 import Header from './Header.tsx';
 import { EventService } from '../services/eventService.ts';
+import { theme } from '../theme/theme.ts';
 
 const CreateEvent: React.FC = () => {
   const navigate = useNavigate();
+
+  // Get current date at 4 PM
+  const defaultDateTime = new Date();
+  defaultDateTime.setHours(16, 0, 0, 0); // Set to 4:00:00 PM
+  
   const [eventData, setEventData] = useState({
     name: '',
-    start_time: '',
-    end_time: '',
+    start_time: defaultDateTime.toISOString().slice(0, 16), // Format: "YYYY-MM-DDThh:mm"
+    end_time: defaultDateTime.toISOString().slice(0, 16), // Format: "YYYY-MM-DDThh:mm"
     address: '',
     city: '',
     description: '',
@@ -25,6 +31,41 @@ const CreateEvent: React.FC = () => {
   };
 
   const handleSubmit = async () => {
+    // Validate required fields
+    const requiredFields = {
+      name: 'Name',
+      start_time: 'Starting time',
+      end_time: 'End time',
+      address: 'Address',
+      city: 'City',
+      expected_selection: 'Number of invitation'
+    };
+
+    // Check for empty fields
+    const emptyFields = Object.entries(requiredFields).filter(
+      ([key]) => !eventData[key]
+    ).map(([_, label]) => label);
+
+    if (emptyFields.length > 0) {
+      alert(`Please fill in the following required fields: ${emptyFields.join(', ')}`);
+      return;
+    }
+
+    // Validate date/time logic
+    const startDate = new Date(eventData.start_time);
+    const endDate = new Date(eventData.end_time);
+    
+    if (endDate <= startDate) {
+      alert('End time must be after start time');
+      return;
+    }
+
+    // Validate number of invitations
+    if (isNaN(parseInt(eventData.expected_selection)) || parseInt(eventData.expected_selection) <= 0) {
+      alert('Please enter a valid number of invitations');
+      return;
+    }
+
     try {
       const eventService = new EventService();
       const completeEventData = {
@@ -32,197 +73,264 @@ const CreateEvent: React.FC = () => {
         start_time: eventData.start_time,
         end_time: eventData.end_time,
         location: `${eventData.address}, ${eventData.city}`,
-        description: eventData.description,
+        description: eventData.description || '', // Handle optional description
         expected_selection: parseInt(eventData.expected_selection),
       };
+      
       await eventService.createEvent(completeEventData);
+      alert('Event created successfully!');
       navigate('/events');
     } catch (error) {
       console.error('Error creating event:', error);
+      alert('Failed to create event. Please try again.');
     }
   };
 
-  return (
-    <Box sx={{ display: "flex" }}>
-      <Box sx={{ width: '250px' }}>
-        <Sidebar />
-      </Box>
+  // Add this near the top of your component, after imports
+  const cityOptions = [
+    'Vancouver',
+    'Burnaby',
+    'Richmond',
+    'Surrey',
+    'North Vancouver',
+    'West Vancouver',
+    'Coquitlam',
+    'Port Coquitlam',
+    'Port Moody',
+    'New Westminster'
+  ];
 
-      <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', position: 'relative' }}>
-        <Box sx={{
-          justifyContent: 'flex-end',
-          display: 'flex',
-          position: 'fixed',
-          top: 20,
-          right: 0,
-          marginRight: '15px',
-        }}>
-          <Header />
+  return (
+    <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: 'white' }}>
+    <Box sx={{ width: '250px' }}>
+        <Sidebar />
+    </Box>
+
+    {/* Main content */}
+    <Box sx={{ 
+        flexGrow: 1, 
+        marginLeft: '40px',
+        p: 4,
+    }}>
+        {/* Header */}
+        <Box sx={{ position: 'absolute', right: 40 }}>
+            <Header />
         </Box>
 
-        <Box sx={{ width: '80%', marginTop: '70px', marginRight: '20px' }}>
-          <Grid container spacing={2}>
-            <Grid item sx={{ marginBottom: '20px', marginLeft: '-15px' }}>
-              <Typography variant="h4" fontWeight="bold">CREATE EVENT</Typography>
-            </Grid>
-
-            <Grid container spacing={4} sx={{ marginBottom: '15px' }}>
-              <Grid item xs={12} md={6} lg={4}>
-                <Typography variant="subtitle2" color="black" fontSize={20}>Name</Typography>
-                <TextField
-                  name="name"
-                  value={eventData.name}
-                  onChange={handleChange}
-                  fullWidth
-                  sx={{ 
-                    '& .MuiOutlinedInput-root': {
-                      '& fieldset': {
-                        borderColor: 'black',
-                        borderWidth: 2,
-                      },
-                    },
-                  }}
-                />
-              </Grid>
-              
-              <Grid item xs={12} md={6} lg={4}>
-                <Typography variant="subtitle2" color="black" fontSize={20}>Starting time</Typography>
-                <TextField
-                  name="start_time"
-                  type="datetime-local"
-                  value={eventData.start_time}
-                  onChange={handleChange}
-                  fullWidth
-                  sx={{ 
-                    '& .MuiOutlinedInput-root': {
-                      '& fieldset': {
-                        borderColor: 'black',
-                        borderWidth: 2,
-                      },
-                    },
-                  }}
-                />
-              </Grid>
-
-              <Grid item xs={12} md={6} lg={4}>
-                <Typography variant="subtitle2" color="black" fontSize={20}>End time</Typography>
-                <TextField
-                  name="end_time"
-                  type="datetime-local"
-                  value={eventData.end_time}
-                  onChange={handleChange}
-                  fullWidth
-                  sx={{ 
-                    '& .MuiOutlinedInput-root': {
-                      '& fieldset': {
-                        borderColor: 'black',
-                        borderWidth: 2,
-                      },
-                    },
-                  }}
-                />
-              </Grid>
-            </Grid>
-
-            <Grid container spacing={4} sx={{ marginBottom: '15px' }}>
-              <Grid item xs={12} md={6} lg={4}>
-                <Typography variant="subtitle2" color="black" fontSize={20}>Address</Typography>
-                <TextField
-                  name="address"
-                  value={eventData.address}
-                  onChange={handleChange}
-                  placeholder="Enter street address"
-                  fullWidth
-                  sx={{ 
-                    '& .MuiOutlinedInput-root': {
-                      '& fieldset': {
-                        borderColor: 'black',
-                        borderWidth: 2,
-                      },
-                    },
-                  }}
-                />
-              </Grid>
-
-              <Grid item xs={12} md={6} lg={4}>
-                <Typography variant="subtitle2" color="black" fontSize={20}>City</Typography>
-                <TextField
-                  name="city"
-                  value={eventData.city}
-                  onChange={handleChange}
-                  placeholder="Enter city"
-                  fullWidth
-                  sx={{ 
-                    '& .MuiOutlinedInput-root': {
-                      '& fieldset': {
-                        borderColor: 'black',
-                        borderWidth: 2,
-                      },
-                    },
-                  }}
-                />
-              </Grid>
-
-              <Grid item xs={12} md={6} lg={4}>
-                <Typography variant="subtitle2" color="black" fontSize={20}>Number of invitation</Typography>
-                <TextField
-                  name="expected_selection"
-                  type="number"
-                  value={eventData.expected_selection}
-                  onChange={handleChange}
-                  fullWidth
-                  sx={{ 
-                    '& .MuiOutlinedInput-root': {
-                      '& fieldset': {
-                        borderColor: 'black',
-                        borderWidth: 2,
-                      },
-                    },
-                  }}
-                />
-              </Grid>
-            </Grid>
-
-            <Grid item xs={12}>
-              <Typography variant="subtitle2" color="black" fontSize={20}>Description</Typography>
-              <TextField
-                name="description"
-                value={eventData.description}
-                onChange={handleChange}
-                multiline
-                rows={4}
-                fullWidth
-                sx={{ 
-                  '& .MuiOutlinedInput-root': {
-                    '& fieldset': {
-                      borderColor: 'black',
-                      borderWidth: 2,
-                    },
-                  },
-                }}
-              />
-            </Grid>
-
-            <Grid item xs={12} sx={{ marginTop: '20px' }}>
-              <Button
+        {/* Title and button section */}
+        <Box sx={{ 
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            alignItems: 'center', 
+            mt: 12,
+            mb: 4  // Add margin bottom
+        }}>
+            <Typography variant="h4">NEW EVENT</Typography>
+            <Button
                 variant="contained"
                 onClick={handleSubmit}
                 sx={{
-                  backgroundColor: 'black',
-                  color: 'white',
-                  padding: '10px 30px',
-                  '&:hover': {
-                    backgroundColor: '#333'
-                  }
+                    backgroundColor: '#2C3E50',  // Dark blue color from image
+                    color: 'white',
+                    width: '210px',
+                    height: '40px',
+                    '&:hover': {
+                        backgroundColor: theme.palette.darkpurple.main
+                    }
                 }}
-              >
-                Confirm Creation
-              </Button>
-            </Grid>
-          </Grid>
+            >
+                CREATE EVENT
+            </Button>
         </Box>
-      </Box>
+
+        {/* Form container */}
+        <Box sx={{ width: '100%' }}>
+            <Grid container spacing={3}>
+                {/* First row */}
+                <Grid item xs={4}>
+                    <Typography sx={{ mb: 1 }}>Name</Typography>
+                    <TextField
+                        name="name"
+                        value={eventData.name}
+                        onChange={handleChange}
+                        fullWidth
+                        variant="outlined"
+                        sx={{ 
+                            backgroundColor: 'white',
+                            '& .MuiOutlinedInput-root': {
+                                '& fieldset': {
+                                    borderColor: theme.palette.grey[500],
+                                }
+                            }
+                        }}
+                    />
+                </Grid>
+                <Grid item xs={4}>
+                    <Typography sx={{ mb: 1 }}>Starting time</Typography>
+                    <TextField
+                        name="start_time"
+                        type="datetime-local"
+                        value={eventData.start_time}
+                        onChange={handleChange}
+                        fullWidth
+                        variant="outlined"
+                        sx={{ 
+                            backgroundColor: 'white',
+                            '& .MuiOutlinedInput-root': {
+                                '& fieldset': {
+                                    borderColor: theme.palette.grey[500],
+                                    borderWidth: 1,
+                                },
+                                '&:hover fieldset': {
+                                    borderColor: theme.palette.grey[500],
+                                },
+                                '&.Mui-focused fieldset': {
+                                    borderColor: theme.palette.darkpurple.main,
+                                    borderWidth: 3,
+                                }
+                            }
+                        }}
+                    />
+                </Grid>
+                <Grid item xs={4}>
+                    <Typography sx={{ mb: 1 }}>End time</Typography>
+                    <TextField
+                        name="end_time"
+                        type="datetime-local"
+                        value={eventData.end_time}
+                        onChange={handleChange}
+                        fullWidth
+                        variant="outlined"
+                        sx={{ 
+                            backgroundColor: 'white',
+                            '& .MuiOutlinedInput-root': {
+                                '& fieldset': {
+                                    borderColor: theme.palette.grey[500],
+                                },
+                                '&.Mui-focused fieldset': {
+                                    borderColor: theme.palette.darkpurple.main, // Changes to dark purple when focused
+                                    borderWidth: 3,   
+                                }
+                            }
+                        }}
+                    />
+                </Grid>
+
+                {/* Second row */}
+                <Grid item xs={4}>
+                    <Typography sx={{ mb: 1 }}>Address</Typography>
+                    <TextField
+                        name="address"
+                        value={eventData.address}
+                        onChange={handleChange}
+                        placeholder="Enter street address"
+                        fullWidth
+                        variant="outlined"
+                        sx={{ 
+                            backgroundColor: 'white',
+                            '& .MuiOutlinedInput-root': {
+                                '& fieldset': {
+                                    borderColor: theme.palette.grey[500],
+                                },
+                                '&.Mui-focused fieldset': {
+                                    borderColor: theme.palette.darkpurple.main, // Changes to dark purple when focused
+                                    borderWidth: 3,
+                                }
+                            }
+                        }}
+                    />
+                </Grid>
+                <Grid item xs={4}>
+                    <Typography sx={{ mb: 1 }}>City</Typography>
+                    <TextField
+                        select
+                        name="city"
+                        value={eventData.city}
+                        onChange={handleChange}
+                        fullWidth
+                        variant="outlined"
+                        SelectProps={{
+                            native: true
+                        }}
+                        sx={{ 
+                            backgroundColor: 'white',
+                            '& .MuiOutlinedInput-root': {
+                                '& fieldset': {
+                                    borderColor: theme.palette.grey[500],
+                                },
+                                '&.Mui-focused fieldset': {
+                                    borderColor: theme.palette.darkpurple.main,
+                                    borderWidth: 3,
+                                }
+                            }
+                        }}
+                    >
+                        <option value="">Select a city</option>
+                        {cityOptions.map((city) => (
+                            <option key={city} value={city}>
+                                {city}
+                            </option>
+                        ))}
+                    </TextField>
+                </Grid>
+                <Grid item xs={4}>
+                    <Typography sx={{ mb: 1 }}>Number of invitation</Typography>
+                    <TextField
+                        name="expected_selection"
+                        type="number"
+                        value={eventData.expected_selection}
+                        onChange={handleChange}
+                        fullWidth
+                        variant="outlined"
+                        InputProps={{
+                            inputProps: { 
+                                min: 1 
+                            }
+                        }}
+                        sx={{ 
+                            backgroundColor: 'white',
+                            '& .MuiOutlinedInput-root': {
+                                '& fieldset': {
+                                    borderColor: theme.palette.grey[500],
+                                },
+                                '&.Mui-focused fieldset': {
+                                    borderColor: theme.palette.darkpurple.main,
+                                    borderWidth: 3,
+                                }
+                            }
+                        }}
+                    />
+                </Grid>
+
+                {/* Description field */}
+                <Grid item xs={12}>
+                    <Typography sx={{ mb: 1 }}>Description</Typography>
+                    <TextField
+                        name="description"
+                        value={eventData.description}
+                        onChange={handleChange}
+                        multiline
+                        rows={4}
+                        fullWidth
+                        variant="outlined"
+                        sx={{ 
+                            backgroundColor: 'white',
+                            '& .MuiOutlinedInput-root': {
+                                '& fieldset': {
+                                    borderColor: theme.palette.grey[500],
+                                },
+                                '&.Mui-focused fieldset': {
+                                    borderColor: theme.palette.darkpurple.main, // Changes to dark purple when focused
+                                    borderWidth: 3,
+                                }
+                            }
+                        }}
+                    />
+                </Grid>
+            </Grid>
+        </Box>
     </Box>
+  </Box>
   );
 };
 

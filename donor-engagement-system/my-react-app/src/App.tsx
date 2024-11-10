@@ -8,17 +8,22 @@ import DonorSelectionPage from "./components/DonorSelectionPage.tsx";
 import DonorNotePage from "./components/DonorNotePage.tsx"; // 导入 DonorNotePage
 import EventListPage from "./components/EventListPage.tsx";
 import CreateEvent from "./components/CreateEvent.tsx";
+import { ThemeProvider } from '@mui/material/styles';
+import { theme } from './theme/theme.ts';
+
 const App: React.FC = () => {
   return (
-    <Router>
-      <MainContent />
-    </Router>
+    <ThemeProvider theme={theme}>
+      <Router>
+        <MainContent />
+      </Router>
+    </ThemeProvider>
   );
 }
 
 const MainContent: React.FC = () => {
   return (
-    <div style={{ marginRight: '500px' }}>
+    <div>
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} /> 
         <Route path="/login" element={<LoginPage />} />

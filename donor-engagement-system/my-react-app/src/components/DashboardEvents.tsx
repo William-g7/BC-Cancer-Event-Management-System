@@ -36,7 +36,7 @@ const DashboardEvents: React.FC = () => {
   return (
     <>
       <Typography variant="h5" sx={{ marginBottom: 2, marginLeft: '0px' }}>
-        Waiting for donor selection
+        Your Upcoming Events
       </Typography>
       <Grid container spacing={2}>
         {events.map((event) => (

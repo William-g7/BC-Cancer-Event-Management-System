@@ -50,9 +50,6 @@ const EventList: React.FC = () => {
 
   return (
     <div style={{ width: '100%' }}>
-      <Typography variant="h4" gutterBottom>
-        All Events
-      </Typography>
       
       <TableContainer 
         component={Paper} 
@@ -65,7 +62,6 @@ const EventList: React.FC = () => {
         <Table sx={{ minWidth: 1200 }}>
           <TableHead>
             <TableRow>
-              <TableCell sx={{ width: '50px' }}>Favorite</TableCell>
               <TableCell 
                 sx={{ 
                   fontWeight: 'bold',
@@ -134,11 +130,6 @@ const EventList: React.FC = () => {
                   }
                 }}
               >
-                <TableCell onClick={(e) => e.stopPropagation()}>
-                  <IconButton size="small">
-                    <StarBorderIcon fontSize="small" />
-                  </IconButton>
-                </TableCell>
                 <TableCell>{event.name}</TableCell>
                 <TableCell>{event.organizer?.name || 'N/A'}</TableCell>
                 <TableCell>{new Date(event.start_time).toLocaleDateString()}</TableCell>

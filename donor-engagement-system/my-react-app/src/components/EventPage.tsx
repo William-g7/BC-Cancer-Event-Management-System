@@ -4,36 +4,30 @@ import Sidebar from './Sidebar.tsx';
 import Header from './Header.tsx';
 import EventDetail from './EventDetail.tsx';
 
-
 const EventPage: React.FC = () => {
-    
     return (
-        <Box sx={{ display: "flex" }}>
-         <Box
-            sx={{
-            width: '250px', // Sidebar width
-            }}
-          >
-        <Sidebar />
-        </Box>
+        <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: 'white' }}>
+            <Box sx={{ width: '250px' }}>
+                <Sidebar />
+            </Box>
 
-        <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', position: 'relative' }}>
-        {/* Header at the top right of the page */}
-        <Box
-          sx={{
-            justifyContent: 'flex-end', // Aligns the header to the right
-            display: 'flex',
-            position: 'fixed', // Change to fixed to cover the whole page
-            top: 20, // Ensure it is at the top
-            right: 0, // Align to the right
-            marginRight: '15px',
-          }}
-        > 
-          <Header />
+            {/* Main content */}
+            <Box sx={{ 
+                flexGrow: 1, 
+                marginLeft: '30px',
+                marginRight: '30px'
+            }}>
+                {/* Header */}
+                <Box sx={{ position: 'absolute', right: 40 }}>
+                    <Header />
+                </Box>
+
+                {/* Event Detail Content */}
+                <Box sx={{ mt: 16 }}>
+                    <EventDetail />
+                </Box>
+            </Box>
         </Box>
-        </Box>
-          <EventDetail />
-         </Box>
     );
 }
 
