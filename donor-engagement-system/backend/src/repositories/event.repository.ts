@@ -120,7 +120,7 @@ export class EventRepository {
         const [donors] = await this.pool.execute(
             `SELECT * FROM Donors 
             WHERE LOWER(city) = LOWER(?) 
-            ORDER BY id ASC
+            ORDER BY RAND()
             LIMIT ${number_of_donors}`,
             [city]
         ) as [any[], any];
