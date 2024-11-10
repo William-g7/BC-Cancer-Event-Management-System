@@ -8,7 +8,7 @@ export interface Event {
     end_time: DateTime;
     location: string;
     description: string | null;
-    // this organizer_id is account_id
+    // this organizer_id is fundraiser_id
     organizer_id: number;
     deadline: DateTime;
     expected_selection: number;
@@ -21,7 +21,7 @@ export interface CreateEventDTO {
     end_time: string | DateTime;
     location: string;
     description?: string | null;
-    // this organizer_id is account_id
+    // this organizer_id is fundraiser_id
     organizer_id: number;
     deadline: string | DateTime;
     expected_selection: number;
