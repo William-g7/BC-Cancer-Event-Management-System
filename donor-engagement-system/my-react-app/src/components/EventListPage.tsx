@@ -1,10 +1,11 @@
 import React from "react";
-import { Box, Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import EventList from "./EventList.tsx";
 import Sidebar from "./Sidebar.tsx";
 import Header from "./Header.tsx";
 import AddIcon from '@mui/icons-material/Add';
 import { useNavigate } from 'react-router-dom';
+import { theme } from '../theme/theme.ts';
 
 const EventListPage: React.FC = () => {
     const navigate = useNavigate();
@@ -14,46 +15,48 @@ const EventListPage: React.FC = () => {
     };
 
     return (
-        <Box sx={{ display: 'flex', height: '100vh', marginRight: 0 }}>
+        <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: 'white' }}>
             <Box sx={{ width: '250px' }}>
                 <Sidebar />
             </Box>
 
-            <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', position: 'relative' }}>
-                <Box sx={{
-                    justifyContent: 'flex-end',
-                    display: 'flex',
-                    position: 'fixed',
-                    top: 20,
-                    right: 0,
-                    marginRight: '15px',
-                }}>
+            {/* Main content */}
+            <Box sx={{ flexGrow: 1, p: 4 }}>
+                {/* Header */}
+                <Box sx={{ position: 'absolute',  right: 40 }}>
                     <Header />
                 </Box>
 
-                <Box sx={{ 
-                    marginTop: '64px', 
-                    marginLeft: '20px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: 2 
-                }}>
+
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 16 }}>
+                    <Typography variant="h4">
+                        EVENTS
+                    </Typography>
                     <Button
                         variant="contained"
                         startIcon={<AddIcon />}
                         onClick={handleCreateEvent}
                         sx={{
-                            alignSelf: 'flex-start',
-                            backgroundColor: 'black',
+                            backgroundColor: theme.palette.primary.main,
                             '&:hover': {
-                                backgroundColor: '#333'
+                                backgroundColor: theme.palette.darkpurple.main
                             }
                         }}
                     >
                         Create Event
                     </Button>
-                    <EventList />
                 </Box>
+
+                <Box sx={{ 
+                    mt: 5,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 2 
+                }}>
+                    
+                    <EventList />
+                </Box >
+                
             </Box>
         </Box>
     );

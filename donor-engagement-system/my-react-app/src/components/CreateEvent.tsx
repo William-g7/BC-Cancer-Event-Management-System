@@ -43,28 +43,28 @@ const CreateEvent: React.FC = () => {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: 'white' }}>
+      {/* Sidebar */}
       <Box sx={{ width: '250px' }}>
         <Sidebar />
       </Box>
 
-      <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', position: 'relative' }}>
-        <Box sx={{
-          justifyContent: 'flex-end',
-          display: 'flex',
-          position: 'fixed',
-          top: 20,
-          right: 0,
-          marginRight: '15px',
-        }}>
+      {/* Main content */}
+      <Box sx={{ flexGrow: 1, p: 4 }}>
+        {/* Header */}
+        <Box sx={{ position: 'absolute',  right: 40 }}>
           <Header />
+        </Box>
+
+        {/* Title Section */}
+        <Box sx={{ mb: 4, mt: 16 }}>
+          <Typography variant="h4">
+            CREATE EVENT
+          </Typography>
         </Box>
 
         <Box sx={{ width: '80%', marginTop: '70px', marginRight: '20px' }}>
           <Grid container spacing={2}>
-            <Grid item sx={{ marginBottom: '20px', marginLeft: '-15px' }}>
-              <Typography variant="h4" fontWeight="bold">CREATE EVENT</Typography>
-            </Grid>
 
             <Grid container spacing={4} sx={{ marginBottom: '15px' }}>
               <Grid item xs={12} md={6} lg={4}>

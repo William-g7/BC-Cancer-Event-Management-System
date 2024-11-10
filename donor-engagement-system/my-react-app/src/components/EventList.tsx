@@ -50,9 +50,6 @@ const EventList: React.FC = () => {
 
   return (
     <div style={{ width: '100%' }}>
-      <Typography variant="h4" gutterBottom>
-        All Events
-      </Typography>
       
       <TableContainer 
         component={Paper} 

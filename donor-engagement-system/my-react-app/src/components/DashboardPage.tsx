@@ -1,67 +1,63 @@
 import React from 'react';
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import Sidebar from './Sidebar.tsx';
 import Header from './Header.tsx';
 import DashboardEvents from './DashboardEvents.tsx';
 import Notification from './Notification.tsx';
+import { theme } from '../theme/theme.ts';
+import Todo from './todo.tsx';
 
 const DashboardPage: React.FC = () => {
   return (
-    <Box sx={{ display: 'flex', height: '100vh', marginRight: 0 }}>
-      <Box
-        sx={{
-          width: '250px', // Sidebar width
-        }}
-      >
+    <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: 'white' }}>
+      {/* Sidebar */}
+      <Box sx={{ width: '250px' }}>
         <Sidebar />
       </Box>
 
-      <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', position: 'relative' }}>
-        {/* Header at the top right of the page */}
-        <Box
-          sx={{
-            justifyContent: 'flex-end', // Aligns the header to the right
-            display: 'flex',
-            position: 'fixed', // Change to fixed to cover the whole page
-            top: 20, // Ensure it is at the top
-            right: 0, // Align to the right
-            marginRight: '15px',
-          }}
-        > 
+      {/* Main content */}
+      <Box sx={{ flexGrow: 1, p: 4 }}>
+        {/* Header */}
+        <Box sx={{ position: 'absolute',  right: 40 }}>
           <Header />
         </Box>
 
-        {/* Content area with Events and Notification */}
-        <Grid container spacing={2} sx={{ marginTop: '64px', marginLeft: '-30px'}}> {/* Adjust margin to avoid overlap with fixed header */}
-          {/* Events area */}
-          <Typography variant="h4" sx={{ marginBottom: 2, marginLeft: '10px' }}>
+        {/* Title Section */}
+        <Box sx={{ mb: 4, mt: 16 }}>
+          <Typography variant="h4">
             FUNDRAISER DASHBOARD
-            </Typography>
-          <Grid item xs={12}>
-            <DashboardEvents />
-          </Grid>
+          </Typography>
+        </Box>
 
-          {/* Notification area */}
-          <Grid>
-            <Box
-              sx={{
-                width: '280px',
-                borderColor: 'transparent',
-                display: 'flex',
-                position: 'fixed', // Change to fixed to cover the whole page
-                top: 150, // Ensure it is at the top
-                right: 0, // Align to the right
-                marginRight: '0px',
-            
-              }}
-            >
-              <Notification />
-            </Box>
-          </Grid>
-        </Grid>
+        {/* Content Container */}
+        <Box sx={{ 
+          display: 'flex', 
+          gap: 3,
+          mt: 5
+        }}>
+          {/* Events Section - Takes up more space */}
+          <Box sx={{ 
+            flex: '1 1 auto',
+            bgcolor: theme.palette.lightgrey.main,
+            borderRadius: 4,
+            p: 3
+          }}>
+            <DashboardEvents />
+          </Box>
+
+          {/* Notifications and do do list Section - Takes up less space */}
+          <Box sx={{ 
+            flex: '0 0 348px',
+            bgcolor: theme.palette.lightgrey.main,
+            borderRadius: 4,
+            p: 3
+          }}>
+            <Todo />
+            <Notification />
+          </Box>
+        </Box>
       </Box>
     </Box>
-  
   );
 };
 
