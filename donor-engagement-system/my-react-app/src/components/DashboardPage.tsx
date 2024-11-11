@@ -11,49 +11,74 @@ const DashboardPage: React.FC = () => {
   return (
     <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: 'white' }}>
       {/* Sidebar */}
-      <Box sx={{ width: '250px' }}>
+      <Box sx={{ 
+        width: { xs: '60px', sm: '250px' },
+        flexShrink: 0
+      }}>
         <Sidebar />
       </Box>
 
-      {/* Main content */}
-      <Box sx={{ flexGrow: 1, marginLeft: '40px', marginRight:'30px', position: 'relative' }}>
-        {/* Header */}
-        <Box sx={{ position: 'absolute',  right: 40 }}>
-          <Header />
-        </Box>
-
-        {/* Title Section */}
-        <Box sx={{ mb: 4, mt: 16 }}>
-          <Typography variant="h4">
-            FUNDRAISER DASHBOARD
-          </Typography>
-        </Box>
-
-        {/* Content Container */}
+      {/* Main content wrapper for centering */}
+      <Box sx={{ 
+        flexGrow: 1,
+        display: 'flex',
+        justifyContent: 'center'
+      }}>
+        {/* Main content with max width */}
         <Box sx={{ 
-          display: 'flex', 
-          gap: 3,
-          mt: 5
+          width: '100%',
+          maxWidth: '1440px',
+          marginLeft: { xs: '10px', sm: '20px', md: '40px' },
+          marginRight: { xs: '10px', sm: '20px', md: '40px' },
+          overflow: 'auto',
+          position: 'relative'
         }}>
-          {/* Events Section - Takes up more space */}
+          {/* Header */}
           <Box sx={{ 
-            flex: '1 1 auto',
-            bgcolor: theme.palette.lightgrey.main,
-            borderRadius: 4,
-            p: 3
+            position: 'absolute', 
+            right: { xs: '10px', sm: '20px', md: '40px' }
           }}>
-            <DashboardEvents />
+            <Header />
           </Box>
 
-          {/* Notifications and do do list Section - Takes up less space */}
+          {/* Title Section */}
+          <Box sx={{ mb: 4, mt: { xs: 12, sm: 14, md: 16 } }}>
+            <Typography variant="h4" sx={{ 
+              fontSize: { xs: '1rem', sm: '1.2rem', md: '1.5rem' }
+            }}>
+              FUNDRAISER DASHBOARD
+            </Typography>
+          </Box>
+
+          {/* Content Container */}
           <Box sx={{ 
-            flex: '0 0 348px',
-            bgcolor: theme.palette.lightgrey.main,
-            borderRadius: 4,
-            p: 3
+            display: 'flex', 
+            flexDirection: { xs: 'column', md: 'row' },
+            gap: { xs: 2, sm: 2, md: 3 },
+            mt: { xs: 3, sm: 4, md: 5 },
+            width: '100%'
           }}>
-            <Todo />
-            <Notification />
+            {/* Events Section */}
+            <Box sx={{ 
+              flex: '1 1 auto',
+              bgcolor: theme.palette.lightgrey.main,
+              borderRadius: 4,
+              p: { xs: 2, sm: 2, md: 3 },
+              minWidth: 0
+            }}>
+              <DashboardEvents />
+            </Box>
+
+            {/* Notifications Section */}
+            <Box sx={{ 
+              flex: { xs: '1 1 auto', md: '0 0 348px' },
+              bgcolor: theme.palette.lightgrey.main,
+              borderRadius: 4,
+              p: { xs: 2, sm: 2, md: 3 }
+            }}>
+              <Todo />
+              <Notification />
+            </Box>
           </Box>
         </Box>
       </Box>

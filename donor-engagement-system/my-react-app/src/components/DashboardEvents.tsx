@@ -16,8 +16,14 @@ const DashboardEvents: React.FC = () => {
   };
 
   return (
-    <Box sx={{ width: '930px' }}>
-      <Typography variant="h5" sx={{ marginBottom: 2 }}>
+    <Box sx={{ 
+      width: '100%',
+      maxWidth: '100%'
+    }}>
+      <Typography variant="h5" sx={{ 
+        marginBottom: 2,
+        fontSize: { xs: '1rem', sm: '1rem', md: '1.25rem' }
+      }}>
         Your Upcoming Events
       </Typography>
       
@@ -35,34 +41,56 @@ const DashboardEvents: React.FC = () => {
         <Box sx={{ 
           display: 'flex',
           flexWrap: 'wrap',
-          gap: 2,
+          gap: { xs: 1, sm: 1.5, md: 2 },
           width: '100%'
         }}>
           {events.map((event) => (
             <Box 
               key={event.id}
               sx={{
-                flex: '1 1 270px',
-                minWidth: '270px',
-                maxWidth: 'calc(33.333% - 16px)'
+                width: {
+                  xs: '100%',
+                  sm: 'calc(50% - 8px)',
+                  lg: 'calc(33.33% - 16px)'
+                },
+                minWidth: {
+                  xs: '100%',
+                  sm: '260px',
+                  lg: '290px'
+                },
+                maxWidth: {
+                  sm: 'calc(50% - 8px)',
+                  lg: 'calc(33.33% - 16px)'
+                }
               }}
             >
               <Card 
                 onClick={() => handleEventClick(event.id)}
-                sx={{ cursor: 'pointer' }}
-                style={{border: "none", boxShadow: "none"}}
+                sx={{ 
+                  cursor: 'pointer',
+                  border: "none", 
+                  boxShadow: "none",
+                  height: '100%'
+                }}
               >
                 <CardMedia
                   component="img"
                   alt={event.name}
-                  height="200"
+                  height={{ xs: 150, sm: 180, md: 200 }}
                   image="/calendar.png"
                 />
-                <CardContent sx={{ flexGrow: 1, padding: 2 }}>
+                <CardContent sx={{ 
+                  flexGrow: 1, 
+                  padding: { xs: 1, sm: 1.5, md: 2 }
+                }}>
                   <Typography variant="body2" color="text.secondary">
                     {new Date(event.start_time).toLocaleDateString()}
                   </Typography>
-                  <Typography sx={{ fontSize: 16}}>{event.name}</Typography>
+                  <Typography sx={{ 
+                    fontSize: { xs: 14, sm: 15, md: 16 }
+                  }}>
+                    {event.name}
+                  </Typography>
                 </CardContent>
               </Card>
             </Box>
