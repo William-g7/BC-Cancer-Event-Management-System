@@ -58,50 +58,30 @@ const DonorSelectionTable: React.FC = () => {
   ];
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh', padding: 2, backgroundColor: 'white', position: 'relative' }}>
-      <Typography variant="h4" fontWeight="bold">
-        EVENTS / {data.event?.name}
-      </Typography>
-      <Typography variant="subtitle2" color="black" fontSize={20}>Total Invitation: 100 </Typography>
-      <Typography variant="subtitle2" color="black" fontSize={20}>Total Selected: 10 </Typography>
-      <Typography variant="subtitle2" color="black" fontSize={20}>Your Selection: </Typography>
 
-      <Box sx={{ height: 500, width: 1400 }}>
+    <Box sx={{ width: '100%', position: 'relative' }}>
+      <Box sx={{ mb: 4 }}>
+        <Typography variant="h4">
+          {data?.event ? `EVENTS / ${data.event.name}` : 'Loading...'}
+        </Typography>
+      </Box>
+
+
+      <Box sx={{ width: '100%' }}>
         <DataGrid
-          rows={data.donors}
+          rows={data?.donors || []}
           columns={columns}
           initialState={{
             pagination: {
-              paginationModel: {
-                pageSize: 5,
-              },
+              paginationModel: { page: 0, pageSize: 10 },
             },
           }}
-          pageSizeOptions={[5]}
+          pageSizeOptions={[5, 10]}
           checkboxSelection
           disableRowSelectionOnClick
-          sx={{
-            '& .MuiDataGrid-cell': {
-              fontSize: '15px',
-            },
-            '& .MuiDataGrid-columnHeader': {
-              fontSize: '17px',
-              fontWeight: 'bold !important',
-            },
-          }}
         />
       </Box>
 
-      <Typography variant="subtitle2" color="black" fontSize={20}>Other Donors: </Typography>
-
-      <Box sx={{ position: 'absolute', marginTop: 80, marginLeft: 100 }}>
-        <Button variant="contained" sx={{ width: '180px', height: '40px', backgroundColor: 'gray' }} onClick={() => console.log('Save Current')}>
-          Save Current
-        </Button>
-        <Button variant="contained" sx={{ width: '200px', height: '40px', backgroundColor: 'gray', marginLeft: '20px' }} onClick={() => console.log('Confirm Selection')}>
-          Confirm Selection
-        </Button>
-      </Box>
     </Box>
     
   );

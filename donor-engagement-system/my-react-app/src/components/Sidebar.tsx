@@ -53,7 +53,7 @@ const Sidebar: React.FC = () => {
   return (
     <Box
       sx={{
-        width: '250px',
+        width: { xs: '60px', sm: '230px' },
         height: "100vh",
         backgroundColor: theme.palette.primary.main,
         color: "white",
@@ -61,22 +61,30 @@ const Sidebar: React.FC = () => {
         position: 'fixed',
         left: 0,
         top: 0,
+        transition: 'width 0.2s',
       }}
     >
-      <Box sx={{ p: 2 }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, marginTop: '20px' }}>
-          <img 
-            src="/BCCF-Logo.png" 
-            alt="BC Cancer Logo" 
-            style={{ 
-              height: '72px',
-              width: '165px'
-            }} 
-          />
-        </Box>
+      {/* Logo container - only show on larger screens */}
+      <Box sx={{ 
+        p: { xs: 1, sm: 2 },
+        display: { xs: 'none', sm: 'flex' }, // Hide entire logo container on mobile
+        justifyContent: 'flex-start',
+        marginTop: '20px',
+        marginBottom: '20px'
+      }}>
+        <img 
+          src="/BCCF-Logo.png" 
+          alt="BC Cancer Logo" 
+          style={{ 
+            height: '72px',
+            width: '165px'
+          }} 
+        />
       </Box>
 
-      <List sx={{ mt: 1 }}>
+      <List sx={{ 
+        mt: { xs: 2, sm: 1 } // Adjust top margin when logo is hidden
+      }}>
         {menuItems.map((item) => {
           const isSelected = selectedItem === item.text;
           return (
@@ -85,6 +93,8 @@ const Sidebar: React.FC = () => {
                 onClick={() => handleIconClick(item.text, item.path)}
                 sx={{
                   py: 1.5,
+                  px: { xs: 1, sm: 2 },
+                  justifyContent: { xs: 'center', sm: 'flex-start' },
                   backgroundColor: isSelected ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
                   '&:hover': {
                     backgroundColor: isSelected 
@@ -95,14 +105,17 @@ const Sidebar: React.FC = () => {
               >
                 <ListItemIcon sx={{ 
                   color: 'white', 
-                  minWidth: 40,
-                  opacity: isSelected ? 1 : 0.7
+                  minWidth: { xs: 0, sm: 40 },
+                  mr: { xs: 0, sm: 2 },
+                  opacity: isSelected ? 1 : 0.7,
+                  justifyContent: 'center'
                 }}>
                   {item.icon}
                 </ListItemIcon>
                 <ListItemText 
                   primary={item.text} 
                   sx={{ 
+                    display: { xs: 'none', sm: 'block' },
                     '& .MuiTypography-root': { 
                       fontSize: '16px',
                       color: 'white',

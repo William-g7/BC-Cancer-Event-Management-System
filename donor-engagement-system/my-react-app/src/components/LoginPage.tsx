@@ -29,23 +29,30 @@ const LoginPage: React.FC = () => {
           <h1 className="no-space">BC</h1>
           <h1 className="no-space">CANCER</h1>
         </Box>
-        
-        <Paper
-          elevation={0}
+
+        <Box
           sx={{
-            width: { xs: '17.5rem', sm: '18.75rem' },
-            mx: 'auto',
-            my: '1.5rem',
-            py: '0.75rem',
-            px: '0.5rem',
+            position: 'relative',
+            width: '30%',
             display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
             flexDirection: 'column',
-            gap: '0.5rem',
-            borderRadius: '0.25rem',
-            bgcolor: 'transparent',
+            padding: '2rem',
           }}
         >
+
           <Box textAlign="center" mb={2}>
+            <img
+              src="/BCCF-color-logo.png"
+              alt="BC Cancer"
+              style={{
+                width: '100%',
+                maxWidth: '300px',
+                height: 'auto',
+                marginBottom: '5rem',
+            }}
+          />
             <Typography variant="h4" component="h1" sx={{ fontWeight: 'bold' }}>
               Welcome!
             </Typography>
@@ -54,17 +61,32 @@ const LoginPage: React.FC = () => {
             </Typography>
           </Box>
 
-          <Box display="flex" flexDirection="column" gap={2}>
-            <TextField
-              label="Username"
-              name="username"
-              variant="outlined"
-              fullWidth
-              placeholder="johndoe"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              size="small"
-            />
+          <Paper
+            elevation={0}
+            sx={{
+              width: '60%',
+              mx: 'auto',
+              my: '1.5rem',
+              py: '0.75rem',
+              px: '0.5rem',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '0.5rem',
+              borderRadius: '0.25rem',
+              bgcolor: 'transparent',
+            }}
+          >
+            <Box display="flex" flexDirection="column" gap={2}>
+              <TextField
+                label="Username"
+                name="username"
+                variant="outlined"
+                fullWidth
+                placeholder="johndoe"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                size="small"
+              />
 
             <TextField
               label="Password"

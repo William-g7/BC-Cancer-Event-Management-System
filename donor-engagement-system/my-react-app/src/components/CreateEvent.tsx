@@ -77,9 +77,8 @@ const CreateEvent: React.FC = () => {
         expected_selection: parseInt(eventData.expected_selection),
       };
       
-      await eventService.createEvent(completeEventData);
-      alert('Event created successfully!');
       navigate('/events');
+      await eventService.createEvent(completeEventData);
     } catch (error) {
       console.error('Error creating event:', error);
       alert('Failed to create event. Please try again.');
