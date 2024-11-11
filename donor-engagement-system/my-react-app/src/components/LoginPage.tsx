@@ -24,7 +24,22 @@ const LoginPage: React.FC = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ position: 'absolute', right: 40 }}>
+      <Box
+        sx={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '70%',
+          height: '100%',
+          backgroundImage: `url(/login-bg.jpg)`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+      <Box sx={{ position: 'absolute', left: 950 }}>
         <Box sx={{ textAlign: 'left', lineHeight: 1, mt: '5rem', ml: '6rem' }}>
           <h1 className="no-space">BC</h1>
           <h1 className="no-space">CANCER</h1>
@@ -107,6 +122,7 @@ const LoginPage: React.FC = () => {
           </Button>
         </Paper>
       </Box>
+    </Box>
     </ThemeProvider>
   );
 };

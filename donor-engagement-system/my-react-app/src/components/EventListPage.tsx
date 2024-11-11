@@ -9,9 +9,10 @@ import { theme } from '../theme/theme.ts';
 
 const EventListPage: React.FC = () => {
     const navigate = useNavigate();
+    const username = localStorage.getItem('username');
 
     const handleCreateEvent = () => {
-        navigate('/events/create');
+        navigate(`/${username}/events/create`);
     };
 
     return (
