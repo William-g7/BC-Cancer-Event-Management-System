@@ -56,7 +56,7 @@ const DashboardEvents: React.FC = () => {
                 minWidth: {
                   xs: '100%',
                   sm: '260px',
-                  lg: '290px'
+                  lg: '330px'
                 },
                 maxWidth: {
                   sm: 'calc(50% - 8px)',
@@ -77,7 +77,7 @@ const DashboardEvents: React.FC = () => {
                   component="img"
                   alt={event.name}
                   sx={{ 
-                    height: { xs: 150, sm: 180, md: 200 } 
+                    height: { xs: 230, sm: 230, md: 230 } 
                   }}
                   image="/calendar.png"
                 />
