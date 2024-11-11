@@ -24,10 +24,25 @@ const LoginPage: React.FC = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ position: 'absolute', right: 40 }}>
-        <Box sx={{ textAlign: 'left', lineHeight: 1, mt: '5rem', ml: '6rem' }}>
-          <h1 className="no-space">BC</h1>
-          <h1 className="no-space">CANCER</h1>
+
+      <Box
+        sx={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+        }}
+      >
+        <Box
+          sx={{
+            flex: 1,
+            backgroundImage: `url(/login-bg.jpg)`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        >
         </Box>
 
         <Box
