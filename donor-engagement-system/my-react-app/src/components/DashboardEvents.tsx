@@ -76,7 +76,9 @@ const DashboardEvents: React.FC = () => {
                 <CardMedia
                   component="img"
                   alt={event.name}
-                  height={{ xs: 150, sm: 180, md: 200 }}
+                  sx={{ 
+                    height: { xs: 150, sm: 180, md: 200 } 
+                  }}
                   image="/calendar.png"
                 />
                 <CardContent sx={{ 
