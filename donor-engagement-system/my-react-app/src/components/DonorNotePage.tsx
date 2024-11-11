@@ -28,7 +28,7 @@ const DonorNotePage: React.FC = () => {
     <Box sx={{ display: "flex" }}>
       <Box
         sx={{
-          width: { xs: '60px', sm: '230px' }, // Sidebar width
+          width: { xs: '60px', sm: '200px' }, // Sidebar width
         }}
       >
         <Sidebar />

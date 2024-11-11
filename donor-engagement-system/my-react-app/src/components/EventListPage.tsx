@@ -16,7 +16,7 @@ const EventListPage: React.FC = () => {
 
     return (
         <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: 'white' }}>
-            <Box sx={{ width: { xs: '60px', sm: '230px' } }}>
+            <Box sx={{ width: { xs: '60px', sm: '200px' } }}>
                 <Sidebar />
             </Box>
 
