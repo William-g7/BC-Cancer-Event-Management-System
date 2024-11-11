@@ -5,36 +5,30 @@ import LoginPage from "./components/LoginPage.tsx";
 import DashboardPage from "./components/DashboardPage.tsx";
 import EventPage from "./components/EventPage.tsx";
 import DonorSelectionPage from "./components/DonorSelectionPage.tsx";
-import DonorNotePage from "./components/DonorNotePage.tsx"; // 导入 DonorNotePage
+import DonorNotePage from "./components/DonorNotePage.tsx";
 import EventListPage from "./components/EventListPage.tsx";
 import CreateEvent from "./components/CreateEvent.tsx";
 import { ThemeProvider } from '@mui/material/styles';
 import { theme } from './theme/theme.ts';
 
 const App: React.FC = () => {
+  const isAuthenticated = !!localStorage.getItem('username'); // Check if user is logged in
+
   return (
     <ThemeProvider theme={theme}>
       <Router>
-        <MainContent />
+        <Routes>
+          <Route path="/" element={<Navigate to="/login" />} /> 
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/dashboard" element={isAuthenticated ? <DashboardPage /> : <Navigate to="/login" />} /> 
+          <Route path="/events" element={isAuthenticated ? <EventListPage /> : <Navigate to="/login" />} />
+          <Route path="/events/create" element={isAuthenticated ? <CreateEvent /> : <Navigate to="/login" />} />
+          <Route path="/event/:id" element={isAuthenticated ? <EventPage /> : <Navigate to="/login" />} /> 
+          <Route path="/event/:id/selections" element={isAuthenticated ? <DonorSelectionPage /> : <Navigate to="/login" />} />
+          <Route path="/donor/:id" element={isAuthenticated ? <DonorNotePage /> : <Navigate to="/login" />} />
+        </Routes>
       </Router>
     </ThemeProvider>
-  );
-}
-
-const MainContent: React.FC = () => {
-  return (
-    <div>
-      <Routes>
-        <Route path="/" element={<Navigate to="/login" />} /> 
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/dashboard" element={<DashboardPage />} /> 
-        <Route path="/events" element={<EventListPage />} />
-        <Route path="/events/create" element={<CreateEvent />} />
-        <Route path="/event/:id" element={<EventPage />} /> 
-        <Route path="/event/:id/selections" element={<DonorSelectionPage />} />
-        <Route path="/donor/:id" element={<DonorNotePage />} /> {/* 设置 DonorNotePage 路由 */}
-      </Routes>
-    </div>
   );
 };
 
