@@ -5,7 +5,7 @@ interface RequestOptions extends RequestInit {
 }
 
 class Api {
-  private username: string = localStorage.getItem('username') || 'Amy Smith';
+  private username: string = localStorage.getItem('username') || 'Invalid User';
 
   public setUsername(username: string) {
     this.username = username;
