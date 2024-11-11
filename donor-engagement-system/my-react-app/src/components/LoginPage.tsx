@@ -24,10 +24,24 @@ const LoginPage: React.FC = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ position: 'absolute', right: 40 }}>
-        <Box sx={{ textAlign: 'left', lineHeight: 1, mt: '5rem', ml: '6rem' }}>
-          <h1 className="no-space">BC</h1>
-          <h1 className="no-space">CANCER</h1>
+      <Box
+        sx={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+        }}
+      >
+        <Box
+          sx={{
+            flex: 1,
+            backgroundImage: `url(/login-bg.jpg)`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        >
         </Box>
 
         <Box
@@ -88,46 +102,47 @@ const LoginPage: React.FC = () => {
                 size="small"
               />
 
-            <TextField
-              label="Password"
-              name="password"
-              type="password"
-              variant="outlined"
+              <TextField
+                label="Password"
+                name="password"
+                type="password"
+                variant="outlined"
+                fullWidth
+                placeholder="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                size="small"
+              />
+            </Box>
+            
+            {error && (
+              <Typography 
+                color="error" 
+                variant="body2" 
+                sx={{ mt: 1 }}
+              >
+                {error}
+              </Typography>
+            )}
+            
+            <Button
+              onClick={onLogin}
+              disabled={loading}
+              sx={{
+                mt: 2,
+                bgcolor: 'primary.main',
+                color: 'primary.contrastText',
+                '&:hover': {
+                  bgcolor: 'primary.dark',
+                },
+              }}
+              variant="contained"
               fullWidth
-              placeholder="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              size="small"
-            />
-          </Box>
-          
-          {error && (
-            <Typography 
-              color="error" 
-              variant="body2" 
-              sx={{ mt: 1 }}
             >
-              {error}
-            </Typography>
-          )}
-          
-          <Button
-            onClick={onLogin}
-            disabled={loading}
-            sx={{
-              mt: 2,
-              bgcolor: 'primary.main',
-              color: 'primary.contrastText',
-              '&:hover': {
-                bgcolor: 'primary.dark',
-              },
-            }}
-            variant="contained"
-            fullWidth
-          >
-            {loading ? 'Signing in...' : 'Sign in'}
-          </Button>
-        </Paper>
+              {loading ? 'Signing in...' : 'Sign in'}
+            </Button>
+          </Paper>
+        </Box>
       </Box>
     </ThemeProvider>
   );
