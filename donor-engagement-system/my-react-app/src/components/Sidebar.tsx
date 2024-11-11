@@ -7,18 +7,16 @@ import ChatIcon from '@mui/icons-material/Chat';
 import { useNavigate, useLocation } from "react-router-dom";
 import SettingsIcon from '@mui/icons-material/Settings';
 import { theme } from "../theme/theme.ts";
-
 const Sidebar: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const username = localStorage.getItem('username');
 
   const menuItems = useMemo(() => [
-    { text: "Home", icon: <DashboardIcon />, path: `/${username}/dashboard` },
-    { text: "Events", icon: <EventIcon />, path: `/${username}/events`, matchPaths: ["/events", "/event/"] },
-    { text: "Calendar", icon: <CalendarTodayIcon />, path: `/${username}/calendar` },
-    { text: "Message", icon: <ChatIcon />, path: `/${username}/message`},
-    { text: "Settings", icon: <SettingsIcon />, path: `/${username}/settings` },
+    { text: "Home", icon: <DashboardIcon />, path: "/dashboard" },
+    { text: "Events", icon: <EventIcon />, path: "/events", matchPaths: ["/events", "/event/"] },
+    { text: "Calendar", icon: <CalendarTodayIcon />, path: "/calendar" },
+    { text: "Message", icon: <ChatIcon />, path: "/message" },
+    { text: "Settings", icon: <SettingsIcon />, path: "/settings" },
   ], []);
 
   // Initialize selectedItem based on current path

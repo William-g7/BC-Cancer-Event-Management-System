@@ -1,8 +1,15 @@
 import React, { useCallback } from "react";
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import ListItem from '@mui/material/ListItem';
+import Paper from '@mui/material/Paper';
+import styled from '@mui/material/styles/styled';
 import Typography from '@mui/material/Typography';
 import { useParams } from 'react-router-dom';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Avatar from '@mui/material/Avatar';
+import ListItemText from '@mui/material/ListItemText';
+import List from '@mui/material/List';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -24,8 +31,7 @@ const EventDetail: React.FC = () => {
   const { event, loading, error } = useSingleEvent(fetchEvent);
 
   const handleClick = () => {
-    const username = localStorage.getItem('username');
-    navigate(`/${username}/dashboard/event/${id}/donor-selection`);
+    navigate(`/event/${id}/selections`);
   }
 
   if (loading) {

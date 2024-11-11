@@ -29,7 +29,6 @@ const LoginPage: React.FC = () => {
           position: 'absolute',
           top: 0,
           left: 0,
-
           width: '100%',
           height: '100%',
           display: 'flex',
@@ -145,7 +144,6 @@ const LoginPage: React.FC = () => {
           </Paper>
         </Box>
       </Box>
-    </Box>
     </ThemeProvider>
   );
 };

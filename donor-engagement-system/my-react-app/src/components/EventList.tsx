@@ -10,6 +10,7 @@ import {
   Typography,
   Box,
   CircularProgress,
+  IconButton
 } from '@mui/material';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import { useEvents } from '../hooks/useEvents.ts';
@@ -28,8 +29,7 @@ const EventList: React.FC = () => {
   const { events, loading, error } = useEvents(fetchEvents);
   
   const handleEventClick = (id: number) => {
-    const username = localStorage.getItem('username');
-    navigate(`/${username}/dashboard/event/${id}`);
+    navigate(`/event/${id}`);
   };
 
   if (loading) {

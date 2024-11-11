@@ -14,9 +14,8 @@ const useLogin = () => {
             setLoading(true);
             const response = await authService.login(username, password);
             if (response.success) {
-                localStorage.setItem('user', JSON.stringify(response.user));
-                // navigate to username/dashboard
-                navigate('/' + username + '/dashboard'); // Redirect to the dashboard upon successful login
+                navigate('/dashboard'); // Redirect to the dashboard upon successful login
+                return;
             } else {
                 setError(response.message || 'Failed to login');
             }
