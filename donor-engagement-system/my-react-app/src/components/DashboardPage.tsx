@@ -12,7 +12,7 @@ const DashboardPage: React.FC = () => {
     <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: 'white' }}>
       {/* Sidebar */}
       <Box sx={{ 
-        width: { xs: '60px', sm: '230px' },
+        width: { xs: '60px', sm: '250px' },
         flexShrink: 0
       }}>
         <Sidebar />
@@ -42,8 +42,10 @@ const DashboardPage: React.FC = () => {
           </Box>
 
           {/* Title Section */}
-          <Box sx={{ mb: 4, mt: 16 }}>
-            <Typography variant="h4">
+          <Box sx={{ mb: 4, mt: { xs: 12, sm: 14, md: 16 } }}>
+            <Typography variant="h4" sx={{ 
+              fontSize: { xs: '1rem', sm: '1.2rem', md: '1.5rem' }
+            }}>
               FUNDRAISER DASHBOARD
             </Typography>
           </Box>
@@ -58,7 +60,7 @@ const DashboardPage: React.FC = () => {
           }}>
             {/* Events Section */}
             <Box sx={{ 
-              flex: { xs: '1 1 auto', sm: '0 0 auto', md: '1 1 auto', lg: '1 1 auto' },
+              flex: '1 1 auto',
               bgcolor: theme.palette.lightgrey.main,
               borderRadius: 4,
               p: { xs: 2, sm: 2, md: 3 },
@@ -69,7 +71,7 @@ const DashboardPage: React.FC = () => {
 
             {/* Notifications Section */}
             <Box sx={{ 
-              flex: { xs: '1 1 auto', sm: '1 1 auto', md: '1 1 auto', lg: '0 0 330px' },
+              flex: { xs: '1 1 auto', md: '0 0 348px' },
               bgcolor: theme.palette.lightgrey.main,
               borderRadius: 4,
               p: { xs: 2, sm: 2, md: 3 }

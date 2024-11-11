@@ -10,7 +10,7 @@ const Header: React.FC = () => {
         display: "flex", 
         alignItems: "center",
         justifyContent: "flex-end",
-        marginLeft: "270px",
+        marginLeft: "290px",
         marginRight: "40px",
         height: "88px",
         borderBottom: "1px solid #e0e0e0",

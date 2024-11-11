@@ -53,7 +53,7 @@ const Sidebar: React.FC = () => {
   return (
     <Box
       sx={{
-        width: { xs: '60px', sm: '230px' },
+        width: { xs: '60px', sm: '250px' },
         height: "100vh",
         backgroundColor: theme.palette.primary.main,
         color: "white",

@@ -7,7 +7,7 @@ import EventDetail from './EventDetail.tsx';
 const EventPage: React.FC = () => {
     return (
         <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: 'white' }}>
-            <Box sx={{ width: { xs: '60px', sm: '230px' } }}>
+            <Box sx={{ width: '250px' }}>
                 <Sidebar />
             </Box>
 

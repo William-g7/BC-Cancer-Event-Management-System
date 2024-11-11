@@ -8,7 +8,7 @@ const DonorSelectionPage: React.FC = () => {
     return (
       <Box sx={{ display: "flex", minHeight: '100vh', bgcolor: 'white' }}>
         {/* Sidebar */}
-        <Box sx={{ width: { xs: '60px', sm: '230px' } }}>
+        <Box sx={{ width: '250px' }}>
           <Sidebar />
         </Box>
 
