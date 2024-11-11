@@ -12,8 +12,7 @@ const DashboardEvents: React.FC = () => {
   const { events, loading, error } = useEvents(fetchEvents);
 
   const handleEventClick = (id: number) => {
-    const username = localStorage.getItem('username'); // Retrieve username from local storage  
-    navigate(`/${username}/dashboard/event/${id}`);
+    navigate(`/event/${id}`);
   };
 
   if (loading) {

@@ -46,17 +46,14 @@ const DonorSelectionTable: React.FC = () => {
       headerName: 'Notes',
       width: 200,
       editable: true,
-      renderCell: (params) => {
-        const username = localStorage.getItem('username');
-        return (
-          <Link
-            to={`/${username}/dashboard/event/${id}/donor/${params.row.id}`}
-            style={{ color: 'blue', textDecoration: 'underline', cursor: 'pointer' }}
-          >
-            {params.value}
-          </Link>
-        );
-      },
+      renderCell: (params) => (
+        <Link
+          to={`/donor/${params.row.id}`}
+          style={{ color: 'blue', textDecoration: 'underline', cursor: 'pointer' }}
+        >
+          {params.value}
+        </Link>
+      ),
     },
   ];
 
