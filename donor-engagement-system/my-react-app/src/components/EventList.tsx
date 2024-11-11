@@ -119,25 +119,27 @@ const EventList: React.FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {events.map((event) => (
-              <TableRow 
-                key={event.id}
-                onClick={() => handleEventClick(event.id)}
-                sx={{ 
-                  '&:hover': { 
-                    backgroundColor: '#f5f5f5',
-                    cursor: 'pointer'
-                  }
-                }}
-              >
-                <TableCell>{event.name}</TableCell>
-                <TableCell>{event.organizer?.name || 'N/A'}</TableCell>
-                <TableCell>{new Date(event.start_time).toLocaleDateString()}</TableCell>
-                <TableCell>{new Date(event.end_time).toLocaleDateString()}</TableCell>
-                <TableCell>{event.location}</TableCell>
-                <TableCell>{event.description}</TableCell>
-              </TableRow>
-            ))}
+            {events
+              .sort((a, b) => new Date(b.start_time).getTime() - new Date(a.start_time).getTime())
+              .map((event) => (
+                <TableRow 
+                  key={event.id}
+                  onClick={() => handleEventClick(event.id)}
+                  sx={{ 
+                    '&:hover': { 
+                      backgroundColor: '#f5f5f5',
+                      cursor: 'pointer'
+                    }
+                  }}
+                >
+                  <TableCell>{event.name}</TableCell>
+                  <TableCell>{event.organizer?.name || 'N/A'}</TableCell>
+                  <TableCell>{new Date(event.start_time).toLocaleDateString()}</TableCell>
+                  <TableCell>{new Date(event.end_time).toLocaleDateString()}</TableCell>
+                  <TableCell>{event.location}</TableCell>
+                  <TableCell>{event.description}</TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>

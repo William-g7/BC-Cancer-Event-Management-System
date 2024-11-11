@@ -29,38 +29,45 @@ const LoginPage: React.FC = () => {
           position: 'absolute',
           top: 0,
           left: 0,
-          width: '70%',
+
+          width: '100%',
           height: '100%',
-          backgroundImage: `url(/login-bg.jpg)`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
           display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
         }}
       >
-      <Box sx={{ position: 'absolute', left: 950 }}>
-        <Box sx={{ textAlign: 'left', lineHeight: 1, mt: '5rem', ml: '6rem' }}>
-          <h1 className="no-space">BC</h1>
-          <h1 className="no-space">CANCER</h1>
-        </Box>
-        
-        <Paper
-          elevation={0}
+        <Box
           sx={{
-            width: { xs: '17.5rem', sm: '18.75rem' },
-            mx: 'auto',
-            my: '1.5rem',
-            py: '0.75rem',
-            px: '0.5rem',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '0.5rem',
-            borderRadius: '0.25rem',
-            bgcolor: 'transparent',
+            flex: 1,
+            backgroundImage: `url(/login-bg.jpg)`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
           }}
         >
+        </Box>
+
+        <Box
+          sx={{
+            position: 'relative',
+            width: '30%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column',
+            padding: '2rem',
+          }}
+        >
+
           <Box textAlign="center" mb={2}>
+            <img
+              src="/BCCF-color-logo.png"
+              alt="BC Cancer"
+              style={{
+                width: '100%',
+                maxWidth: '300px',
+                height: 'auto',
+                marginBottom: '5rem',
+            }}
+          />
             <Typography variant="h4" component="h1" sx={{ fontWeight: 'bold' }}>
               Welcome!
             </Typography>
@@ -69,58 +76,74 @@ const LoginPage: React.FC = () => {
             </Typography>
           </Box>
 
-          <Box display="flex" flexDirection="column" gap={2}>
-            <TextField
-              label="Username"
-              name="username"
-              variant="outlined"
-              fullWidth
-              placeholder="johndoe"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              size="small"
-            />
-
-            <TextField
-              label="Password"
-              name="password"
-              type="password"
-              variant="outlined"
-              fullWidth
-              placeholder="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              size="small"
-            />
-          </Box>
-          
-          {error && (
-            <Typography 
-              color="error" 
-              variant="body2" 
-              sx={{ mt: 1 }}
-            >
-              {error}
-            </Typography>
-          )}
-          
-          <Button
-            onClick={onLogin}
-            disabled={loading}
+          <Paper
+            elevation={0}
             sx={{
-              mt: 2,
-              bgcolor: 'primary.main',
-              color: 'primary.contrastText',
-              '&:hover': {
-                bgcolor: 'primary.dark',
-              },
+              width: '60%',
+              mx: 'auto',
+              my: '1.5rem',
+              py: '0.75rem',
+              px: '0.5rem',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '0.5rem',
+              borderRadius: '0.25rem',
+              bgcolor: 'transparent',
             }}
-            variant="contained"
-            fullWidth
           >
-            {loading ? 'Signing in...' : 'Sign in'}
-          </Button>
-        </Paper>
+            <Box display="flex" flexDirection="column" gap={2}>
+              <TextField
+                label="Username"
+                name="username"
+                variant="outlined"
+                fullWidth
+                placeholder="johndoe"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                size="small"
+              />
+
+              <TextField
+                label="Password"
+                name="password"
+                type="password"
+                variant="outlined"
+                fullWidth
+                placeholder="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                size="small"
+              />
+            </Box>
+            
+            {error && (
+              <Typography 
+                color="error" 
+                variant="body2" 
+                sx={{ mt: 1 }}
+              >
+                {error}
+              </Typography>
+            )}
+            
+            <Button
+              onClick={onLogin}
+              disabled={loading}
+              sx={{
+                mt: 2,
+                bgcolor: 'primary.main',
+                color: 'primary.contrastText',
+                '&:hover': {
+                  bgcolor: 'primary.dark',
+                },
+              }}
+              variant="contained"
+              fullWidth
+            >
+              {loading ? 'Signing in...' : 'Sign in'}
+            </Button>
+          </Paper>
+        </Box>
       </Box>
     </Box>
     </ThemeProvider>
