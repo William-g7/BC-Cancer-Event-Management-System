@@ -53,7 +53,7 @@ const Sidebar: React.FC = () => {
   return (
     <Box
       sx={{
-        width: { xs: '60px', sm: '230px' },
+        width: { xs: '60px',lg: '230px' },
         height: "100vh",
         backgroundColor: theme.palette.primary.main,
         color: "white",
@@ -66,8 +66,8 @@ const Sidebar: React.FC = () => {
     >
       {/* Logo container - only show on larger screens */}
       <Box sx={{ 
-        p: { xs: 1, sm: 2 },
-        display: { xs: 'none', sm: 'flex' }, // Hide entire logo container on mobile
+        p: { xs: 1, lg: 2 },
+        display: { xs: 'none', lg: 'flex' }, // Hide entire logo container on mobile
         justifyContent: 'flex-start',
         marginTop: '20px',
         marginBottom: '20px'
@@ -83,7 +83,7 @@ const Sidebar: React.FC = () => {
       </Box>
 
       <List sx={{ 
-        mt: { xs: 2, sm: 1 } // Adjust top margin when logo is hidden
+        mt: { xs: 2, lg: 1 } // Adjust top margin when logo is hidden
       }}>
         {menuItems.map((item) => {
           const isSelected = selectedItem === item.text;
@@ -93,8 +93,8 @@ const Sidebar: React.FC = () => {
                 onClick={() => handleIconClick(item.text, item.path)}
                 sx={{
                   py: 1.5,
-                  px: { xs: 1, sm: 2 },
-                  justifyContent: { xs: 'center', sm: 'flex-start' },
+                  px: { xs: 1, lg: 2 },
+                  justifyContent: { xs: 'center', lg: 'flex-start' },
                   backgroundColor: isSelected ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
                   '&:hover': {
                     backgroundColor: isSelected 
@@ -105,8 +105,8 @@ const Sidebar: React.FC = () => {
               >
                 <ListItemIcon sx={{ 
                   color: 'white', 
-                  minWidth: { xs: 0, sm: 40 },
-                  mr: { xs: 0, sm: 2 },
+                  minWidth: { xs: 0, lg: 40 },
+                  mr: { xs: 0, lg: 2 },
                   opacity: isSelected ? 1 : 0.7,
                   justifyContent: 'center'
                 }}>
@@ -115,7 +115,7 @@ const Sidebar: React.FC = () => {
                 <ListItemText 
                   primary={item.text} 
                   sx={{ 
-                    display: { xs: 'none', sm: 'block' },
+                    display: { xs: 'none', lg: 'block' },
                     '& .MuiTypography-root': { 
                       fontSize: '16px',
                       color: 'white',

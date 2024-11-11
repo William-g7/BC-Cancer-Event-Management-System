@@ -12,7 +12,7 @@ const DashboardPage: React.FC = () => {
     <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: 'white' }}>
       {/* Sidebar */}
       <Box sx={{ 
-        width: { xs: '60px', sm: '230px' },
+        width: { xs: '60px', lg: '230px' },
         flexShrink: 0
       }}>
         <Sidebar />
