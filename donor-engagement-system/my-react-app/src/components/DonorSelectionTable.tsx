@@ -46,24 +46,29 @@ const DonorSelectionTable: React.FC = () => {
       headerName: 'Notes',
       width: 200,
       editable: true,
-      renderCell: (params) => (
-        <Link
-          to={`/donor/${params.row.id}`}
-          style={{ color: 'blue', textDecoration: 'underline', cursor: 'pointer' }}
-        >
-          {params.value}
-        </Link>
-      ),
+      renderCell: (params) => {
+        const username = localStorage.getItem('username');
+        return (
+          <Link
+            to={`/${username}/dashboard/event/${id}/donor/${params.row.id}`}
+            style={{ color: 'blue', textDecoration: 'underline', cursor: 'pointer' }}
+          >
+            {params.value}
+          </Link>
+        );
+      },
     },
   ];
 
   return (
+
     <Box sx={{ width: '100%', position: 'relative' }}>
       <Box sx={{ mb: 4 }}>
         <Typography variant="h4">
           {data?.event ? `EVENTS / ${data.event.name}` : 'Loading...'}
         </Typography>
       </Box>
+
 
       <Box sx={{ width: '100%' }}>
         <DataGrid
@@ -79,7 +84,9 @@ const DonorSelectionTable: React.FC = () => {
           disableRowSelectionOnClick
         />
       </Box>
+
     </Box>
+    
   );
 };
 
