@@ -13,6 +13,7 @@ export interface Event {
     deadline: DateTime;
     expected_selection: number;
     selected_count: number;
+    image_url?: string | null;
 }
 
 export interface CreateEventDTO {

@@ -13,6 +13,7 @@ export interface EventData {
     selected_count: number;
     assigned_fundraisers?: Fundraiser[];
     organizer?: Fundraiser;
+    image_url?: string | null;
 }
 
 export interface CreateEventData {

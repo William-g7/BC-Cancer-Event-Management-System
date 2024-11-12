@@ -114,6 +114,7 @@ export class EventService {
         
         // select donors for the event
         const donorIds = await eventRepository.selectDonorIdsForEvent(city, newEvent.expected_selection);
+        console.log('Donor ID numbers:', donorIds.length);
         // find the fundraiser for each donor
         for (const donorId of donorIds) {   
             const fundraiserId = await eventRepository.findFundraiserIdFromDonorId(donorId);

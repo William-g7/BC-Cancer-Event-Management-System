@@ -118,14 +118,16 @@ export class EventRepository {
     }
 
     // select donor_ids for event parameters: city, number_of_donors
+    // for now, add 20 to the number of donors to account for further selections
     async selectDonorIdsForEvent(city: string, number_of_donors: number): Promise<number[]> {
         const [donors] = await this.pool.execute(
             `SELECT * FROM Donors 
             WHERE LOWER(city) = LOWER(?) 
             ORDER BY RAND()
-            LIMIT ${number_of_donors}`,
+            LIMIT ${number_of_donors + 30}`,
             [city]
         ) as [any[], any];
+        console.log('Donors:', donors);
         return donors.map((donor: any) => donor.id);
     }
 
