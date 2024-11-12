@@ -79,7 +79,7 @@ const DashboardEvents: React.FC = () => {
                   sx={{ 
                     height: { xs: 230, sm: 230, md: 230 } 
                   }}
-                  image="/calendar.png"
+                  image={event.image_url || '/calendar.png'}
                 />
                 <CardContent sx={{ 
                   flexGrow: 1, 

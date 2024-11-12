@@ -6,10 +6,10 @@ import mysql, { Pool, PoolOptions } from 'mysql2/promise';
 // Connection pool configuration
 const poolConfig: PoolOptions = {
     // Basic configuration
-    host: process.env.DB_HOST || 'donor-engagement-system-db.c5s2qkg2wpk5.us-east-1.rds.amazonaws.com',
-    user: process.env.DB_USER || 'puppylover',
-    password: process.env.DB_PASSWORD || 'puppylover5500',
-    database: process.env.DB_DATABASE || 'donor_engagement_system',
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
 
     // Pool specific configuration
     connectionLimit: 20,      // Maximum number of connections in the pool

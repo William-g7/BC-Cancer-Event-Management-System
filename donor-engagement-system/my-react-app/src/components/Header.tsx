@@ -14,7 +14,7 @@ const Header: React.FC = () => {
         marginRight: {xs:"10px", lg:"40px"},
         height: "88px",
         borderBottom: "1px solid #e0e0e0",
-        position: "fixed",
+        position: "relative",
         right: 0,
         left: 0,
         top: 0,

@@ -91,12 +91,23 @@ const CreateEvent: React.FC = () => {
     'Burnaby',
     'Richmond',
     'Surrey',
+    'Abbotsford',
+    'Salmon Arm',
+    'Parksville',
+    'Saanich',
+    'White Rock',
+    'Kelowna',  
     'North Vancouver',
     'West Vancouver',
     'Coquitlam',
-    'Port Coquitlam',
-    'Port Moody',
-    'New Westminster'
+    'Port Coquitlam', 
+    'New Westminster',
+    'Vernon',
+    'Langley',
+    'Williams Lake',
+    'Prince George',
+    'Campbell River',
+    'Courtenay',
   ];
 
   return (

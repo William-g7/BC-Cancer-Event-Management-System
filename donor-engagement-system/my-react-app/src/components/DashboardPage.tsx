@@ -35,9 +35,13 @@ const DashboardPage: React.FC = () => {
         }}>
           {/* Header */}
           <Box sx={{ 
-            position: 'absolute', 
-            right: { xs: '10px', sm: '20px', md: '40px' }
-          }}>
+            width: '100%',
+            maxWidth: '1440px',
+            marginLeft: { xs: '10px', sm: '20px', md: '40px' },
+            marginRight: { xs: '10px', sm: '20px', md: '40px' },
+            overflow: 'auto',
+            position: 'relative' // This can stay or be removed
+        }}>
             <Header />
           </Box>
 

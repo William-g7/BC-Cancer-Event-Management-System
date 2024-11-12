@@ -105,6 +105,7 @@ export class EventService {
         if (!newEvent) {
             throw new Error(`Event with id ${newEventId} not found`);
         }
+        console.log('New event in Service:', newEvent);
 
         // get the city from the location
         const city = newEvent.location.split(',')
@@ -113,6 +114,7 @@ export class EventService {
         
         // select donors for the event
         const donorIds = await eventRepository.selectDonorIdsForEvent(city, newEvent.expected_selection);
+        console.log('Donor ID numbers:', donorIds.length);
         // find the fundraiser for each donor
         for (const donorId of donorIds) {   
             const fundraiserId = await eventRepository.findFundraiserIdFromDonorId(donorId);
