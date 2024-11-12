@@ -48,16 +48,17 @@ Identify actionable steps that can be taken to improve future projects.
 ## Individual Self-Assessments
 ### [Team Member 1]
 - **Achievements and Contributions:**
-  - create a Figma share project to help analyze the client presentation (https://www.figma.com/files/team/1400599363972161267/project/281237467/CS-5500?fuid=1400599359760576965)
-  - share understanding of product and user experience design with team members
-  - share understanding of the cal-sheet assignment with other team members
-  - fill in the persona analysis of the bc-cancer clients
+  - finish the full-stack codes for the 'create event' feature
+  - enrich the database with 5000 donors from the outside API
+  - finish the high-fidelity mockup for the whole application
+  - optimize the layout of the frontend pages based on the latest design
+  
 - **Challenges Faced:**
-  - It is hard to have better time management, there are always more things to do.
+  - It is hard to test some backend codes and delete the test date from the database
 - **Areas for Improvement:**
-  - It would be better if I could have a better understanding of design patterns
+  - the frontend codes need to be cleaner and more organized to follow the best practices
 - **Feedback and Suggestions:**
-  - I will keep leading the design process and try to have more time to improve my technical skills
+  - do some unit testing for the backend codes at the early stage of development
 
 ### [Team Member 2]
 - **Achievements and Contributions:**
