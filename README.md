@@ -26,7 +26,7 @@ Your TA will be one of these:
 
 ## Project Description
 
-The BC Cancer Foundation aims to enhance donor engagement through a streamlined Donor Engagement Optimization System. This project addresses the challenges in managing event invite lists by facilitating collaboration among event organizers/fundraisers and coordinators.
+The BC Cancer Foundation aims to enhance donor engagement through a streamlined Donor Engagement Optimization System. This project addresses the challenges in managing event invite lists by facilitating collaboration among event organizers/fundraisers and coordinators. details of the project can be found in the [README.md](Project/README.md) file.
 
 The web application is organized within the `donor-engagement-system` folder, which contains three main components:
 
