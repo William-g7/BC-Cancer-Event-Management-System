@@ -41,7 +41,7 @@ export class DonorController {
 
         const fundraiserId = await this.fundraiserService.getFundraiserIdByAccountId(accountId);
         const donors = await this.donorService.getDonorsByEventFundraiser(eventId, fundraiserId);
-        console.log('Donors:', donors);
+        console.log('Donors fetched successfully');
         res.json({
             success: true,
             data: donors

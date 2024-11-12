@@ -6,7 +6,7 @@ async function fetchAllDonors(): Promise<any[]> {
     
     try {
         console.log('Starting API fetch...');
-        const response = await fetch(`${baseUrl}?limit=3000&offset=3000&format=json`);
+        const response = await fetch(`${baseUrl}?limit=5000&format=json`);
         
         if (!response.ok) {
             console.error('API Response:', await response.text());

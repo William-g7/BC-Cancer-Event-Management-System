@@ -105,6 +105,7 @@ export class EventService {
         if (!newEvent) {
             throw new Error(`Event with id ${newEventId} not found`);
         }
+        console.log('New event in Service:', newEvent);
 
         // get the city from the location
         const city = newEvent.location.split(',')

@@ -99,6 +99,8 @@ export class EventRepository {
             0
         ];
 
+        console.log('Event data in Repository:', values);
+
         const [result] = await this.pool.execute(query, values) as [ResultSetHeader, any];
         return result.insertId;
     }
@@ -120,7 +122,7 @@ export class EventRepository {
         const [donors] = await this.pool.execute(
             `SELECT * FROM Donors 
             WHERE LOWER(city) = LOWER(?) 
-            ORDER BY id ASC
+            ORDER BY RAND()
             LIMIT ${number_of_donors}`,
             [city]
         ) as [any[], any];
