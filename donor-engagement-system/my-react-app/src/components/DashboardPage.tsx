@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography} from '@mui/material';
 import Sidebar from './Sidebar.tsx';
 import Header from './Header.tsx';
 import DashboardEvents from './DashboardEvents.tsx';
@@ -26,24 +26,20 @@ const DashboardPage: React.FC = () => {
       }}>
         {/* Main content with max width */}
         <Box sx={{ 
-          width: '100%',
-          maxWidth: '1440px',
-          marginLeft: { xs: '10px', sm: '20px', md: '40px' },
-          marginRight: { xs: '10px', sm: '20px', md: '40px' },
-          overflow: 'auto',
-          position: 'relative'
-        }}>
+                flexGrow: 1,
+                overflow: 'auto',
+                position: 'relative',
+                marginLeft: { xs: '10px', sm: '20px', md: '40px' },
+            }}>
           {/* Header */}
+          
           <Box sx={{ 
-            width: '100%',
-            maxWidth: '1440px',
-            marginLeft: { xs: '10px', sm: '20px', md: '40px' },
-            marginRight: { xs: '10px', sm: '20px', md: '40px' },
-            overflow: 'auto',
-            position: 'relative' // This can stay or be removed
-        }}>
+            position: 'absolute',
+            right: 40
+          }}>
             <Header />
           </Box>
+          
 
           {/* Title Section */}
           <Box sx={{ mb: 4, mt: 16 }}>
