@@ -1,46 +1,45 @@
 # Retrospective Document Template
 
 ## Team Name
-[Insert Team Name Here]
+Puppy Lover
 
 ## Date
 Week 9 November 04
 
 ## Participants
-- [Team Member 1]
-- [Team Member 2]
+- Shiyuan Chen
+- Yan Wang
 - Xing Gao
-- [Team Member 4]
-- [Team Member 5]
+- Zhenziye Lin
 
 ---
 
 ## Overview
-Briefly describe the purpose of this retrospective and what you aim to achieve.
+This retrospective outlines our achievements and challenges from the past week, providing insights on areas for improvement for the next phase of the project.
 
 ---
 
 ## What Went Well
 List the things that went well during the project.
--
--
--
+- Successfully fetched data from the provided API and stored it in the database
+- Developed proficiency in connecting the client side and server side using REST APIs
+- Made adjustments to the webpage layout
 
 ---
 
 ## What Could Be Improved
 List the areas where there is room for improvement.
--
--
--
+- Improving the responsiveness of the webpage layout 
+- Enhancing skills in TypeScript and React
+- Strengthening database management practices
 
 ---
 
 ## Action Items
 Identify actionable steps that can be taken to improve future projects.
-1.
-2.
-3.
+1. Continue developing skills in TypeScript and React
+2. Focus on achieving user-centered features
+3. Implement unit testing 
 
 ---
 
@@ -59,15 +58,20 @@ Identify actionable steps that can be taken to improve future projects.
 - **Feedback and Suggestions:**
   - do some unit testing for the backend codes at the early stage of development
 
-### [Team Member 2]
+### [Yan Wang]
 - **Achievements and Contributions:**
-  -
+  - Enhanced the robustness of the login feature
+  - Updated project routes to improve security
+  - Refined the webpage layout
 - **Challenges Faced:**
-  -
+  - Webpage layout adjustments are time-consuming and require significant patience
+  - Lack of familiarity with database syntax
 - **Areas for Improvement:**
-  -
+  - Strengthen database skills
+  - Continue practicing frontend development skills
 - **Feedback and Suggestions:**
-  -
+  - Our group is very supportive, and we actively help each other when facing bugs—let’s keep this up!
+  - Set clear objectives for the next sprint to ensure focused progress
 
 ### [Xing Gao]
 - **Achievements and Contributions:**
@@ -101,26 +105,22 @@ Identify actionable steps that can be taken to improve future projects.
 - **Feedback and Suggestions:**
   -
 
-### [Team Member 5]
-- **Achievements and Contributions:**
-  -
-- **Challenges Faced:**
-  -
-- **Areas for Improvement:**
-  -
-- **Feedback and Suggestions:**
-  -
 
 ---
 
 ## Overall Team Assessment
 Reflect on the team’s performance as a whole.
 - **Team Strengths:**
-  -
+  - Team members consistently support each other, especially when tackling technical challenges. This collaborative approach has fostered a productive and positive working environment.
+  - Each member has contributed unique skills, allowing us to cover a wide range of tasks, from database management and backend development to frontend layout and design.
+  - The team demonstrates resilience and resourcefulness, actively seeking solutions for complex problems in both frontend and backend functionalities.
 - **Areas for Improvement:**
-  -
+  - Although we achieved many goals, better planning at the beginning of each sprint could help streamline our workflow and prevent last-minute rushes.
+  - Comprehensive documentation of core features and workflows, such as donor selection logic, would improve project maintainability and help onboard team members more efficiently.
 - **Suggestions for Future Projects:**
-  -
+  - Implement code reviews to ensure code quality, maintain best practices, and promote knowledge sharing among team members.
+  - Define specific, measurable goals at the beginning of each sprint to guide the team and help track progress effectively.
+  - Encourage continuous learning in areas like TypeScript, React, and SQL, which are essential for the project’s success and the team's overall growth.
 
 ---
 
