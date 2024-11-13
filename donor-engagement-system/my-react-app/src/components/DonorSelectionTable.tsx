@@ -12,9 +12,19 @@ import { EventData } from '../types/event';
 const donorService = new DonorService();
 const eventService = new EventService();
 
-const DonorSelectionTable: React.FC = () => {
-  const navigate = useNavigate();
+
+interface DonorSelectionTableProps {
+  selectedDonors: number[];  
+  onSelectionChange: (selected: number[]) => void;  
+}
+
+
+const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
+  selectedDonors,
+  onSelectionChange
+}) => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
 
   const fetchEventAndDonors = useCallback(async () => {
     if (!id) throw new Error('Event ID is required');
@@ -27,6 +37,19 @@ const DonorSelectionTable: React.FC = () => {
 
   const { data, loading, error } = useEventAndDonors(fetchEventAndDonors);
 
+  React.useEffect(() => {
+    if (data?.donors) {
+      const selectedIds = data.donors
+        .filter(donor => 
+          donor.state === 'selected' || 
+          donor.state === 'confirmed'
+                
+        )
+        .map(donor => donor.id);
+      onSelectionChange(selectedIds);
+    }
+  }, [data?.donors, onSelectionChange]);
+
   if (loading) {
     return <Typography variant="h6">Loading...</Typography>;
   }
@@ -36,6 +59,7 @@ const DonorSelectionTable: React.FC = () => {
   }
 
   const columns: GridColDef[] = [
+    { field: 'id', headerName: 'ID', width: 90 },
     { field: 'last_name', headerName: 'Donor Last Name', width: 150 },
     { field: 'first_name', headerName: 'Donor First Name', width: 150 },
     { field: 'total_donations', headerName: 'Total Donations', width: 180, type: 'number' },
@@ -55,7 +79,24 @@ const DonorSelectionTable: React.FC = () => {
         </Link>
       ),
     },
+    {
+      field: 'state',
+      headerName: 'Status',
+      width: 120,
+      renderCell: (params) => (
+        <Typography color={
+          params.value === 'confirmed' ? 'success.main' :
+          params.value === 'selected' ? 'primary.main' :
+          'text.secondary'
+        }>
+          {params.value}
+        </Typography>
+      ),
+    }
   ];
+
+  if (loading) return <Typography>Loading...</Typography>;
+  if (error) return <Typography color="error">{error}</Typography>;
 
   return (
     <Box sx={{ width: '100%', position: 'relative' }}>
@@ -69,14 +110,19 @@ const DonorSelectionTable: React.FC = () => {
         <DataGrid
           rows={data?.donors || []}
           columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 10 },
-            },
-          }}
-          pageSizeOptions={[5, 10]}
           checkboxSelection
           disableRowSelectionOnClick
+          onRowSelectionModelChange={(newSelection) => {
+            console.log('Selection changed:', newSelection);
+            onSelectionChange(newSelection as number[]);
+          }}
+          rowSelectionModel={selectedDonors}
+          initialState={{
+              pagination: {
+                  paginationModel: { page: 0, pageSize: 10 },
+              },
+          }}
+          pageSizeOptions={[5, 10]}
         />
       </Box>
     </Box>

@@ -47,4 +47,76 @@ export class DonorController {
             data: donors
         });
     }
+
+    /**
+     * @route   POST /api/events/:id/selections/save
+     * @desc    Save selections
+     */
+    saveSelections = async (req: CustomRequest, res: Response) => {
+        try {
+            console.log('DonorController: Received save request:', {
+                params: req.params,
+                body: req.body,
+                user: req.user
+            });
+            
+            const eventId = parseInt(req.params.id);
+            const { donorIds } = req.body;
+            const accountId = req.user?.id;
+
+            if (!accountId) {
+                console.log('DonorController: No account ID found');
+                return res.status(401).json({
+                    success: false,
+                    error: 'User not authenticated'
+                });
+            }
+
+            if (!donorIds || !Array.isArray(donorIds)) {
+                console.log('DonorController: Invalid donorIds:', donorIds);
+                return res.status(400).json({
+                    success: false,
+                    error: 'Invalid donor selection'
+                });
+            }
+
+            await this.donorService.saveSelections(eventId, donorIds, accountId);
+            console.log('DonorController: Save successful');
+            res.json({ success: true });
+        } catch (error) {
+            console.error('DonorController: Error saving selections:', error);
+            res.status(500).json({
+                success: false,
+                error: error instanceof Error ? error.message : 'Failed to save selections'
+            });
+        }
+    }
+
+    /**
+     * @route   POST /api/events/:id/selections/confirm
+     * @desc    Confirm selections
+     */
+    confirmSelections = async (req: CustomRequest, res: Response) => {
+        try {
+            const eventId = parseInt(req.params.id);
+            const { donorIds } = req.body;
+            const accountId = req.user?.id;
+
+            if (!accountId) {
+                return res.status(401).json({
+                    success: false,
+                    error: 'User not authenticated'
+                });
+            }
+
+            await this.donorService.confirmSelections(eventId, donorIds, accountId);
+            res.json({ success: true });
+        } catch (error) {
+            res.status(500).json({
+                success: false,
+                error: 'Failed to confirm selections'
+            });
+        }
+    }
+    
 }

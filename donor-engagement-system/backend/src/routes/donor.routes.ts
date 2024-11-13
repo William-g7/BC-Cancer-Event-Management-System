@@ -14,4 +14,10 @@ router.get('/event/:id/selections/:donorId', checkUser, donorController.getDonor
 // Get donors by event and fundraiser
 router.get('/event/:id/selections', checkUser, donorController.getDonorsByEventFundraiser);
 
+// Save selections
+router.post('/event/:id/selections/save', checkUser, donorController.saveSelections);
+
+// Confirm selections
+router.post('/event/:id/selections/confirm', checkUser, donorController.confirmSelections);
+
 export default router;

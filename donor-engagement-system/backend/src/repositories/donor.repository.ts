@@ -1,5 +1,6 @@
 import { Pool } from 'mysql2/promise';
 import { Donor } from '../types/donor.types';
+import { RowDataPacket, FieldPacket } from 'mysql2';
 
 interface DonorSelectionRow {
     donor_id: number;
@@ -15,20 +16,96 @@ export class DonorRepository {
         return result[0] || null;
     }
 
-    async findDonorsByEventFundraiser(eventId: number, fundraiserId: number): Promise<Donor[]> {
+    async findDonorsByEventFundraiser(eventId: number, fundraiserId: number): Promise<(Donor & { state: string })[]> {
         const [eventFundraiserId] = await this.pool.execute(`
-            SELECT id FROM Event_Fundraisers WHERE event_id = ? AND fundraiser_id = ?
+            SELECT id FROM Event_Fundraisers 
+            WHERE event_id = ? AND fundraiser_id = ?
         `, [eventId, fundraiserId]) as [any[], any];
-
+    
         if (!eventFundraiserId.length) {
             return [];
         }
+    
+        const [donors] = await this.pool.execute(`
+            SELECT 
+                d.*,
+                COALESCE(s.state, 'unselected') as state
+            FROM Donors d
+            INNER JOIN Selections s ON 
+                s.donor_id = d.id AND 
+                s.event_id = ? AND 
+                s.event_fundraiser_id = ?
+            ORDER BY d.ID
+        `, [eventId, eventFundraiserId[0].id]) as [any[], any];
+    
+        return donors;
+    }
+    
 
-        const [donorIds] = await this.pool.execute(`
-            SELECT donor_id FROM Selections WHERE event_id = ? AND event_fundraiser_id = ?
-        `, [eventId, eventFundraiserId[0].id]) as [DonorSelectionRow[], any];
-        
-        const donors = await Promise.all(donorIds.map(donorId => this.findById(donorId.donor_id)));
-        return donors.filter((donor): donor is Donor => donor !== null);
+    async saveSelections(eventId: number, donorIds: number[], eventFundraiserId: number): Promise<void> {
+        const connection = await this.pool.getConnection();
+        try {
+            await connection.beginTransaction();
+
+            for (const donorId of donorIds) {
+                await connection.execute(`
+                    UPDATE Selections 
+                    SET state = 'selected'
+                    WHERE event_id = ? 
+                    AND donor_id = ? 
+                    AND event_fundraiser_id = ?
+                `, [eventId, donorId, eventFundraiserId]);
+            }
+
+            await connection.commit();
+        } catch (error) {
+            await connection.rollback();
+            throw error;
+        } finally {
+            connection.release();
+        }
+    }
+
+    async confirmSelections(eventId: number, donorIds: number[], eventFundraiserId: number): Promise<void> {
+        const connection = await this.pool.getConnection();
+        try {
+            await connection.beginTransaction();
+
+            for (const donorId of donorIds) {
+                await connection.execute(`
+                    UPDATE Selections 
+                    SET state = 'confirmed'
+                    WHERE event_id = ? 
+                    AND donor_id = ? 
+                    AND event_fundraiser_id = ?
+                `, [eventId, donorId, eventFundraiserId]);
+            }
+
+            await connection.commit();
+        } catch (error) {
+            await connection.rollback();
+            throw error;
+        } finally {
+            connection.release();
+        }
+    }
+
+    async findOtherFundraisersSelections(eventId: number, currentFundraiserId: number): Promise<(Donor & { fundraiser_name: string; state: string; })[]> {
+        const [rows] = await this.pool.execute<RowDataPacket[]>(`
+            SELECT 
+                d.*,
+                s.state,
+                a.name as fundraiser_name
+            FROM Selections s
+            INNER JOIN Donors d ON d.id = s.donor_id
+            INNER JOIN Event_Fundraisers ef ON s.event_fundraiser_id = ef.id
+            INNER JOIN Fundraisers f ON ef.fundraiser_id = f.id
+            INNER JOIN Accounts a ON f.account_id = a.id
+            WHERE s.event_id = ? 
+            AND ef.fundraiser_id != ?
+            ORDER BY d.last_name, d.first_name
+        `, [eventId, currentFundraiserId]);
+
+        return rows as (Donor & { fundraiser_name: string; state: string; })[];
     }
 }
