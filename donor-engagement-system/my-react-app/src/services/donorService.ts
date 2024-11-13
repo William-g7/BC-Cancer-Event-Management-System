@@ -77,7 +77,23 @@ async confirmSelections(eventId: number, donorIds: number[]): Promise<void> {
   }
 }
 
+async getOtherFundraisersSelections(eventId: number): Promise<any[]> {
+  try {
+    const response = await api.get<{
+      success: boolean,
+      data: any[]
+    }>(`/event/${eventId}/other-selections`);
 
+    if (!response.success) {
+      throw new Error('Failed to fetch other selections');
+    }
+
+    return response.data || [];
+  } catch (error) {
+    console.error('Error fetching other selections:', error);
+    throw error;
+  }
+}
 
 }
 

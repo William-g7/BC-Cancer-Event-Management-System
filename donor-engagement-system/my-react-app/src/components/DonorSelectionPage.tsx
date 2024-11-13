@@ -1,20 +1,35 @@
 import React from 'react';
 import DonorSelectionTable from './DonorSelectionTable.tsx';
+import OtherSelectionsTable from './OtherSelectionsTable.tsx';
 import Sidebar from './Sidebar.tsx';
 import { Box } from '@mui/system';
 import Header from './Header.tsx';
 import { useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { DonorService } from '../services/donorService.ts';
 import { Button, useTheme } from '@mui/material';
-
 
 const donorService = new DonorService();
 
 const DonorSelectionPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [selectedDonors, setSelectedDonors] = useState<number[]>([]);
+  const [otherSelections, setOtherSelections] = useState<any[]>([]);
   const theme = useTheme();
+
+  useEffect(() => {
+    const fetchOtherSelections = async () => {
+      if (!id) return;
+      try {
+        const data = await donorService.getOtherFundraisersSelections(parseInt(id));
+        setOtherSelections(data);
+      } catch (error) {
+        console.error('Error fetching other selections:', error);
+      }
+    };
+
+    fetchOtherSelections();
+  }, [id]);
 
   const handleSaveSelection = async () => {
       try {
@@ -33,9 +48,14 @@ const DonorSelectionPage: React.FC = () => {
   const handleConfirmSelection = async () => {
       try {
           if (!id) return;
+          console.log('Confirming selections:', {
+              eventId: id,
+              selectedDonors,
+          });
           await donorService.confirmSelections(parseInt(id), selectedDonors);
+          console.log('Confirm selections successful');
       } catch (error) {
-          console.error('Error confirming selections:', error);
+          console.error('Error confirming selections in page:', error);
       }
   };
   
@@ -69,6 +89,10 @@ const DonorSelectionPage: React.FC = () => {
               selectedDonors={selectedDonors}
             />
             
+            <Box sx={{ mt: 4 }}>
+              <OtherSelectionsTable donors={otherSelections} />
+            </Box>
+
             {/* Buttons */}
             <Box sx={{ 
               position: 'fixed',

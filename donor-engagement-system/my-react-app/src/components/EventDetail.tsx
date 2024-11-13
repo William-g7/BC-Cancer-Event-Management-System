@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import ListItem from '@mui/material/ListItem';
@@ -16,13 +16,20 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useSingleEvent } from '../hooks/useEvents.ts';
 import { EventService } from '../services/eventService.ts';
 import { theme } from '../theme/theme.ts';
+import { DonorService } from '../services/donorService.ts';
+import { Donor } from '../types/donor.ts';
+import OtherSelectionsTable from './OtherSelectionsTable.tsx';
 
 const eventService = new EventService();
+const donorService = new DonorService();
 
 const EventDetail: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
-  
+  const [otherSelections, setOtherSelections] = useState<(Donor & { fundraiser_name: string; state: string; })[]>([]);
+
+
+
   const fetchEvent = useCallback(() => {
     if (!id) throw new Error('Event ID is required');
     return eventService.getEventById(parseInt(id));
@@ -162,6 +169,7 @@ const EventDetail: React.FC = () => {
               )}
             </Box>
           </Grid>
+
         </Grid>
       </Box>
 

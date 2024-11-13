@@ -1,6 +1,7 @@
-import React from 'react';
-import { Box, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, Typography, IconButton, Collapse } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 90 },
@@ -15,23 +16,41 @@ interface OtherSelectionsTableProps {
 }
 
 const OtherSelectionsTable: React.FC<OtherSelectionsTableProps> = ({ donors }) => {
+    const [isCollapsed, setIsCollapsed] = useState(false);
+
     return (
         <Box sx={{ mt: 4 }}>
-            <Typography variant="h5" sx={{ mb: 2 }}>
-                DONORS SELECTED BY OTHER FUNDRAISERS
-            </Typography>
-            <DataGrid
-                rows={donors}
-                columns={columns}
-                autoHeight
-                disableRowSelectionOnClick
-                initialState={{
-                    pagination: {
-                        paginationModel: { page: 0, pageSize: 5 },
-                    },
-                }}
-                pageSizeOptions={[5, 10]}
-            />
+            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                <Typography variant="h5">
+                    Donors selected by other fundraisers
+                </Typography>
+                <IconButton 
+                    onClick={() => setIsCollapsed(!isCollapsed)}
+                    size="small"
+                    sx={{ 
+                        ml: 1,
+                        transform: isCollapsed ? 'rotate(180deg)' : 'rotate(0deg)',
+                        transition: 'transform 0.3s ease-in-out'
+                    }}
+                >
+                    <KeyboardArrowUpIcon />
+                </IconButton>
+            </Box>
+            
+            <Collapse in={!isCollapsed} timeout={300}>
+                <DataGrid
+                    rows={donors}
+                    columns={columns}
+                    autoHeight
+                    disableRowSelectionOnClick
+                    initialState={{
+                        pagination: {
+                            paginationModel: { page: 0, pageSize: 5 },
+                        },
+                    }}
+                    pageSizeOptions={[5, 10]}
+                />
+            </Collapse>
         </Box>
     );
 };

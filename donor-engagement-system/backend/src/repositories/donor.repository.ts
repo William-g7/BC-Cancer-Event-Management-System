@@ -103,7 +103,8 @@ export class DonorRepository {
             INNER JOIN Accounts a ON f.account_id = a.id
             WHERE s.event_id = ? 
             AND ef.fundraiser_id != ?
-            ORDER BY d.last_name, d.first_name
+            AND s.state = 'confirmed'
+            ORDER BY s.ID
         `, [eventId, currentFundraiserId]);
 
         return rows as (Donor & { fundraiser_name: string; state: string; })[];

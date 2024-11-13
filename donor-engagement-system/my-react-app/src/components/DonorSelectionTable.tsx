@@ -1,6 +1,6 @@
 // src/components/DonorSelectionTable.tsx
-import React, { useCallback } from 'react';
-import { Box, Button, Typography } from '@mui/material';
+import React, { useCallback, useState } from 'react';
+import { Box, Button, Typography, IconButton, Collapse } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useNavigate, Link } from 'react-router-dom';
 import { DonorService } from '../services/donorService.ts';
@@ -8,6 +8,8 @@ import { useParams } from 'react-router-dom';
 import { EventService } from '../services/eventService.ts';
 import { useEventAndDonors } from '../hooks/useDonors.ts';
 import { EventData } from '../types/event';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 const donorService = new DonorService();
 const eventService = new EventService();
@@ -25,6 +27,7 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
 }) => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   const fetchEventAndDonors = useCallback(async () => {
     if (!id) throw new Error('Event ID is required');
@@ -101,30 +104,48 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
   return (
     <Box sx={{ width: '100%', position: 'relative' }}>
       <Box sx={{ mb: 4 }}>
-        <Typography variant="h4">
+        
+        <Typography variant="h4" sx={{ mb: 4 }}>
           {data?.event ? `EVENTS / ${data.event.name}` : 'Loading...'}
         </Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+          <Typography variant="h5">
+            Your own donors
+          </Typography>
+          <IconButton 
+            onClick={() => setIsCollapsed(!isCollapsed)}
+            size="small"
+            sx={{ 
+              ml: 1,
+              transform: isCollapsed ? 'rotate(180deg)' : 'rotate(0deg)',
+              transition: 'transform 0.3s ease-in-out'
+            }}
+          >
+            <KeyboardArrowUpIcon />
+          </IconButton>
+        </Box>
       </Box>
 
-      <Box sx={{ width: '100%' }}>
-        <DataGrid
-          rows={data?.donors || []}
-          columns={columns}
-          checkboxSelection
-          disableRowSelectionOnClick
-          onRowSelectionModelChange={(newSelection) => {
-            console.log('Selection changed:', newSelection);
-            onSelectionChange(newSelection as number[]);
-          }}
-          rowSelectionModel={selectedDonors}
-          initialState={{
+      <Collapse in={!isCollapsed} timeout={300}>
+        <Box sx={{ width: '100%' }}>
+          <DataGrid
+            rows={data?.donors || []}
+            columns={columns}
+            checkboxSelection
+            disableRowSelectionOnClick
+            onRowSelectionModelChange={(newSelection) => {
+              onSelectionChange(newSelection as number[]);
+            }}
+            rowSelectionModel={selectedDonors}
+            initialState={{
               pagination: {
-                  paginationModel: { page: 0, pageSize: 10 },
+                paginationModel: { page: 0, pageSize: 5 },
               },
-          }}
-          pageSizeOptions={[5, 10]}
-        />
-      </Box>
+            }}
+            pageSizeOptions={[5, 10]}
+          />
+        </Box>
+      </Collapse>
     </Box>
   );
 };

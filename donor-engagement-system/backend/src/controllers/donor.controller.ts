@@ -119,4 +119,31 @@ export class DonorController {
         }
     }
     
+    getOtherFundraisersSelections = async (req: CustomRequest, res: Response) => {
+        try {
+            const eventId = parseInt(req.params.id);
+            const accountId = req.user?.id;
+
+            if (!accountId) {
+                res.status(401).json({
+                    success: false,
+                    error: 'User not authenticated'
+                });
+                return;
+            }
+
+            const selections = await this.donorService.getOtherFundraisersSelections(eventId, accountId);
+            
+            res.json({
+                success: true,
+                data: selections
+            });
+        } catch (error) {
+            console.error('Error getting other selections:', error);
+            res.status(500).json({
+                success: false,
+                error: 'Failed to get other selections'
+            });
+        }
+    }
 }

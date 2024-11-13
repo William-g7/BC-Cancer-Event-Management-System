@@ -51,6 +51,25 @@ export class DonorService {
         await donorRepository.confirmSelections(eventId, donorIds, eventFundraiserId);
     }
 
+    private async getFundraiserIdByAccountId(accountId: number): Promise<number> {
+        const [fundraiser] = await this.pool.execute(
+            'SELECT id FROM Fundraisers WHERE account_id = ?',
+            [accountId]
+        ) as [any[], any];
+
+        if (!fundraiser.length) {
+            throw new Error('Fundraiser not found');
+        }
+
+        return fundraiser[0].id;
+    }
+
+    async getOtherFundraisersSelections(eventId: number, accountId: number): Promise<(Donor & { fundraiser_name: string; state: string; })[]> {
+        const donorRepository = new DonorRepository(this.pool);
+        const fundraiserId = await this.getFundraiserIdByAccountId(accountId);
+        return donorRepository.findOtherFundraisersSelections(eventId, fundraiserId);
+    }
+
     
 
     
