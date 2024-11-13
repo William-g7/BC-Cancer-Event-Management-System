@@ -24,8 +24,8 @@ Briefly describe the purpose of this retrospective and what you aim to achieve.
 ## What Went Well
 List the things that went well during the project.
 - have meetings regularly
-- 
--
+- all the members finished the work step by step
+- all the members communicate with each other promptly
 
 ---
 
@@ -70,7 +70,7 @@ Identify actionable steps that can be taken to improve future projects.
 - **Feedback and Suggestions:**
   -
 
-### [Team Member 3]
+### [Xing Gao]
 - **Achievements and Contributions:**
   - Successfully implemented donor selection functionality for fundraisers, allowing users to save selected donors with a "selected" status and confirm selections with a "confirmed" status.
   - Enabled the persistence of donor selection states across page reloads, ensuring selected and confirmed donors remain highlighted and display the correct status.
