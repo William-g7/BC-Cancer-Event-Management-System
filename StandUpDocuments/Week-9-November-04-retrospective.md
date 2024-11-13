@@ -95,15 +95,24 @@ Identify actionable steps that can be taken to improve future projects.
   - Consider creating utility functions or hooks for common data transformation tasks, such as mapping database states to front-end components.
   - Document the logic and flow of donor selection and confirmation processes to make it easier for other team members to maintain and enhance this feature in the future.
 
-### [Team Member 4]
+### [Zhenziye Lin]
 - **Achievements and Contributions:**
-  -
+  - Assisted in optimizing the API integration for donor data fetching, ensuring smoother data flow between the client and server.
+  - Conducted troubleshooting for asynchronous data issues, improving the efficiency of data loading in the frontend.
+  - Participated in debugging sessions, identifying and resolving issues related to component re-renders in the frontend.
+
 - **Challenges Faced:**
-  -
+  - Faced difficulties in managing complex state interactions within the frontend, especially in maintaining consistency between displayed data and database values.
+  - Encountered challenges in understanding advanced TypeScript features, which slowed down certain development processes.
+
 - **Areas for Improvement:**
-  -
+  - Improve proficiency in TypeScript, particularly focusing on typing and interfaces to enhance code clarity and maintainability.
+  - Gain more experience in React state management to better handle dynamic data and component updates.
+
 - **Feedback and Suggestions:**
-  -
+  - Consider introducing structured code reviews to streamline debugging and ensure adherence to best practices.
+  - Our team collaboration has been strong; continuing this supportive approach will further enhance productivity and morale.
+
 
 
 ---
