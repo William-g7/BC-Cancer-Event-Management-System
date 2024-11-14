@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Typography} from '@mui/material';
 import EventList from "./EventList.tsx";
 import Sidebar from "./Sidebar.tsx";
 import Header from "./Header.tsx";
@@ -16,19 +16,31 @@ const EventListPage: React.FC = () => {
 
     return (
         <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: 'white' }}>
-            <Box sx={{ width: { xs: '60px', sm: '200px' } }}>
+            <Box sx={{ width: { xs: '60px', lg: '200px' }, flexShrink: 0 }}>
                 <Sidebar />
             </Box>
 
             {/* Main content */}
-            <Box sx={{ flexGrow: 1, p: 4 }}>
+            <Box sx={{ 
+                flexGrow: 1,
+                overflow: 'auto',
+                position: 'relative',
+                marginLeft: { xs: '10px', sm: '20px', md: '40px' },
+            }}>
+            {/* Main content with max width */}
+            
                 {/* Header */}
-                <Box sx={{ position: 'absolute',  right: 40 }}>
+                
+                <Box sx={{ 
+                    position: 'absolute',
+                    right: 40 
+                }}>
                     <Header />
                 </Box>
+                
 
 
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 12 }}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 16 }}>
                     <Typography variant="h4">
                         EVENTS
                     </Typography>
@@ -53,7 +65,7 @@ const EventListPage: React.FC = () => {
                     mt: 5,
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: 2 
+                    gap: 2,
                 }}>
                     
                     <EventList />
@@ -61,6 +73,7 @@ const EventListPage: React.FC = () => {
                 
             </Box>
         </Box>
+        
     );
 };
 

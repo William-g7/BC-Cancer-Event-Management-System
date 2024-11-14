@@ -41,7 +41,7 @@ const EventList: React.FC = () => {
 
   if (error) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
+      <Box display="flex" justifyContent="center"  minHeight="200px">
         <Typography color="error">{error}</Typography>
       </Box>
     );
@@ -137,7 +137,7 @@ const EventList: React.FC = () => {
                         whiteSpace: 'nowrap', 
                         overflow: 'hidden', 
                         textOverflow: 'ellipsis', 
-                          maxWidth: '120px' // Adjust maxWidth as needed
+                        maxWidth: '120px' // Adjust maxWidth as needed
                         }}
                       >
                         {event.name}
