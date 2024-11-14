@@ -23,4 +23,7 @@ router.post('/event/:id/selections/confirm', checkUser, donorController.confirmS
 // Get other fundraisers selections
 router.get('/event/:id/other-selections', checkUser, donorController.getOtherFundraisersSelections);
 
+// Unselect donors
+router.post('/event/:id/selections/unselect', checkUser, donorController.unselectDonors);
+
 export default router;

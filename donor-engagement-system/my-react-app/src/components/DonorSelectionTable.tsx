@@ -18,12 +18,14 @@ const eventService = new EventService();
 interface DonorSelectionTableProps {
   selectedDonors: number[];  
   onSelectionChange: (selected: number[]) => void;  
+  refreshTrigger: number;
 }
 
 
 const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
   selectedDonors,
-  onSelectionChange
+  onSelectionChange,
+  refreshTrigger
 }) => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -38,7 +40,7 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
     return { event: eventData as EventData, donors: donorsData };
   }, [id]);
 
-  const { data, loading, error } = useEventAndDonors(fetchEventAndDonors);
+  const { data, loading, error } = useEventAndDonors(fetchEventAndDonors, refreshTrigger);
 
   React.useEffect(() => {
     if (data?.donors) {

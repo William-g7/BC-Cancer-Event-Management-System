@@ -95,6 +95,22 @@ async getOtherFundraisersSelections(eventId: number): Promise<any[]> {
   }
 }
 
+async unselectDonors(eventId: number, donorIds: number[]): Promise<void> {
+  try {
+    const response = await api.post<{ success: boolean }>(
+      `/event/${eventId}/selections/unselect`,
+      { donorIds }
+    );
+
+    if (!response.success) {
+      throw new Error('Failed to unselect donors');
+    }
+  } catch (error) {
+    console.error('Error unselecting donors:', error);
+    throw error;
+  }
+}
+
 }
 
 export default new DonorService();

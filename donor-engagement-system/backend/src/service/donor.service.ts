@@ -70,6 +70,12 @@ export class DonorService {
         return donorRepository.findOtherFundraisersSelections(eventId, fundraiserId);
     }
 
+    async unselectDonors(eventId: number, donorIds: number[], accountId: number): Promise<void> {
+        const donorRepository = new DonorRepository(this.pool);
+        const eventFundraiserId = await this.getEventFundraiserId(eventId, accountId);
+        await donorRepository.unselectDonors(eventId, donorIds, eventFundraiserId);
+    }
+
     
 
     

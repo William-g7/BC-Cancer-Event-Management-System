@@ -1,5 +1,6 @@
 import { Pool } from 'mysql2/promise';
 import { Donor } from '../types/donor.types';
+import { SelectionStatus } from '../types/selection';
 import { RowDataPacket, FieldPacket } from 'mysql2';
 
 interface DonorSelectionRow {
@@ -29,7 +30,8 @@ export class DonorRepository {
         const [donors] = await this.pool.execute(`
             SELECT 
                 d.*,
-                COALESCE(s.state, 'unselected') as state
+                s.state
+            
             FROM Donors d
             INNER JOIN Selections s ON 
                 s.donor_id = d.id AND 
@@ -103,10 +105,39 @@ export class DonorRepository {
             INNER JOIN Accounts a ON f.account_id = a.id
             WHERE s.event_id = ? 
             AND ef.fundraiser_id != ?
-            AND s.state = 'confirmed'
+            AND s.state IN (?, ?, ?)
             ORDER BY s.ID
-        `, [eventId, currentFundraiserId]);
+        `, [eventId, currentFundraiserId, SelectionStatus.CONFIRMED, SelectionStatus.SELECTED, SelectionStatus.UNSELECTED]);
 
         return rows as (Donor & { fundraiser_name: string; state: string; })[];
     }
+
+    async unselectDonors(eventId: number, donorIds: number[], eventFundraiserId: number): Promise<void> {
+        const connection = await this.pool.getConnection();
+        try {
+            await connection.beginTransaction();
+
+            for (const donorId of donorIds) {
+                const [result] = await connection.execute(`
+                    UPDATE Selections 
+                    SET state = ?
+                    WHERE event_id = ? 
+                    AND donor_id = ? 
+                    AND event_fundraiser_id = ?
+                    AND state = ?
+                `, [SelectionStatus.UNSELECTED, eventId, donorId, eventFundraiserId, SelectionStatus.SELECTED]);
+
+                // Log the affected rows for debugging
+                console.log(`Donor ID ${donorId}: Affected rows:`, (result as any).affectedRows);
+            }
+
+            await connection.commit();
+        } catch (error) {
+            await connection.rollback();
+            throw error;
+        } finally {
+            connection.release();
+        }
+    }
+    
 }

@@ -146,4 +146,27 @@ export class DonorController {
             });
         }
     }
+
+    unselectDonors = async (req: CustomRequest, res: Response) => {
+        try {
+            const eventId = parseInt(req.params.id);
+            const { donorIds } = req.body;
+            const accountId = req.user?.id;
+
+            if (!accountId) {
+                return res.status(401).json({
+                    success: false,
+                    error: 'User not authenticated'
+                });
+            }
+
+            await this.donorService.unselectDonors(eventId, donorIds, accountId);
+            res.json({ success: true });
+        } catch (error) {
+            res.status(500).json({
+                success: false,
+                error: 'Failed to unselect donors'
+            });
+        }
+    }
 }
