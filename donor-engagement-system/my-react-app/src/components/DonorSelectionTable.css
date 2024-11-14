@@ -1,0 +1,40 @@
+.drawer{
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    margin: 100px 40px 20px 40px;
+}
+.drawer_select{
+    background-color:#D0D0D0;
+    border-radius: 20px;
+    margin: 10px;
+    width: fit-content;
+    padding: 5px 10px 5px 10px;
+}
+.drawer_title{
+    font-weight: bold;
+    font-size: 20px;
+}
+.drawer_top{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.drawer_top_title{
+    font-size: 18px;
+}
+.drawer_top_list{
+    display: flex;
+    flex-direction: column;
+}
+.drawer_bottom{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+.drawer_center{
+    flex: 1;
+}
