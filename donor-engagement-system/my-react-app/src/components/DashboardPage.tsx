@@ -50,18 +50,20 @@ const DashboardPage: React.FC = () => {
 
           {/* Content Container */}
           <Box sx={{ 
+            flexGrow: 1,
+            flexShrink: 1,
             display: 'flex', 
-            flexDirection: { xs: 'column', md: 'row' },
-            gap: { xs: 2, sm: 2, md: 3 },
+            flexDirection: { xs: 'column', sm: 'column', md: 'row' },
+            gap: { xs: 1, sm: 2, md: 3 },
             mt: { xs: 3, sm: 4, md: 5 },
             width: '100%'
           }}>
             {/* Events Section */}
             <Box sx={{ 
-              flex: { xs: '1 1 auto', sm: '0 0 auto', md: '1 1 auto', lg: '1 1 auto' },
+              flex: { xs: '1 1 auto', sm: '1 1 auto', md: '1 1 auto', lg: '1 1 auto' },  
               bgcolor: theme.palette.lightgrey.main,
               borderRadius: 4,
-              p: { xs: 2, sm: 2, md: 3 },
+              p: { xs: 2, sm: 1.5, md: 3 },
               minWidth: 0
             }}>
               <DashboardEvents />
