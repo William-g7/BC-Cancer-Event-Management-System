@@ -1,27 +1,15 @@
-// src/components/DonorSelectionTable.tsx
-<<<<<<< HEAD
-
-import React, {useCallback, useState} from 'react';
-import { Box, Button, Typography,Drawer,TextField,IconButton, Collapse } from '@mui/material';
-
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
-=======
 import React, { useCallback, useState } from 'react';
-import { Box, Button, Typography, IconButton, Collapse } from '@mui/material';
+import { Box, Typography, IconButton, Collapse } from '@mui/material';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
->>>>>>> William
 import { useNavigate, Link } from 'react-router-dom';
 import { DonorService } from '../services/donorService.ts';
 import { useParams } from 'react-router-dom';
 import { EventService } from '../services/eventService.ts';
 import { useEventAndDonors } from '../hooks/useDonors.ts';
 
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import {DonorNotes, EventData} from '../types/event';
-import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import "./DonorSelectionTable.css"
-import {useEvents} from "../hooks/useEvents";
 
 const donorService = new DonorService();
 const eventService = new EventService();
@@ -41,7 +29,6 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
 }) => {
   const { id } = useParams<{ id: string }>();
 
-  const navigate = useNavigate();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
 
@@ -131,11 +118,6 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
       headerName: 'Notes',
       width: 200,
       editable: true,
-<<<<<<< HEAD
-      renderCell: (params) => (
-        <p onClick={()=>toggleDrawer(true,params)}>...</p>
-      ),
-=======
       renderCell: (params: GridRenderCellParams) => {
         if (!params?.value) return '';
         return (
@@ -144,7 +126,6 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
           </Link>
         );
       }
->>>>>>> William
     },
     {
       field: 'state',
@@ -162,9 +143,6 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
     }
   ];
 
-  const getRowClassName = (params: any) => {
-    return params.row.state === 'confirmed' ? 'confirmed-row' : '';
-  };
 
   return (
     <Box sx={{ width: '100%', position: 'relative' }}>
@@ -191,57 +169,6 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
         </Box>
       </Box>
 
-<<<<<<< HEAD
-
-      <Box sx={{ width: '100%' }}>
-        <DataGrid
-          rows={data?.donors || []}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 10 },
-            },
-          }}
-          pageSizeOptions={[5, 10]}
-          checkboxSelection
-          disableRowSelectionOnClick
-        />
-        <Drawer open={open}
-                onClose={()=>editopen(false)}
-                anchor={"right"}
-        >
-          <div className={"drawer"}>
-            <p className={"drawer_title"}>{lastgitDate.first_name} {lastgitDate.last_name}</p>
-            {/* <div className={"drawer_top"}>
-              <p className={"drawer_top_title"}>Lastgit Date:</p>
-              <div className={"drawer_top_list"}>
-                <span>{lastgitDate.largest_gift}</span>
-                <span>{lastgitDate.largest_gift_appeal}</span>
-                <span>{lastgitDate.last_gift_amount}</span>
-              </div>
-            </div> */}
-            <div className={"drawer_center"}>
-              <p className={"drawer_top_title"}>Notes</p>
-              <div>
-                {notes.map((note, index) => (
-                    <div className={"drawer_select"}>
-                      <span>{note.fundraiser_name}:</span>
-                      <span>{note.note}</span>
-                    </div>
-                ))}
-
-              </div>
-            </div>
-            <div className={"drawer_bottom"}>
-              <TextField fullWidth id="outlined-basic" label="add you notes here" variant="outlined" />
-              <IconButton color="primary" aria-label="add to shopping cart">
-                <AddCircleOutlineRoundedIcon />
-              </IconButton>
-            </div>
-          </div>
-        </Drawer>
-      </Box>
-=======
       <Collapse in={!isCollapsed} timeout={300}>
         <Box sx={{ width: '100%' }}>
           <DataGrid
@@ -290,7 +217,6 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
           />
         </Box>
       </Collapse>
->>>>>>> William
     </Box>
   );
 };
