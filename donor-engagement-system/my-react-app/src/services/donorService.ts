@@ -125,5 +125,4 @@ export class DonorService {
 
 }
 
-export default new DonorService();
 

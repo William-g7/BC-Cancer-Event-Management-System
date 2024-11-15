@@ -41,7 +41,6 @@ export class DonorRepository {
 
         return rows as Donor[];
     }
-    
 
     async saveSelections(eventId: number, donorIds: number[], eventFundraiserId: number): Promise<void> {
         const connection = await this.pool.getConnection();
