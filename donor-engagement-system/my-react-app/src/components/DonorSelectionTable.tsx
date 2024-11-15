@@ -48,7 +48,8 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
             month: 'short',
             day: 'numeric'
           })
-        : '-'
+        : '-',
+      full_name: `${donor.first_name} ${donor.last_name}`
     }));
 
     return { 
@@ -79,20 +80,21 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
   }
 
   const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 90 },
-    { field: 'last_name', headerName: 'Donor Last Name', width: 150 },
-    { field: 'first_name', headerName: 'Donor First Name', width: 150 },
+    { field: 'full_name', headerName: 'Name', width: 120 },
     { 
-      field: 'total_donations', 
-      headerName: 'Total Donations', 
-      width: 180,
+      field: 'last_gift_appeal', 
+      headerName: 'Last Appeal', 
+      width: 150,
     },
     { 
       field: 'last_gift_date', 
-      headerName: 'Last Donation', 
+      headerName: 'Last Donation Date', 
       width: 200,
     },
+    { field: 'total_donations', headerName: 'Total Donations', width: 180 },
+    { field: 'address_line1', headerName: 'Address', width: 200 },
     { field: 'city', headerName: 'Location', width: 200 },
+    { field: 'communication_restrictions', headerName: 'Communication', width: 200 },
     {
       field: 'notes',
       headerName: 'Notes',
@@ -173,6 +175,11 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
               onSelectionChange([...confirmedIds, ...unconfirmedSelection]);
             }}
             rowSelectionModel={selectedDonors}
+            initialState={{
+              pagination: {
+                  paginationModel: { page: 0, pageSize: 10},
+              },
+            }}  
             getRowClassName={(params) => {
               if (params.row.state === 'confirmed') return 'confirmed-row';
               return '';
