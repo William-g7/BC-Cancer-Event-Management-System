@@ -28,4 +28,90 @@ export class DonorService {
       throw new Error(`Donor service error: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
+
+  async saveSelections(eventId: number, donorIds: number[]): Promise<void> {
+    try {
+        console.log('DonorService: Attempting to save selections:', {
+            eventId,
+            donorIds,
+            url: `/event/${eventId}/selections/save`
+        });
+        
+        const response = await api.post<{ success: boolean }>(
+            `/event/${eventId}/selections/save`,
+            { donorIds }
+        );
+        
+        console.log('DonorService: Save response:', response);
+        
+        if (!response.success) {
+            throw new Error('Failed to save selections');
+        }
+    } catch (error) {
+        console.error('DonorService: Error saving selections:', error);
+        throw error;
+    }
 }
+
+async confirmSelections(eventId: number, donorIds: number[]): Promise<void> {
+  try {
+      console.log('DonorService: Attempting to confirm selections:', {
+          eventId,
+          donorIds,
+          url: `/event/${eventId}/selections/confirm`
+      });
+      
+      const response = await api.post<{ success: boolean }>(
+          `/event/${eventId}/selections/confirm`,
+          { donorIds }
+      );
+      
+      console.log('DonorService: Confirm response:', response);
+      
+      if (!response.success) {
+          throw new Error('Failed to confirm selections');
+      }
+  } catch (error) {
+      console.error('DonorService: Error confirming selections:', error);
+      throw error;
+  }
+}
+
+async getOtherFundraisersSelections(eventId: number): Promise<any[]> {
+  try {
+    const response = await api.get<{
+      success: boolean,
+      data: any[]
+    }>(`/event/${eventId}/other-selections`);
+
+    if (!response.success) {
+      throw new Error('Failed to fetch other selections');
+    }
+
+    return response.data || [];
+  } catch (error) {
+    console.error('Error fetching other selections:', error);
+    throw error;
+  }
+}
+
+async unselectDonors(eventId: number, donorIds: number[]): Promise<void> {
+  try {
+    const response = await api.post<{ success: boolean }>(
+      `/event/${eventId}/selections/unselect`,
+      { donorIds }
+    );
+
+    if (!response.success) {
+      throw new Error('Failed to unselect donors');
+    }
+  } catch (error) {
+    console.error('Error unselecting donors:', error);
+    throw error;
+  }
+}
+
+}
+
+export default new DonorService();
+
