@@ -1,7 +1,7 @@
 // src/components/DonorSelectionTable.tsx
 import React, { useCallback, useState } from 'react';
 import { Box, Button, Typography, IconButton, Collapse } from '@mui/material';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { useNavigate, Link } from 'react-router-dom';
 import { DonorService } from '../services/donorService.ts';
 import { useParams } from 'react-router-dom';
@@ -35,23 +35,38 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
     if (!id) throw new Error('Event ID is required');
     const [eventData, donorsData] = await Promise.all([
       eventService.getEventById(parseInt(id)),
-      donorService.getDonorsByEvent(parseInt(id))
+      donorService.getDonorsByEventFundraiser(parseInt(id))
     ]);
-    return { event: eventData as EventData, donors: donorsData };
+
+    // Format the data before returning
+    const formattedDonors = donorsData.map(donor => ({
+      ...donor,
+      total_donations: donor.total_donations ? `$${Number(donor.total_donations).toLocaleString()}` : '-',
+      last_gift_date: donor.last_gift_date 
+        ? new Date(donor.last_gift_date).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+          })
+        : '-'
+    }));
+
+    return { 
+      event: eventData as EventData, 
+      donors: formattedDonors 
+    };
   }, [id]);
 
   const { data, loading, error } = useEventAndDonors(fetchEventAndDonors, refreshTrigger);
 
+  console.log('Donors data in table component:', data?.donors);
+
   React.useEffect(() => {
     if (data?.donors) {
-      const selectedIds = data.donors
-        .filter(donor => 
-          donor.state === 'selected' || 
-          donor.state === 'confirmed'
-                
-        )
+      const confirmedIds = data.donors
+        .filter(donor => donor.state === 'confirmed')
         .map(donor => donor.id);
-      onSelectionChange(selectedIds);
+      onSelectionChange([...confirmedIds]);
     }
   }, [data?.donors, onSelectionChange]);
 
@@ -67,41 +82,50 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
     { field: 'id', headerName: 'ID', width: 90 },
     { field: 'last_name', headerName: 'Donor Last Name', width: 150 },
     { field: 'first_name', headerName: 'Donor First Name', width: 150 },
-    { field: 'total_donations', headerName: 'Total Donations', width: 180, type: 'number' },
-    { field: 'communication_preference', headerName: 'Communication Preference', width: 200 },
-    { field: 'location', headerName: 'Location', width: 200 },
+    { 
+      field: 'total_donations', 
+      headerName: 'Total Donations', 
+      width: 180,
+    },
+    { 
+      field: 'last_gift_date', 
+      headerName: 'Last Donation', 
+      width: 200,
+    },
+    { field: 'city', headerName: 'Location', width: 200 },
     {
       field: 'notes',
       headerName: 'Notes',
       width: 200,
       editable: true,
-      renderCell: (params) => (
-        <Link
-          to={`/donor/${params.row.id}`}
-          style={{ color: 'blue', textDecoration: 'underline', cursor: 'pointer' }}
-        >
-          {params.value}
-        </Link>
-      ),
+      renderCell: (params: GridRenderCellParams) => {
+        if (!params?.value) return '';
+        return (
+          <Link to={`/donor/${params.row.id}`}>
+            {params.value}
+          </Link>
+        );
+      }
     },
     {
       field: 'state',
       headerName: 'Status',
       width: 120,
-      renderCell: (params) => (
+      renderCell: (params: GridRenderCellParams) => (
         <Typography color={
-          params.value === 'confirmed' ? 'success.main' :
-          params.value === 'selected' ? 'primary.main' :
+          params?.value === 'confirmed' ? 'success.main' :
+          params?.value === 'selected' ? 'primary.main' :
           'text.secondary'
         }>
-          {params.value}
+          {params?.value || ''}
         </Typography>
-      ),
+      )
     }
   ];
 
-  if (loading) return <Typography>Loading...</Typography>;
-  if (error) return <Typography color="error">{error}</Typography>;
+  const getRowClassName = (params: any) => {
+    return params.row.state === 'confirmed' ? 'confirmed-row' : '';
+  };
 
   return (
     <Box sx={{ width: '100%', position: 'relative' }}>
@@ -135,16 +159,39 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
             columns={columns}
             checkboxSelection
             disableRowSelectionOnClick
+            isRowSelectable={(params) => params.row.state !== 'confirmed'}
             onRowSelectionModelChange={(newSelection) => {
-              onSelectionChange(newSelection as number[]);
+              const confirmedIds = data?.donors
+                .filter(donor => donor.state === 'confirmed')
+                .map(donor => donor.id);
+              
+              const unconfirmedSelection = newSelection.filter(id => {
+                const row = data?.donors.find(donor => donor.id === id);
+                return row && row.state !== 'confirmed';
+              });
+              
+              onSelectionChange([...confirmedIds, ...unconfirmedSelection]);
             }}
             rowSelectionModel={selectedDonors}
-            initialState={{
-              pagination: {
-                paginationModel: { page: 0, pageSize: 5 },
-              },
+            getRowClassName={(params) => {
+              if (params.row.state === 'confirmed') return 'confirmed-row';
+              return '';
             }}
-            pageSizeOptions={[5, 10]}
+            sx={{
+              '& .confirmed-row': {
+                backgroundColor: 'rgba(0, 0, 0, 0.04)',
+                '& .MuiCheckbox-root': {
+                  color: 'rgba(0, 0, 0, 0.38)',
+                  '&.Mui-checked': {
+                    color: 'success.main',
+                  },
+                  '&.Mui-disabled': {
+                    color: 'success.main',
+                    opacity: 1,
+                  }
+                }
+              }
+            }}
           />
         </Box>
       </Collapse>

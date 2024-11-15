@@ -17,30 +17,29 @@ export class DonorRepository {
         return result[0] || null;
     }
 
-    async findDonorsByEventFundraiser(eventId: number, fundraiserId: number): Promise<(Donor & { state: string })[]> {
-        const [eventFundraiserId] = await this.pool.execute(`
-            SELECT id FROM Event_Fundraisers 
-            WHERE event_id = ? AND fundraiser_id = ?
-        `, [eventId, fundraiserId]) as [any[], any];
-    
-        if (!eventFundraiserId.length) {
-            return [];
-        }
-    
-        const [donors] = await this.pool.execute(`
+    async findDonorsByEvent(eventId: number, eventFundraiserId: number): Promise<Donor[]> {
+        const [rows] = await this.pool.execute<RowDataPacket[]>(`
             SELECT 
-                d.*,
+                d.id,
+                d.first_name,
+                d.last_name,
+                d.total_donations,
+                d.last_gift_date,
+                d.city,
                 s.state
-            
             FROM Donors d
-            INNER JOIN Selections s ON 
-                s.donor_id = d.id AND 
-                s.event_id = ? AND 
-                s.event_fundraiser_id = ?
-            ORDER BY d.ID
-        `, [eventId, eventFundraiserId[0].id]) as [any[], any];
-    
-        return donors;
+            LEFT JOIN Selections s ON d.id = s.donor_id 
+                AND s.event_id = ? 
+                AND s.event_fundraiser_id = ?
+            WHERE d.id IN (
+                SELECT donor_id 
+                FROM Selections 
+                WHERE event_id = ?
+            )
+            ORDER BY d.id
+        `, [eventId, eventFundraiserId, eventId]);
+
+        return rows as Donor[];
     }
     
 
@@ -105,9 +104,9 @@ export class DonorRepository {
             INNER JOIN Accounts a ON f.account_id = a.id
             WHERE s.event_id = ? 
             AND ef.fundraiser_id != ?
-            AND s.state IN (?, ?, ?)
+            AND s.state = ?
             ORDER BY s.ID
-        `, [eventId, currentFundraiserId, SelectionStatus.CONFIRMED, SelectionStatus.SELECTED, SelectionStatus.UNSELECTED]);
+        `, [eventId, currentFundraiserId, SelectionStatus.CONFIRMED]);
 
         return rows as (Donor & { fundraiser_name: string; state: string; })[];
     }
@@ -140,4 +139,31 @@ export class DonorRepository {
         }
     }
     
+    async findDonorsByEventFundraiser(eventId: number, fundraiserId: number): Promise<(Donor & { state: string })[]> {
+        const [eventFundraiserId] = await this.pool.execute(`
+            SELECT id FROM Event_Fundraisers 
+            WHERE event_id = ? AND fundraiser_id = ?
+        `, [eventId, fundraiserId]) as [any[], any];
+    
+        if (!eventFundraiserId.length) {
+            return [];
+        }
+    
+        const [donors] = await this.pool.execute(`
+            SELECT 
+                d.*,
+                s.state
+            
+            FROM Donors d
+            INNER JOIN Selections s ON 
+                s.donor_id = d.id AND 
+                s.event_id = ? AND 
+                s.event_fundraiser_id = ?
+            ORDER BY d.ID
+        `, [eventId, eventFundraiserId[0].id]) as [any[], any];
+    
+        return donors;
+    }
 }
+    
+

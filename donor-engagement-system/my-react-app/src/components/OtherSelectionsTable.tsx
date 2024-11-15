@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Typography, IconButton, Collapse } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 90 },
@@ -18,22 +19,22 @@ interface OtherSelectionsTableProps {
 const OtherSelectionsTable: React.FC<OtherSelectionsTableProps> = ({ donors }) => {
     const [isCollapsed, setIsCollapsed] = useState(false);
 
+    useEffect(() => {
+        console.log('Other selections donors:', donors);
+    }, [donors]);
+
     return (
         <Box sx={{ mt: 4 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                 <Typography variant="h5">
-                    Donors selected by other fundraisers
+                    Donors selected by other fundraisers ({donors.length})
                 </Typography>
                 <IconButton 
                     onClick={() => setIsCollapsed(!isCollapsed)}
                     size="small"
-                    sx={{ 
-                        ml: 1,
-                        transform: isCollapsed ? 'rotate(180deg)' : 'rotate(0deg)',
-                        transition: 'transform 0.3s ease-in-out'
-                    }}
+                    sx={{ ml: 1 }}
                 >
-                    <KeyboardArrowUpIcon />
+                    {isCollapsed ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
                 </IconButton>
             </Box>
             
