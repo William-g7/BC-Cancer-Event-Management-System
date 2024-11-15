@@ -6,4 +6,4 @@ export interface CustomRequest extends Request {
         name: string;
         role: 'FUNDRAISER' | 'COORDINATOR';
     };
-} 
+}

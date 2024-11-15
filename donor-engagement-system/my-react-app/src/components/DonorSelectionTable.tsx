@@ -22,7 +22,9 @@ const DonorSelectionTable: React.FC = () => {
   let [lastgitDate,editLastgitDate]=useState({
     largest_gift: null,
     largest_gift_appeal:null,
-    last_gift_amount:null
+    last_gift_amount:null,
+    last_name:null,
+    first_name:null,
   })
   const fetchEventAndDonors = useCallback(async () => {
     if (!id) throw new Error('Event ID is required');
@@ -43,9 +45,8 @@ const DonorSelectionTable: React.FC = () => {
   }
   const toggleDrawer=(isBool:boolean,params)=>{
     editopen(isBool)
-    let {largest_gift,largest_gift_appeal,last_gift_amount}=params.row
-    console.log(largest_gift,largest_gift_appeal,last_gift_amount,params)
-    editLastgitDate({largest_gift,largest_gift_appeal,last_gift_amount})
+    let {largest_gift,largest_gift_appeal,last_gift_amount,first_name,last_name}=params.row
+    editLastgitDate({largest_gift,largest_gift_appeal,last_gift_amount,first_name,last_name})
     eventService.getEventNote(params.id).then(r => {
       editnotes(r)
     })
@@ -93,15 +94,15 @@ const DonorSelectionTable: React.FC = () => {
                 anchor={"right"}
         >
           <div className={"drawer"}>
-            <p className={"drawer_title"}>CMMA SMITH</p>
-            <div className={"drawer_top"}>
+            <p className={"drawer_title"}>{lastgitDate.first_name} {lastgitDate.last_name}</p>
+            {/* <div className={"drawer_top"}>
               <p className={"drawer_top_title"}>Lastgit Date:</p>
               <div className={"drawer_top_list"}>
                 <span>{lastgitDate.largest_gift}</span>
                 <span>{lastgitDate.largest_gift_appeal}</span>
                 <span>{lastgitDate.last_gift_amount}</span>
               </div>
-            </div>
+            </div> */}
             <div className={"drawer_center"}>
               <p className={"drawer_top_title"}>Notes</p>
               <div>
