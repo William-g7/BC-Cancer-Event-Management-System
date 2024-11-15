@@ -1,28 +1,15 @@
-<<<<<<< HEAD
-import React, { useCallback, useState } from 'react';
-import { Box, Typography, IconButton, Collapse } from '@mui/material';
-import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-=======
 // src/components/DonorSelectionTable.tsx
 import React, { useCallback, useState } from 'react';
 import { Box, Button, Typography, IconButton, Collapse } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
->>>>>>> parent of 90c481d (Merge branch 'makoy' into main)
 import { useNavigate, Link } from 'react-router-dom';
 import { DonorService } from '../services/donorService.ts';
 import { useParams } from 'react-router-dom';
 import { EventService } from '../services/eventService.ts';
 import { useEventAndDonors } from '../hooks/useDonors.ts';
-<<<<<<< HEAD
-
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import {DonorNotes, EventData} from '../types/event';
-import "./DonorSelectionTable.css"
-=======
 import { EventData } from '../types/event';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
->>>>>>> parent of 90c481d (Merge branch 'makoy' into main)
 
 const donorService = new DonorService();
 const eventService = new EventService();
@@ -41,11 +28,7 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
   refreshTrigger
 }) => {
   const { id } = useParams<{ id: string }>();
-<<<<<<< HEAD
-
-=======
   const navigate = useNavigate();
->>>>>>> parent of 90c481d (Merge branch 'makoy' into main)
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const fetchEventAndDonors = useCallback(async () => {
@@ -117,16 +100,6 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
       headerName: 'Notes',
       width: 200,
       editable: true,
-<<<<<<< HEAD
-      renderCell: (params: GridRenderCellParams) => {
-        if (!params?.value) return '';
-        return (
-          <Link to={`/donor/${params.row.id}`}>
-            {params.value}
-          </Link>
-        );
-      }
-=======
       renderCell: (params) => (
         <Link
           to={`/donor/${params.row.id}`}
@@ -135,7 +108,6 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
           {params.value}
         </Link>
       ),
->>>>>>> parent of 90c481d (Merge branch 'makoy' into main)
     },
     {
       field: 'state',
@@ -186,56 +158,16 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
             columns={columns}
             checkboxSelection
             disableRowSelectionOnClick
-<<<<<<< HEAD
-            isRowSelectable={(params) => params.row.state !== 'confirmed'}
-            onRowSelectionModelChange={(newSelection) => {
-              const confirmedIds = data?.donors
-                .filter(donor => donor.state === 'confirmed')
-                .map(donor => donor.id);
-              
-              const unconfirmedSelection = newSelection.filter(id => {
-                const row = data?.donors.find(donor => donor.id === id);
-                return row && row.state !== 'confirmed';
-              });
-              
-              onSelectionChange([...confirmedIds, ...unconfirmedSelection]);
-=======
             onRowSelectionModelChange={(newSelection) => {
               onSelectionChange(newSelection as number[]);
->>>>>>> parent of 90c481d (Merge branch 'makoy' into main)
             }}
             rowSelectionModel={selectedDonors}
             initialState={{
               pagination: {
-<<<<<<< HEAD
-                  paginationModel: { page: 0, pageSize: 10},
-              },
-            }}  
-            getRowClassName={(params) => {
-              if (params.row.state === 'confirmed') return 'confirmed-row';
-              return '';
-            }}
-            sx={{
-              '& .confirmed-row': {
-                backgroundColor: 'rgba(0, 0, 0, 0.04)',
-                '& .MuiCheckbox-root': {
-                  color: 'rgba(0, 0, 0, 0.38)',
-                  '&.Mui-checked': {
-                    color: 'success.main',
-                  },
-                  '&.Mui-disabled': {
-                    color: 'success.main',
-                    opacity: 1,
-                  }
-                }
-              }
-            }}
-=======
                 paginationModel: { page: 0, pageSize: 5 },
               },
             }}
             pageSizeOptions={[5, 10]}
->>>>>>> parent of 90c481d (Merge branch 'makoy' into main)
           />
         </Box>
       </Collapse>
