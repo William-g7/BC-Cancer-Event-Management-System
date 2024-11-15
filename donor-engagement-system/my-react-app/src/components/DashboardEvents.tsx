@@ -17,7 +17,6 @@ const DashboardEvents: React.FC = () => {
 
   return (
     <Box sx={{ 
-      flexGrow: 1,
       width: '100%',
       maxWidth: '100%'
     }}>
@@ -42,29 +41,28 @@ const DashboardEvents: React.FC = () => {
         <Box sx={{ 
           display: 'flex',
           flexWrap: 'wrap',
-          gap: { xs: 1, sm: 2, md: 3 },
+          gap: { xs: 1, sm: 1.5, md: 2 },
           width: '100%'
         }}>
           {events.map((event) => (
             <Box 
               key={event.id}
-              // sx={{
-              //   width: {
-              //     xs: '100%',
-              //     sm: 'calc(50% - 8px)',
-              //     lg: 'calc(33.33% - 16px)'
-              //   },
-              //   minWidth: {
-              //     xs: '100%',
-              //     sm: '200px',
-              //     lg: '330px'
-              //   },
-              //   maxWidth: {
-              //     sm: 'calc(50% - 8px)',
-              //     lg: 'calc(33.33% - 16px)'
-              //   },
-                
-              // }}
+              sx={{
+                width: {
+                  xs: '100%',
+                  sm: 'calc(50% - 8px)',
+                  lg: 'calc(33.33% - 16px)'
+                },
+                minWidth: {
+                  xs: '100%',
+                  sm: '260px',
+                  lg: '330px'
+                },
+                maxWidth: {
+                  sm: 'calc(50% - 8px)',
+                  lg: 'calc(33.33% - 16px)'
+                }
+              }}
             >
               <Card 
                 onClick={() => handleEventClick(event.id)}
@@ -79,13 +77,13 @@ const DashboardEvents: React.FC = () => {
                   component="img"
                   alt={event.name}
                   sx={{ 
-                    height: { xs: 230, sm: 230, md: 235 } 
+                    height: { xs: 230, sm: 230, md: 230 } 
                   }}
                   image={event.image_url || '/calendar.png'}
                 />
                 <CardContent sx={{ 
                   flexGrow: 1, 
-                  padding: { xs: 2, sm: 2, md: 2 }
+                  padding: { xs: 1, sm: 1.5, md: 2 }
                 }}>
                   <Typography variant="body2" color="text.secondary">
                     {new Date(event.start_time).toLocaleDateString()}

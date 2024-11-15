@@ -1,15 +1,21 @@
 // src/components/DonorSelectionTable.tsx
-import React, { useCallback, useState } from 'react';
-import { Box, Button, Typography, IconButton, Collapse } from '@mui/material';
+
+import React, {useCallback, useState} from 'react';
+import { Box, Button, Typography,Drawer,TextField,IconButton, Collapse } from '@mui/material';
+
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useNavigate, Link } from 'react-router-dom';
 import { DonorService } from '../services/donorService.ts';
 import { useParams } from 'react-router-dom';
 import { EventService } from '../services/eventService.ts';
 import { useEventAndDonors } from '../hooks/useDonors.ts';
-import { EventData } from '../types/event';
+
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import {DonorNotes, EventData} from '../types/event';
+import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
+import "./DonorSelectionTable.css"
+import {useEvents} from "../hooks/useEvents";
 
 const donorService = new DonorService();
 const eventService = new EventService();
@@ -28,8 +34,20 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
   refreshTrigger
 }) => {
   const { id } = useParams<{ id: string }>();
+
   const navigate = useNavigate();
   const [isCollapsed, setIsCollapsed] = useState(false);
+
+
+  let [open,editopen]=useState(false)
+  let [notes,editnotes]=useState<DonorNotes[]>([])
+  let [lastgitDate,editLastgitDate]=useState({
+    largest_gift: null,
+    largest_gift_appeal:null,
+    last_gift_amount:null,
+    last_name:null,
+    first_name:null,
+  })
 
   const fetchEventAndDonors = useCallback(async () => {
     if (!id) throw new Error('Event ID is required');
@@ -62,7 +80,14 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
   if (error) {
     return <Typography variant="h6">{error}</Typography>;
   }
-
+  const toggleDrawer=(isBool:boolean,params)=>{
+    editopen(isBool)
+    let {largest_gift,largest_gift_appeal,last_gift_amount,first_name,last_name}=params.row
+    editLastgitDate({largest_gift,largest_gift_appeal,last_gift_amount,first_name,last_name})
+    eventService.getEventNote(params.id).then(r => {
+      editnotes(r)
+    })
+  }
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 90 },
     { field: 'last_name', headerName: 'Donor Last Name', width: 150 },
@@ -76,12 +101,7 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
       width: 200,
       editable: true,
       renderCell: (params) => (
-        <Link
-          to={`/donor/${params.row.id}`}
-          style={{ color: 'blue', textDecoration: 'underline', cursor: 'pointer' }}
-        >
-          {params.value}
-        </Link>
+        <p onClick={()=>toggleDrawer(true,params)}>...</p>
       ),
     },
     {
@@ -128,26 +148,55 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
         </Box>
       </Box>
 
-      <Collapse in={!isCollapsed} timeout={300}>
-        <Box sx={{ width: '100%' }}>
-          <DataGrid
-            rows={data?.donors || []}
-            columns={columns}
-            checkboxSelection
-            disableRowSelectionOnClick
-            onRowSelectionModelChange={(newSelection) => {
-              onSelectionChange(newSelection as number[]);
-            }}
-            rowSelectionModel={selectedDonors}
-            initialState={{
-              pagination: {
-                paginationModel: { page: 0, pageSize: 5 },
-              },
-            }}
-            pageSizeOptions={[5, 10]}
-          />
-        </Box>
-      </Collapse>
+
+      <Box sx={{ width: '100%' }}>
+        <DataGrid
+          rows={data?.donors || []}
+          columns={columns}
+          initialState={{
+            pagination: {
+              paginationModel: { page: 0, pageSize: 10 },
+            },
+          }}
+          pageSizeOptions={[5, 10]}
+          checkboxSelection
+          disableRowSelectionOnClick
+        />
+        <Drawer open={open}
+                onClose={()=>editopen(false)}
+                anchor={"right"}
+        >
+          <div className={"drawer"}>
+            <p className={"drawer_title"}>{lastgitDate.first_name} {lastgitDate.last_name}</p>
+            {/* <div className={"drawer_top"}>
+              <p className={"drawer_top_title"}>Lastgit Date:</p>
+              <div className={"drawer_top_list"}>
+                <span>{lastgitDate.largest_gift}</span>
+                <span>{lastgitDate.largest_gift_appeal}</span>
+                <span>{lastgitDate.last_gift_amount}</span>
+              </div>
+            </div> */}
+            <div className={"drawer_center"}>
+              <p className={"drawer_top_title"}>Notes</p>
+              <div>
+                {notes.map((note, index) => (
+                    <div className={"drawer_select"}>
+                      <span>{note.fundraiser_name}:</span>
+                      <span>{note.note}</span>
+                    </div>
+                ))}
+
+              </div>
+            </div>
+            <div className={"drawer_bottom"}>
+              <TextField fullWidth id="outlined-basic" label="add you notes here" variant="outlined" />
+              <IconButton color="primary" aria-label="add to shopping cart">
+                <AddCircleOutlineRoundedIcon />
+              </IconButton>
+            </div>
+          </div>
+        </Drawer>
+      </Box>
     </Box>
   );
 };

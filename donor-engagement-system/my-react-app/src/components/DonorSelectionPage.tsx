@@ -140,21 +140,22 @@ const DonorSelectionPage: React.FC = () => {
     return (
       <Box sx={{ display: "flex", minHeight: '100vh', bgcolor: 'white' }}>
         {/* Sidebar */}
-        <Box sx={{ width: { xs: '60px', lg: '200px', flexShrink: 0 } }}>
+        <Box sx={{ width: { xs: '60px', sm: '200px' } }}>
           <Sidebar />
         </Box>
 
         {/* Main content */}
         <Box sx={{ 
-              flexGrow: 1,
-              overflow: 'auto',
-              position: 'relative',
-              marginLeft: { xs: '10px', sm: '20px', md: '40px' },
-            }}>
+          flexGrow: 1, 
+          marginLeft: '40px',
+          marginRight: '30px',
+          position: 'relative'  // Changed from the nested box
+        }}>
           {/* Header */}
           <Box sx={{ 
             position: 'absolute', 
             right: 40,
+            top: 0 
           }}>
             <Header />
           </Box>

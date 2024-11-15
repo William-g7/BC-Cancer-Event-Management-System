@@ -172,11 +172,13 @@ const EventDetail: React.FC = () => {
 
         </Grid>
       </Box>
-      {/* Button at bottom of content */}
+
+      {/* Fixed position button at bottom right */}
       <Box sx={{
-        display: 'flex',
-        justifyContent: 'flex-end',
-        mt: 4
+        position: 'fixed',
+        bottom: 80,
+        right: 40,
+        zIndex: 1100
       }}>
         <Button
           onClick={handleClick}
