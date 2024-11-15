@@ -112,15 +112,16 @@ const CreateEvent: React.FC = () => {
 
   return (
     <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: 'white' }}>
-    <Box sx={{ width: '250px' }}>
+    <Box sx={{ width: { xs: '60px', lg: '200px' }, flexShrink: 0 }}>
         <Sidebar />
     </Box>
 
     {/* Main content */}
     <Box sx={{ 
-        flexGrow: 1, 
-        marginLeft: '40px',
-        p: 4,
+        flexGrow: 1,
+        overflow: 'auto',
+        position: 'relative',
+        marginLeft: { xs: '10px', sm: '20px', md: '40px' },
     }}>
         {/* Header */}
         <Box sx={{ position: 'absolute', right: 40 }}>
@@ -132,7 +133,7 @@ const CreateEvent: React.FC = () => {
             display: 'flex', 
             justifyContent: 'space-between', 
             alignItems: 'center', 
-            mt: 12,
+            mt: 16,
             mb: 4  // Add margin bottom
         }}>
             <Typography variant="h4">NEW EVENT</Typography>

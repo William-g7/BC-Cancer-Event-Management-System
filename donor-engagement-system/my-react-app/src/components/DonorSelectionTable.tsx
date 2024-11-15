@@ -1,15 +1,28 @@
+<<<<<<< HEAD
 import React, { useCallback, useState } from 'react';
 import { Box, Typography, IconButton, Collapse } from '@mui/material';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
+=======
+// src/components/DonorSelectionTable.tsx
+import React, { useCallback, useState } from 'react';
+import { Box, Button, Typography, IconButton, Collapse } from '@mui/material';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
+>>>>>>> parent of 90c481d (Merge branch 'makoy' into main)
 import { useNavigate, Link } from 'react-router-dom';
 import { DonorService } from '../services/donorService.ts';
 import { useParams } from 'react-router-dom';
 import { EventService } from '../services/eventService.ts';
 import { useEventAndDonors } from '../hooks/useDonors.ts';
+<<<<<<< HEAD
 
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import {DonorNotes, EventData} from '../types/event';
 import "./DonorSelectionTable.css"
+=======
+import { EventData } from '../types/event';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+>>>>>>> parent of 90c481d (Merge branch 'makoy' into main)
 
 const donorService = new DonorService();
 const eventService = new EventService();
@@ -28,19 +41,12 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
   refreshTrigger
 }) => {
   const { id } = useParams<{ id: string }>();
+<<<<<<< HEAD
 
+=======
+  const navigate = useNavigate();
+>>>>>>> parent of 90c481d (Merge branch 'makoy' into main)
   const [isCollapsed, setIsCollapsed] = useState(false);
-
-
-  let [open,editopen]=useState(false)
-  let [notes,editnotes]=useState<DonorNotes[]>([])
-  let [lastgitDate,editLastgitDate]=useState({
-    largest_gift: null,
-    largest_gift_appeal:null,
-    last_gift_amount:null,
-    last_name:null,
-    first_name:null,
-  })
 
   const fetchEventAndDonors = useCallback(async () => {
     if (!id) throw new Error('Event ID is required');
@@ -89,14 +95,7 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
   if (error) {
     return <Typography variant="h6">{error}</Typography>;
   }
-  const toggleDrawer=(isBool:boolean,params)=>{
-    editopen(isBool)
-    let {largest_gift,largest_gift_appeal,last_gift_amount,first_name,last_name}=params.row
-    editLastgitDate({largest_gift,largest_gift_appeal,last_gift_amount,first_name,last_name})
-    eventService.getEventNote(params.id).then(r => {
-      editnotes(r)
-    })
-  }
+
   const columns: GridColDef[] = [
     { field: 'full_name', headerName: 'Name', width: 120 },
     { 
@@ -118,6 +117,7 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
       headerName: 'Notes',
       width: 200,
       editable: true,
+<<<<<<< HEAD
       renderCell: (params: GridRenderCellParams) => {
         if (!params?.value) return '';
         return (
@@ -126,6 +126,16 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
           </Link>
         );
       }
+=======
+      renderCell: (params) => (
+        <Link
+          to={`/donor/${params.row.id}`}
+          style={{ color: 'blue', textDecoration: 'underline', cursor: 'pointer' }}
+        >
+          {params.value}
+        </Link>
+      ),
+>>>>>>> parent of 90c481d (Merge branch 'makoy' into main)
     },
     {
       field: 'state',
@@ -176,6 +186,7 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
             columns={columns}
             checkboxSelection
             disableRowSelectionOnClick
+<<<<<<< HEAD
             isRowSelectable={(params) => params.row.state !== 'confirmed'}
             onRowSelectionModelChange={(newSelection) => {
               const confirmedIds = data?.donors
@@ -188,10 +199,15 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
               });
               
               onSelectionChange([...confirmedIds, ...unconfirmedSelection]);
+=======
+            onRowSelectionModelChange={(newSelection) => {
+              onSelectionChange(newSelection as number[]);
+>>>>>>> parent of 90c481d (Merge branch 'makoy' into main)
             }}
             rowSelectionModel={selectedDonors}
             initialState={{
               pagination: {
+<<<<<<< HEAD
                   paginationModel: { page: 0, pageSize: 10},
               },
             }}  
@@ -214,6 +230,12 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
                 }
               }
             }}
+=======
+                paginationModel: { page: 0, pageSize: 5 },
+              },
+            }}
+            pageSizeOptions={[5, 10]}
+>>>>>>> parent of 90c481d (Merge branch 'makoy' into main)
           />
         </Box>
       </Collapse>

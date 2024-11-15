@@ -1,5 +1,5 @@
 import { api } from '../utils/api.ts';
-import {EventData, CreateEventData, DonorNotes} from '../types/event.ts';
+import { EventData, CreateEventData } from '../types/event.ts';
 
 export class EventService {
     async getDashboardEvents(): Promise<EventData[]> {
@@ -21,13 +21,6 @@ export class EventService {
         const response = await api.post<{success: boolean, data: EventData}>('/event/new-event', event);
         if (!response.success) {
             throw new Error('Failed to create event');
-        }
-        return response.data;
-    }
-    async getEventNote(id:number):Promise<DonorNotes[]> {
-        const response = await api.get<{success: boolean, data: DonorNotes[]}>(`/event/note/${id}`);
-        if (!response.success) {
-            throw new Error('Failed to get notes');
         }
         return response.data;
     }
