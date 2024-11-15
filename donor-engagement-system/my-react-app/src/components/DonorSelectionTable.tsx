@@ -100,14 +100,14 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
       headerName: 'Notes',
       width: 150,
       editable: true,
-      renderCell: (params: GridRenderCellParams) => {
-        if (!params?.value) return '';
-        return (
-          <Link to={`/donor/${params.row.id}`}>
-            {params.value}
-          </Link>
-        );
-      }
+      renderCell: (params) => (
+        <Link
+          to={`/donor/${params.row.id}`}
+          style={{ color: 'blue', textDecoration: 'underline', cursor: 'pointer' }}
+        >
+          {params.value}
+        </Link>
+      ),
     },
     {
       field: 'state',
@@ -157,44 +157,16 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
             columns={columns}
             checkboxSelection
             disableRowSelectionOnClick
-            isRowSelectable={(params) => params.row.state !== 'confirmed'}
             onRowSelectionModelChange={(newSelection) => {
-              const confirmedIds = data?.donors
-                .filter(donor => donor.state === 'confirmed')
-                .map(donor => donor.id);
-              
-              const unconfirmedSelection = newSelection.filter(id => {
-                const row = data?.donors.find(donor => donor.id === id);
-                return row && row.state !== 'confirmed';
-              });
-              
-              onSelectionChange([...confirmedIds, ...unconfirmedSelection]);
+              onSelectionChange(newSelection as number[]);
             }}
             rowSelectionModel={selectedDonors}
             initialState={{
               pagination: {
-                  paginationModel: { page: 0, pageSize: 10},
+                paginationModel: { page: 0, pageSize: 5 },
               },
-            }}  
-            getRowClassName={(params) => {
-              if (params.row.state === 'confirmed') return 'confirmed-row';
-              return '';
             }}
-            sx={{
-              '& .confirmed-row': {
-                backgroundColor: 'rgba(0, 0, 0, 0.04)',
-                '& .MuiCheckbox-root': {
-                  color: 'rgba(0, 0, 0, 0.38)',
-                  '&.Mui-checked': {
-                    color: 'success.main',
-                  },
-                  '&.Mui-disabled': {
-                    color: 'success.main',
-                    opacity: 1,
-                  }
-                }
-              }
-            }}
+            pageSizeOptions={[5, 10]}
           />
         </Box>
       </Collapse>

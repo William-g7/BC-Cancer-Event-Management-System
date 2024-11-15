@@ -4,9 +4,7 @@ interface RequestOptions extends RequestInit {
   params?: Record<string, string | number>;
 }
 
-export class Api {
-  private baseUrl: string = 'http://localhost:5001';
-
+class Api {
   private username: string | null = localStorage.getItem('username') || null;
 
   public setUsername(username: string) {
@@ -14,56 +12,78 @@ export class Api {
     localStorage.setItem('username', username);
   }
 
-  private async request<T>(url: string, options: RequestInit = {}): Promise<T> {
+  private async request<T>(endpoint: string, options: RequestOptions = {}): Promise<T> {
+    const { params, ...requestOptions } = options;
+    
+    // Build URL with query parameters
+    const url = new URL(`${API_URL}${endpoint}`);
+    if (params) {
+      Object.entries(params).forEach(([key, value]) => {
+        url.searchParams.append(key, String(value));
+      });
+    }
+
+    // Default headers with login name
+    const headers = {
+      'Content-Type': 'application/json',
+      'X-User-Name': this.username || 'Invalid User',
+      ...options.headers,
+    };
+
+  
+
     try {
-      const response = await fetch(`${this.baseUrl}/api${url}`, {
-        ...options,
-        headers: {
-          'Content-Type': 'application/json',
-          'X-User-Name': this.username || 'Invalid User',
-          ...options.headers,
-        },
-        credentials: 'include'
+      const response = await fetch(url.toString(), {
+        ...requestOptions,
+        headers,
       });
 
-      const data = await response.json();
-      
       if (!response.ok) {
-        throw new Error(data.error || 'Request failed');
+        const errorMessage = `API Error: ${response.status} ${response.statusText}`;
+        console.log('Full response:', response);
+        const errorBody = await response.json().catch(() => ({}));
+        console.log('Error body:', errorBody);
+        
+        
       }
 
-      return data;
+      // Return null for 204 No Content
+      if (response.status === 204) {
+        return null as T;
+      }
+
+      return response.json();
     } catch (error) {
-      console.error('API request failed:', error);
+      console.error('API Request Failed:', error);
       throw error;
     }
   }
 
   // GET request
-  public get<T>(url: string): Promise<T> {
-    return this.request<T>(url);
+  public get<T>(endpoint: string, params?: Record<string, string | number>): Promise<T> {
+    return this.request<T>(endpoint, { params });
   }
 
   // POST request
-  public post<T>(url: string, body: any): Promise<T> {
-    return this.request<T>(url, {
+  public post<T>(endpoint: string, data: unknown): Promise<T> {
+    return this.request<T>(endpoint, {
       method: 'POST',
-      body: JSON.stringify(body)
+      body: JSON.stringify(data),
     });
   }
 
   // PUT request
-  public put<T>(url: string, body: any): Promise<T> {
-    return this.request<T>(url, {
+  public put<T>(endpoint: string, data: unknown): Promise<T> {
+    return this.request<T>(endpoint, {
       method: 'PUT',
-      body: JSON.stringify(body)
+      body: JSON.stringify(data),
     });
   }
 
   // DELETE request
-  public delete<T>(url: string): Promise<T> {
-    return this.request<T>(url, {
-      method: 'DELETE'
+  public delete<T>(endpoint: string): Promise<T> {
+    return this.request<T>(endpoint, {
+      method: 'DELETE',
     });
   }
 }
