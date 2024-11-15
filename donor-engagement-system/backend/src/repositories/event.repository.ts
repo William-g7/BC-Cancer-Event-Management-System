@@ -199,8 +199,7 @@ export class EventRepository {
     }
     // find notes
     async findNotes(notesId: number): Promise<DonorNotes[]> {
-    const [notes] = await this.pool.execute(`SELECT Donor_Notes.id,Donor_Notes.donor_id,Donor_Notes.note,Donor_Notes.created_at,Accounts.name AS fundraiser_name FROM Donor_Notes JOIN Fundraisers ON Donor_Notes.fundraiser_id = Fundraisers.id JOIN Accounts ON Fundraisers.account_id = Accounts.id WHERE Donor_Notes.donor_id = ?`, [notesId]) as [DonorNotes[], any];
-    return notes
+        const [notes] = await this.pool.execute(`SELECT Donor_Notes.id,Donor_Notes.donor_id,Donor_Notes.note,Donor_Notes.created_at,Accounts.name AS fundraiser_name FROM Donor_Notes JOIN Fundraisers ON Donor_Notes.fundraiser_id = Fundraisers.id JOIN Accounts ON Fundraisers.account_id = Accounts.id WHERE Donor_Notes.donor_id = ?`, [notesId]) as [DonorNotes[], any];
+        return notes
     }
-
 }
