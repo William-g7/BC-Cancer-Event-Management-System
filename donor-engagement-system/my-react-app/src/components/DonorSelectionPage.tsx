@@ -43,7 +43,7 @@ const DonorSelectionPage: React.FC = () => {
     try {
       const donorsData = await donorService.getDonorsByEvent(parseInt(id));
       setSelectedDonors(donorsData
-        .filter(donor => donor.state === 'selected' || donor.state === 'confirmed')
+        .filter(donor => donor.state === 'selected')
         .map(donor => donor.id)
       );
       const otherData = await donorService.getOtherFundraisersSelections(parseInt(id));
@@ -61,15 +61,28 @@ const DonorSelectionPage: React.FC = () => {
         console.error('No event ID provided');
         return;
       }
-      const allDonors = await donorService.getDonorsByEventFundraiser(parseInt(id));
+      const allDonors = await donorService.getDonorsByEvent(parseInt(id));
       const hasConfirmedDonors = allDonors.some(donor => donor.state === 'confirmed');
       setIsChangeMode(hasConfirmedDonors);
     };
 
+    const checkSelectedDonors = async () => {
+      if (!id) {
+        console.error('No event ID provided');
+        return;
+      }
+      const allDonors = await donorService.getDonorsByEvent(parseInt(id));
+      setSelectedDonors(allDonors
+        .filter(donor => donor.state === 'selected')
+        .map(donor => donor.id)
+      );
+    };
+
     if (id) {
       checkConfirmedDonors();
+      checkSelectedDonors();
     }
-  }, [selectedDonors, id]); // Run this effect when selectedDonors or id changes
+  }, [id]); // Run this effect when selectedDonors or id changes
 
   const handleCloseSnackbar = () => {
     setSnackbar(prev => ({ ...prev, open: false }));
@@ -79,23 +92,19 @@ const DonorSelectionPage: React.FC = () => {
     try {
       if (!id) return;
 
-      const allDonors = await donorService.getDonorsByEventFundraiser(parseInt(id));
+      // Get all donors for the event
+      const allDonors = await donorService.getDonorsByEvent(parseInt(id));
       console.log('Donors data received in frontend:', allDonors);
 
-      const selectedUnconfirmedDonors = selectedDonors.filter(id => {
-        const donor = allDonors.find(d => d.id === id);
-        return donor && donor.state !== 'confirmed';
-      });
 
+      // Get the IDs of all unselected donors
       const unselectedDonors = allDonors
-        .filter(donor => 
-          !selectedDonors.includes(donor.id) && 
-          donor.state !== 'confirmed'
-        )
+        .filter(donor => !selectedDonors.includes(donor.id))
         .map(donor => donor.id);
 
+      // Save the selected donors and unselect the unselected donors to the database
       await Promise.all([
-        donorService.saveSelections(parseInt(id), selectedUnconfirmedDonors),
+        donorService.saveSelections(parseInt(id), selectedDonors),
         donorService.unselectDonors(parseInt(id), unselectedDonors)
       ]);
       

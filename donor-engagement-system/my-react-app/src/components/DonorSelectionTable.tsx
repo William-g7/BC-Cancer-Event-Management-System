@@ -1,6 +1,6 @@
 // src/components/DonorSelectionTable.tsx
 import React, { useCallback, useState } from 'react';
-import { Box, Button, Typography, IconButton, Collapse } from '@mui/material';
+import { Box, Typography, IconButton, Collapse } from '@mui/material';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { useNavigate, Link } from 'react-router-dom';
 import { DonorService } from '../services/donorService.ts';
@@ -8,7 +8,6 @@ import { useParams } from 'react-router-dom';
 import { EventService } from '../services/eventService.ts';
 import { useEventAndDonors } from '../hooks/useDonors.ts';
 import { EventData } from '../types/event';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 const donorService = new DonorService();
@@ -25,7 +24,8 @@ interface DonorSelectionTableProps {
 const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
   selectedDonors,
   onSelectionChange,
-  refreshTrigger
+  refreshTrigger,
+
 }) => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -84,21 +84,21 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
     { 
       field: 'last_gift_appeal', 
       headerName: 'Last Appeal', 
-      width: 150,
+      width: 120,
     },
     { 
       field: 'last_gift_date', 
       headerName: 'Last Donation Date', 
-      width: 200,
+      width: 150,
     },
-    { field: 'total_donations', headerName: 'Total Donations', width: 180 },
+    { field: 'total_donations', headerName: 'Total Donations', width: 150 },
     { field: 'address_line1', headerName: 'Address', width: 200 },
     { field: 'city', headerName: 'Location', width: 200 },
     { field: 'communication_restrictions', headerName: 'Communication', width: 200 },
     {
       field: 'notes',
       headerName: 'Notes',
-      width: 200,
+      width: 150,
       editable: true,
       renderCell: (params: GridRenderCellParams) => {
         if (!params?.value) return '';
@@ -112,7 +112,7 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
     {
       field: 'state',
       headerName: 'Status',
-      width: 120,
+      width: 100,
       renderCell: (params: GridRenderCellParams) => (
         <Typography color={
           params?.value === 'confirmed' ? 'success.main' :
@@ -124,10 +124,6 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
       )
     }
   ];
-
-  const getRowClassName = (params: any) => {
-    return params.row.state === 'confirmed' ? 'confirmed-row' : '';
-  };
 
   return (
     <Box sx={{ width: '100%', position: 'relative' }}>
