@@ -31,87 +31,98 @@ export class DonorService {
 
   async saveSelections(eventId: number, donorIds: number[]): Promise<void> {
     try {
-        console.log('DonorService: Attempting to save selections:', {
+      const response = await api.post<{ success: boolean }>(
+        `/event/${eventId}/selections/save`,
+        { donorIds }
+      );
+
+      if (!response.success) {
+        throw new Error('Failed to save selections');
+      }
+    } catch (error) {
+      console.error('Error saving selections:', error);
+      throw error;
+    }
+  }
+
+  async confirmSelections(eventId: number, donorIds: number[]): Promise<void> {
+    try {
+        console.log('DonorService: Attempting to confirm selections:', {
             eventId,
             donorIds,
-            url: `/event/${eventId}/selections/save`
+            url: `/event/${eventId}/selections/confirm`
         });
         
         const response = await api.post<{ success: boolean }>(
-            `/event/${eventId}/selections/save`,
+            `/event/${eventId}/selections/confirm`,
             { donorIds }
         );
         
-        console.log('DonorService: Save response:', response);
+        console.log('DonorService: Confirm response:', response);
         
         if (!response.success) {
-            throw new Error('Failed to save selections');
+            throw new Error('Failed to confirm selections');
         }
     } catch (error) {
-        console.error('DonorService: Error saving selections:', error);
+        console.error('DonorService: Error confirming selections:', error);
         throw error;
     }
-}
+  }
 
-async confirmSelections(eventId: number, donorIds: number[]): Promise<void> {
-  try {
-      console.log('DonorService: Attempting to confirm selections:', {
-          eventId,
-          donorIds,
-          url: `/event/${eventId}/selections/confirm`
-      });
+  async getOtherFundraisersSelections(eventId: number): Promise<any[]> {
+    try {
+      const response = await api.get<{
+        success: boolean,
+        data: any[]
+      }>(`/event/${eventId}/other-selections`);
+
+      if (!response.success) {
+        throw new Error('Failed to fetch other selections');
+      }
+
+      return response.data || [];
+    } catch (error) {
+      console.error('Error fetching other selections:', error);
+      throw error;
+    }
+  }
+
+  async unselectDonors(eventId: number, donorIds: number[]): Promise<void> {
+    try {
+      if (donorIds.length === 0) return;
       
       const response = await api.post<{ success: boolean }>(
-          `/event/${eventId}/selections/confirm`,
-          { donorIds }
+        `/event/${eventId}/selections/unselect`,
+        { donorIds }
       );
-      
-      console.log('DonorService: Confirm response:', response);
-      
+
       if (!response.success) {
-          throw new Error('Failed to confirm selections');
+        throw new Error('Failed to unselect donors');
       }
-  } catch (error) {
-      console.error('DonorService: Error confirming selections:', error);
+    } catch (error) {
+      console.error('Error unselecting donors:', error);
       throw error;
-  }
-}
-
-async getOtherFundraisersSelections(eventId: number): Promise<any[]> {
-  try {
-    const response = await api.get<{
-      success: boolean,
-      data: any[]
-    }>(`/event/${eventId}/other-selections`);
-
-    if (!response.success) {
-      throw new Error('Failed to fetch other selections');
     }
-
-    return response.data || [];
-  } catch (error) {
-    console.error('Error fetching other selections:', error);
-    throw error;
   }
-}
 
-async unselectDonors(eventId: number, donorIds: number[]): Promise<void> {
-  try {
-    const response = await api.post<{ success: boolean }>(
-      `/event/${eventId}/selections/unselect`,
-      { donorIds }
-    );
+  async getDonorsByEventFundraiser(eventId: number): Promise<Donor[]> {
+    try {
+      const response = await api.get<{
+        success: boolean,
+        data: Donor[]
+      }>(`/event/${eventId}/selections`);
 
-    if (!response.success) {
-      throw new Error('Failed to unselect donors');
+      if (!response.success) {
+        throw new Error('Failed to fetch donors');
+      }
+
+      return response.data || [];
+    } catch (error) {
+      console.error('Error fetching donors:', error);
+      throw error;
     }
-  } catch (error) {
-    console.error('Error unselecting donors:', error);
-    throw error;
   }
-}
 
 }
 
-export default new DonorService();
 

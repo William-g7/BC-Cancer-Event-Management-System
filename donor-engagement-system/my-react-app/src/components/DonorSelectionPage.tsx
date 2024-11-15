@@ -24,6 +24,7 @@ const DonorSelectionPage: React.FC = () => {
     message: '',
     severity: 'success' as 'success' | 'error'
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchOtherSelections = async () => {
@@ -42,7 +43,7 @@ const DonorSelectionPage: React.FC = () => {
   const refreshData = async () => {
     if (!id) return;
     try {
-      const donorsData = await donorService.getDonorsByEvent(parseInt(id));
+      const donorsData = await donorService.getDonorsByEventFundraiser(parseInt(id));
       setSelectedDonors(donorsData
         .filter(donor => donor.state === 'selected' || donor.state === 'confirmed')
         .map(donor => donor.id)
@@ -62,18 +63,38 @@ const DonorSelectionPage: React.FC = () => {
   const handleSaveSelection = async () => {
     try {
       if (!id) return;
-      await donorService.saveSelections(parseInt(id), selectedDonors);
-      setIsChangeMode(true);
+      
+
+      const allDonors = await donorService.getDonorsByEventFundraiser(parseInt(id));
+      console.log('Donors data received in frontend:', allDonors);
+
+      const selectedUnconfirmedDonors = selectedDonors.filter(id => {
+        const donor = allDonors.find(d => d.id === id);
+        return donor && donor.state !== 'confirmed';
+      });
+      
+
+      const unselectedDonors = allDonors
+        .filter(donor => 
+          !selectedDonors.includes(donor.id) && 
+          donor.state !== 'confirmed'
+        )
+        .map(donor => donor.id);
+
+
+      await Promise.all([
+        donorService.saveSelections(parseInt(id), selectedUnconfirmedDonors),
+        donorService.unselectDonors(parseInt(id), unselectedDonors)
+      ]);
       
       setSnackbar({
         open: true,
-        message: `Successfully saved ${selectedDonors.length} donor(s)`,
+        message: `Successfully updated donor selections`,
         severity: 'success'
       });
 
       setTimeout(async () => {
         await refreshData();
-        console.log('Data refreshed after save');
       }, 1000);
       
     } catch (error) {
@@ -82,30 +103,38 @@ const DonorSelectionPage: React.FC = () => {
         message: 'Failed to save selections',
         severity: 'error'
       });
-      console.error('Error saving selections in page:', error);
+      console.error('Error saving selections:', error);
     }
   };
 
   const handleChangeSelection = async () => {
     try {
       if (!id) return;
+      setIsLoading(true);
+      setSnackbar({
+        open: true,
+        message: 'Loading...',
+        severity: 'success'
+      });
+
       const donorsToUnselect = selectedDonors;
       await donorService.unselectDonors(parseInt(id), donorsToUnselect);
       setIsChangeMode(false);
       setSelectedDonors([]);
       
-      setSnackbar({
-        open: true,
-        message: 'Successfully changed selections',
-        severity: 'success'
-      });
-
       setTimeout(async () => {
         await refreshData();
         console.log('Data refreshed after change');
+        setIsLoading(false);
+        setSnackbar({
+          open: true,
+          message: 'Loading...',
+          severity: 'success'
+        });
       }, 1000);
       
     } catch (error) {
+      setIsLoading(false);
       setSnackbar({
         open: true,
         message: 'Failed to change selections',
@@ -120,13 +149,17 @@ const DonorSelectionPage: React.FC = () => {
       if (!id) return;
       await donorService.confirmSelections(parseInt(id), selectedDonors);
       
+      setIsChangeMode(true);
       setSnackbar({
         open: true,
         message: `Successfully confirmed ${selectedDonors.length} donor(s)`,
         severity: 'success'
       });
 
-      await refreshData();
+      setTimeout(async () => {
+        await refreshData();
+      }, 1000);
+      
     } catch (error) {
       setSnackbar({
         open: true,

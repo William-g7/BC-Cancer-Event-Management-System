@@ -74,10 +74,6 @@ export class DonorService {
         const donorRepository = new DonorRepository(this.pool);
         const eventFundraiserId = await this.getEventFundraiserId(eventId, accountId);
         await donorRepository.unselectDonors(eventId, donorIds, eventFundraiserId);
-    }
-
-    
-
-    
+    } 
 }
 
