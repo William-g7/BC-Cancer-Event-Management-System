@@ -15,4 +15,5 @@ export interface Donor {
     phone_restrictions: string;
     communication_restrictions: string;
     email_restrictions: string;
+    state: string;
 }
