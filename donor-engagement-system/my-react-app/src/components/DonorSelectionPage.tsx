@@ -172,7 +172,19 @@ const DonorSelectionPage: React.FC = () => {
   const handleConfirmSelection = async () => {
     try {
       if (!id) return;
-      await donorService.confirmSelections(parseInt(id), selectedDonors);
+      const allDonors = await donorService.getDonorsByEvent(parseInt(id));
+
+      // Get the IDs of all unselected donors
+      const unselectedDonors = allDonors
+        .filter(donor => !selectedDonors.includes(donor.id))
+        .map(donor => donor.id);
+
+      // Save the selected donors and unselect the unselected donors to the database
+      await Promise.all([
+        donorService.confirmSelections(parseInt(id), selectedDonors),
+        donorService.unselectDonors(parseInt(id), unselectedDonors)
+      ]);
+
       
       setIsChangeMode(true);
       setSnackbar({
