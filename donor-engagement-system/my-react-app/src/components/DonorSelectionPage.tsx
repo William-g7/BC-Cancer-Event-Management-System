@@ -6,7 +6,7 @@ import { Box } from '@mui/system';
 import Header from './Header.tsx';
 import { useParams } from 'react-router-dom';
 import { DonorService } from '../services/donorService.ts';
-import { Button, useTheme, Snackbar, Alert } from '@mui/material';
+import { Button, useTheme, Snackbar, Alert, Typography } from '@mui/material';
 
 const donorService = new DonorService();
 
@@ -23,7 +23,6 @@ const DonorSelectionPage: React.FC = () => {
     severity: 'success' as 'success' | 'error'
   });
 
-
   useEffect(() => {
     const fetchOtherSelections = async () => {
       if (!id) return;
@@ -37,6 +36,9 @@ const DonorSelectionPage: React.FC = () => {
 
     fetchOtherSelections();
   }, [id]);
+
+  // Calculate confirmed donors count from other fundraisers
+  const confirmedOtherDonorsCount = otherSelections.filter(donor => donor.state === 'confirmed').length;
 
   const refreshData = () => {
     if (!id) return;
@@ -232,6 +234,7 @@ const DonorSelectionPage: React.FC = () => {
             onSelectionChange={setSelectedDonors}
             selectedDonors={selectedDonors}
             refreshTrigger={refreshTrigger}
+            confirmedOtherDonorsCount={confirmedOtherDonorsCount}
           />
           
           <Box sx={{ mt: 4 }}>

@@ -18,6 +18,7 @@ interface DonorSelectionTableProps {
   selectedDonors: number[];  
   onSelectionChange: (selected: number[]) => void;  
   refreshTrigger: number;
+  confirmedOtherDonorsCount: number;
 }
 
 
@@ -25,7 +26,7 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
   selectedDonors,
   onSelectionChange,
   refreshTrigger,
-
+  confirmedOtherDonorsCount,
 }) => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -59,6 +60,9 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
   }, [id]);
 
   const { data, loading, error } = useEventAndDonors(fetchEventAndDonors, refreshTrigger);
+
+  // Calculate the number of confirmed donors
+  const confirmedDonorsCount = data?.donors?.filter(donor => donor.state === 'confirmed').length || 0;
 
   console.log('Donors data in table component:', data?.donors);
 
@@ -129,8 +133,11 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
     <Box sx={{ width: '100%', position: 'relative' }}>
       <Box sx={{ mb: 4 }}>
         
-        <Typography variant="h4" sx={{ mb: 4 }}>
+        <Typography variant="h4" sx={{ mb: 1 }}>
           {data?.event ? `EVENTS / ${data.event.name}` : 'Loading...'}
+        </Typography>
+        <Typography variant="h6" color='#905AA6' sx={{ mb: 3 }}>
+          Selected Donors : {confirmedDonorsCount + confirmedOtherDonorsCount} /{data?.event.expected_selection}
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
           <Typography variant="h5">
