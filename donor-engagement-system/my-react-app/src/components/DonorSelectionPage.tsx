@@ -38,11 +38,17 @@ const DonorSelectionPage: React.FC = () => {
     fetchOtherSelections();
   }, [id]);
 
-  const refreshData = () => {
+  const refreshData = async () => {
     if (!id) return;
     try {
-      // Refresh the whole page
-      window.location.reload();
+      const donorsData = await donorService.getDonorsByEvent(parseInt(id));
+      setSelectedDonors(donorsData
+        .filter(donor => donor.state === 'selected')
+        .map(donor => donor.id)
+      );
+      const otherData = await donorService.getOtherFundraisersSelections(parseInt(id));
+      setOtherSelections(otherData);
+      setRefreshTrigger(prev => prev + 1); 
     } catch (error) {
       console.error('Error refreshing data:', error);
     }
@@ -90,6 +96,7 @@ const DonorSelectionPage: React.FC = () => {
       const allDonors = await donorService.getDonorsByEvent(parseInt(id));
       console.log('Donors data received in frontend:', allDonors);
 
+
       // Get the IDs of all unselected donors
       const unselectedDonors = allDonors
         .filter(donor => !selectedDonors.includes(donor.id))
@@ -100,7 +107,7 @@ const DonorSelectionPage: React.FC = () => {
         donorService.saveSelections(parseInt(id), selectedDonors),
         donorService.unselectDonors(parseInt(id), unselectedDonors)
       ]);
-
+      
       setSnackbar({
         open: true,
         message: `Successfully updated donor selections`,
