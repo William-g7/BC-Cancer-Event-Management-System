@@ -79,7 +79,8 @@ const DashboardEvents: React.FC = () => {
                   component="img"
                   alt={event.name}
                   sx={{ 
-                    height: { xs: 230, sm: 230, md: 235 } 
+                    height: { xs: 230, sm: 230, md: 235 },
+                    width: 280
                   }}
                   image={event.image_url || '/calendar.png'}
                 />
