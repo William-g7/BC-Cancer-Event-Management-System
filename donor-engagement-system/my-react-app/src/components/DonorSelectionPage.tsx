@@ -15,14 +15,14 @@ const DonorSelectionPage: React.FC = () => {
   const [selectedDonors, setSelectedDonors] = useState<number[]>([]);
   const [otherSelections, setOtherSelections] = useState<any[]>([]);
   const [isChangeMode, setIsChangeMode] = useState(false);
-  const [refreshTrigger, setRefreshTrigger] = useState(0);
+  const [refreshTrigger] = useState(0);
   const theme = useTheme();
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: '',
     severity: 'success' as 'success' | 'error'
   });
-  const [isLoading, setIsLoading] = useState(false);
+
 
   useEffect(() => {
     const fetchOtherSelections = async () => {
@@ -124,7 +124,6 @@ const DonorSelectionPage: React.FC = () => {
   const handleChangeSelection = async () => {
     try {
         if (!id) return;
-        setIsLoading(true);
         setSnackbar({
             open: true,
             message: 'Loading...',
@@ -150,7 +149,6 @@ const DonorSelectionPage: React.FC = () => {
         setTimeout(async () => {
             await refreshData();
             console.log('Data refreshed after change');
-            setIsLoading(false);
             setSnackbar({
                 open: true,
                 message: 'Confirmed donors have been selected.',
@@ -159,7 +157,6 @@ const DonorSelectionPage: React.FC = () => {
         }, 1000);
         
     } catch (error) {
-        setIsLoading(false);
         setSnackbar({
             open: true,
             message: 'Failed to change selections',
