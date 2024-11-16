@@ -182,7 +182,7 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
             }}
             sx={{
               '& .confirmed-row': {
-                backgroundColor: 'rgba(0, 0, 0, 0.04)',
+                backgroundColor: '#E5EEEF',
                 '& .MuiCheckbox-root': {
                   color: 'rgba(0, 0, 0, 0.38)',
                   '&.Mui-checked': {
