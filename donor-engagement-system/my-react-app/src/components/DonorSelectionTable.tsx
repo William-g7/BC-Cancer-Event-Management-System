@@ -9,6 +9,7 @@ import { EventService } from '../services/eventService.ts';
 import { useEventAndDonors } from '../hooks/useDonors.ts';
 import { EventData } from '../types/event';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { theme } from '../theme/theme.ts';
 
 const donorService = new DonorService();
 const eventService = new EventService();
@@ -163,12 +164,8 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
                 .filter(donor => donor.state === 'confirmed')
                 .map(donor => donor.id);
               
-              const unconfirmedSelection = newSelection.filter(id => {
-                const row = data?.donors.find(donor => donor.id === id);
-                return row && row.state !== 'confirmed';
-              });
-              
-              onSelectionChange([...confirmedIds, ...unconfirmedSelection]);
+              const updatedSelection = [...new Set([...confirmedIds, ...newSelection])];
+              onSelectionChange(updatedSelection);
             }}
             rowSelectionModel={selectedDonors}
             initialState={{
@@ -182,9 +179,9 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
             }}
             sx={{
               '& .confirmed-row': {
-                backgroundColor: 'rgba(0, 0, 0, 0.04)',
+                backgroundColor: '#E5EEEF',
                 '& .MuiCheckbox-root': {
-                  color: 'rgba(0, 0, 0, 0.38)',
+                  color: theme.palette.text.secondary,
                   '&.Mui-checked': {
                     color: 'success.main',
                   },
