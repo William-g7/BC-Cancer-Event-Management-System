@@ -6,7 +6,7 @@ import { DonorService } from '../services/donorService.ts';
 import { useParams } from 'react-router-dom';
 import { EventService } from '../services/eventService.ts';
 import { useEventAndDonors } from '../hooks/useDonors.ts';
-import { EventData } from '../types/event';
+import { DonorNotes, EventData } from '../types/event';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { Drawer } from '@mui/material';
 const donorService = new DonorService();
@@ -29,6 +29,7 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
 }) => {
   const { id } = useParams<{ id: string }>();
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [newNote, setNewNote] = useState<string>('');
 
   // Sidebar State
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -69,14 +70,27 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
   console.log('Donors data in table component:', data?.donors);
 
   // Function to handle Sidebar toggle
-  const handleDrawerOpen = (params: GridRenderCellParams) => {
-    setSidebarContent(params.row); // Set the clicked row data to Sidebar content
+  const handleDrawerOpen = async (params: GridRenderCellParams) => {
+    const donorId = params.row.id; // Assuming the donor ID is in the row data
+    const notes = await eventService.getEventNote(donorId); // Fetch notes for the selected donor
+    setSidebarContent({ ...params.row, notes }); // Set the clicked row data and notes to Sidebar content
     setDrawerOpen(true); // Open Sidebar
   };
 
   const handleDrawerClose = () => {
     setDrawerOpen(false); // Close Sidebar
     setSidebarContent(null); // Clear Sidebar content
+  };
+
+  const handleAddNote = async () => {
+    if (newNote.trim() && sidebarContent) {
+      const noteToAdd = {
+        fundraiser_name: 'Parvati Patel',
+        note: newNote,
+      };
+      sidebarContent.notes.push(noteToAdd);
+      setNewNote('');
+    }
   };
 
   React.useEffect(() => {
@@ -227,53 +241,53 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
             flexDirection: "column",
             padding: 3,
             boxSizing: "border-box",
+            backgroundColor: '#f9f9f9',
+            borderLeft: '1px solid #e0e0e0',
           }}
         >
           {/* Title and Main Info */}
           <Box>
-            <Typography
-              variant="h5"
-              sx={{
-                fontWeight: "bold",
-                marginBottom: 2,
-              }}
-            >
-              Donor Notes
-            </Typography>
             {sidebarContent && (
               <>
-                <Typography
-                  variant="body1"
-                  sx={{
-                    fontWeight: "bold",
-                    marginBottom: 1,
-                  }}
-                >
-                  Full Name: {sidebarContent.full_name}
+                <Typography variant="body1" sx={{ fontWeight: "bold", marginBottom: 1 }}>
+                  {sidebarContent.full_name}
                 </Typography>
-                <Typography variant="body1" sx={{ marginBottom: 1 }}>
-                  Address: {sidebarContent.address_line1}
+                <Typography variant="body1" sx={{ marginTop: 2 }}>
+                  {sidebarContent.notes.length > 0 
+                    ? sidebarContent.notes.map(note => `${note.fundraiser_name}: ${note.note}`).join(', ') 
+                    : "No additional notes"}
                 </Typography>
-                <Typography variant="body1" sx={{ marginBottom: 1 }}>
-                  City: {sidebarContent.city}
-                </Typography>
+                {/* Input for new note */}
+                <Box sx={{ display: 'flex', flexDirection: 'column', marginTop: 2 }}>
+                  <textarea 
+                    value={newNote} 
+                    onChange={(e) => setNewNote(e.target.value)} 
+                    placeholder="Add your notes here"
+                    style={{
+                      border: '1px solid #007BFF',
+                      borderRadius: '4px',
+                      padding: '10px',
+                      resize: 'none',
+                      height: '100px',
+                      marginBottom: '8px',
+                    }} 
+                  />
+                  <button 
+                    onClick={handleAddNote} 
+                    style={{
+                      backgroundColor: '#007BFF',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '4px',
+                      padding: '10px',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    +
+                  </button>
+                </Box>
               </>
             )}
-          </Box>
-
-          {/* Notes Centered */}
-          <Box
-            sx={{
-              flex: 1,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center", // Center Notes vertically
-              alignItems: "center",
-            }}
-          >
-            <Typography variant="body1">
-              Notes: {sidebarContent?.notes || "No additional notes"}
-            </Typography>
           </Box>
         </Box>
       </Drawer>

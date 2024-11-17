@@ -1,5 +1,4 @@
 import { api } from '../utils/api.ts';
-import { useNavigate } from 'react-router-dom';
 
 interface LoginResponse {
     success: boolean;
@@ -23,6 +22,7 @@ export class AuthService {
             console.error('Login failed:', error);
             return { success: false, message: 'Invalid User or Invalid Password! Please try it again!' };
         }
+        return { success: false };
     }
 }
    

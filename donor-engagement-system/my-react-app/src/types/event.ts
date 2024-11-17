@@ -1,5 +1,5 @@
 import { Fundraiser } from './fundraiser';
-
+import { DateTime } from 'luxon';
 export interface EventData {
     id: number;
     name: string;
@@ -14,6 +14,14 @@ export interface EventData {
     assigned_fundraisers?: Fundraiser[];
     organizer?: Fundraiser;
     image_url?: string | null;
+}
+
+export interface DonorNotes{
+    id: number;
+    donor_id: number;
+    fundraiser_name:string;
+    note:string;
+    created_at: DateTime;
 }
 
 export interface CreateEventData {
