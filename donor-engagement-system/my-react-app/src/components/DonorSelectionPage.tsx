@@ -243,9 +243,9 @@ const DonorSelectionPage: React.FC = () => {
 
           {/* Buttons */}
           <Box sx={{ 
-            position: 'fixed',
-            bottom: 80,
-            right: 40,
+            position: 'absolute',
+            top: 210,
+            right: 10,
             display: 'flex',
             gap: 2,
             zIndex: 1100
