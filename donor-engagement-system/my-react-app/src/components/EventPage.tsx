@@ -3,11 +3,9 @@ import { Box } from '@mui/system';
 import Sidebar from './Sidebar.tsx';
 import Header from './Header.tsx';
 import EventDetail from './EventDetail.tsx';
-import { useMediaQuery } from '@mui/material';
-import { theme } from '../theme/theme.ts';
 
 const EventPage: React.FC = () => {
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+
     return (
         <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: 'white'}}>
             <Box sx={{ width: { xs: '60px', lg: '200px' }, flexShrink: 0 }}>

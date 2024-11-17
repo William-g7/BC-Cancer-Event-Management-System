@@ -37,6 +37,7 @@ export class EventRepository {
                 LEFT JOIN Event_Fundraisers ef ON e.id = ef.event_id
                 WHERE (ef.fundraiser_id = ? OR e.organizer_id = ?) 
                 AND e.start_time > NOW()
+                ORDER BY e.start_time DESC
             `, [fundraiserId, fundraiserId]) as [Event[], any];
             return events;
         } catch (error) {
