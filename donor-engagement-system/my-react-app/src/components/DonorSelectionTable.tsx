@@ -9,6 +9,7 @@ import { useEventAndDonors } from '../hooks/useDonors.ts';
 import { EventData } from '../types/event';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { Drawer } from '@mui/material';
+import { theme } from '../theme/theme.ts';
 const donorService = new DonorService();
 const eventService = new EventService();
 
@@ -128,7 +129,7 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
       field: 'notes',
       headerName: 'Notes',
       width: 150,
-      editable: true,
+      editable: false,
       renderCell: (params: GridRenderCellParams) => (
         <Box
           onClick={() => handleDrawerOpen(params)}
@@ -252,12 +253,18 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
                   {sidebarContent.full_name}
                 </Typography>
                 <Typography variant="body1" sx={{ marginTop: 2 }}>
-                  {sidebarContent.notes.length > 0 
-                    ? sidebarContent.notes.map(note => `${note.fundraiser_name}: ${note.note}`).join(', ') 
-                    : "No additional notes"}
+                  {sidebarContent.notes.length > 0 ? (
+                    sidebarContent.notes.map((note, index) => (
+                      <div key={index}>
+                        {note.fundraiser_name}: {note.note}
+                      </div>
+                    ))
+                  ) : (
+                    "No additional notes"
+                  )}
                 </Typography>
                 {/* Input for new note */}
-                <Box sx={{ display: 'flex', flexDirection: 'column', marginTop: 2 }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column', marginTop: 50 }}>
                   <textarea 
                     value={newNote} 
                     onChange={(e) => setNewNote(e.target.value)} 
@@ -274,7 +281,7 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
                   <button 
                     onClick={handleAddNote} 
                     style={{
-                      backgroundColor: '#007BFF',
+                      backgroundColor: theme.palette.primary.main,
                       color: 'white',
                       border: 'none',
                       borderRadius: '4px',

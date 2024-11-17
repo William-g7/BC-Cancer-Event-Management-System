@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Box, Typography, IconButton, Collapse } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
@@ -19,11 +19,6 @@ interface OtherSelectionsTableProps {
 
 const OtherSelectionsTable: React.FC<OtherSelectionsTableProps> = ({ donors }) => {
     const [isCollapsed, setIsCollapsed] = useState(false);
-
-    useEffect(() => {
-        console.log('Other selections donors:', donors);
-    }, [donors]);
-
     // Format the data before returning
     const formattedDonors = donors.map(donor => ({
         ...donor,
