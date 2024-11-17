@@ -1,26 +1,22 @@
-// src/components/DonorSelectionTable.tsx
-import React, { useCallback, useState } from 'react';
-import { Box, Typography, IconButton, Collapse } from '@mui/material';
-import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import { useNavigate, Link } from 'react-router-dom';
-import { DonorService } from '../services/donorService.ts';
-import { useParams } from 'react-router-dom';
-import { EventService } from '../services/eventService.ts';
-import { useEventAndDonors } from '../hooks/useDonors.ts';
-import { EventData } from '../types/event';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import React, { useCallback, useState } from "react";
+import { Box, Typography, IconButton, Collapse, Drawer } from "@mui/material";
+import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+import { useParams } from "react-router-dom";
+import { DonorService } from "../services/donorService.ts";
+import { EventService } from "../services/eventService.ts";
+import { useEventAndDonors } from "../hooks/useDonors.ts";
+import { EventData } from "../types/event";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
 const donorService = new DonorService();
 const eventService = new EventService();
 
-
 interface DonorSelectionTableProps {
-  selectedDonors: number[];  
-  onSelectionChange: (selected: number[]) => void;  
+  selectedDonors: number[];
+  onSelectionChange: (selected: number[]) => void;
   refreshTrigger: number;
   confirmedOtherDonorsCount: number;
 }
-
 
 const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
   selectedDonors,
@@ -29,51 +25,52 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
   confirmedOtherDonorsCount,
 }) => {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
+  // Sidebar State
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [sidebarContent, setSidebarContent] = useState<any>(null);
+
   const fetchEventAndDonors = useCallback(async () => {
-    if (!id) throw new Error('Event ID is required');
+    if (!id) throw new Error("Event ID is required");
     const [eventData, donorsData] = await Promise.all([
       eventService.getEventById(parseInt(id)),
-      donorService.getDonorsByEventFundraiser(parseInt(id))
+      donorService.getDonorsByEventFundraiser(parseInt(id)),
     ]);
 
-    // Format the data before returning
-    const formattedDonors = donorsData.map(donor => ({
+    const formattedDonors = donorsData.map((donor) => ({
       ...donor,
-      total_donations: donor.total_donations ? `$${Number(donor.total_donations).toLocaleString()}` : '-',
-      last_gift_date: donor.last_gift_date 
-        ? new Date(donor.last_gift_date).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric'
+      total_donations: donor.total_donations
+        ? `$${Number(donor.total_donations).toLocaleString()}`
+        : "-",
+      last_gift_date: donor.last_gift_date
+        ? new Date(donor.last_gift_date).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
           })
-        : '-',
-      full_name: `${donor.first_name} ${donor.last_name}`
+        : "-",
+      full_name: `${donor.first_name} ${donor.last_name}`,
     }));
 
-    return { 
-      event: eventData as EventData, 
-      donors: formattedDonors 
+    return {
+      event: eventData as EventData,
+      donors: formattedDonors,
     };
   }, [id]);
 
   const { data, loading, error } = useEventAndDonors(fetchEventAndDonors, refreshTrigger);
 
-  // Calculate the number of confirmed donors
-  const confirmedDonorsCount = data?.donors?.filter(donor => donor.state === 'confirmed').length || 0;
+  // Function to handle Sidebar toggle
+  const handleDrawerOpen = (params: GridRenderCellParams) => {
+    setSidebarContent(params.row); // Set the clicked row data to Sidebar content
+    setDrawerOpen(true); // Open Sidebar
+  };
 
-  console.log('Donors data in table component:', data?.donors);
-
-  React.useEffect(() => {
-    if (data?.donors) {
-      const confirmedIds = data.donors
-        .filter(donor => donor.state === 'confirmed')
-        .map(donor => donor.id);
-      onSelectionChange([...confirmedIds]);
-    }
-  }, [data?.donors, onSelectionChange]);
+  const handleDrawerClose = () => {
+    setDrawerOpen(false); // Close Sidebar
+    setSidebarContent(null); // Clear Sidebar content
+  };
 
   if (loading) {
     return <Typography variant="h6">Loading...</Typography>;
@@ -84,72 +81,64 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
   }
 
   const columns: GridColDef[] = [
-    { field: 'full_name', headerName: 'Name', width: 120 },
-    { 
-      field: 'last_gift_appeal', 
-      headerName: 'Last Appeal', 
-      width: 120,
-    },
-    { 
-      field: 'last_gift_date', 
-      headerName: 'Last Donation Date', 
-      width: 150,
-    },
-    { field: 'total_donations', headerName: 'Total Donations', width: 150 },
-    { field: 'address_line1', headerName: 'Address', width: 200 },
-    { field: 'city', headerName: 'Location', width: 200 },
-    { field: 'communication_restrictions', headerName: 'Communication', width: 200 },
+    { field: "full_name", headerName: "Name", width: 120 },
+    { field: "last_gift_appeal", headerName: "Last Appeal", width: 120 },
+    { field: "last_gift_date", headerName: "Last Donation Date", width: 150 },
+    { field: "total_donations", headerName: "Total Donations", width: 150 },
+    { field: "address_line1", headerName: "Address", width: 200 },
+    { field: "city", headerName: "Location", width: 200 },
+    { field: "communication_restrictions", headerName: "Communication", width: 200 },
     {
-      field: 'notes',
-      headerName: 'Notes',
+      field: "notes",
+      headerName: "Notes",
       width: 150,
       editable: true,
-      renderCell: (params: GridRenderCellParams) => {
-        if (!params?.value) return '';
-        return (
-          <Link to={`/donor/${params.row.id}`}>
-            {params.value}
-          </Link>
-        );
-      }
+      renderCell: (params: GridRenderCellParams) => (
+        <Box
+          onClick={() => handleDrawerOpen(params)}
+          sx={{ width: "100%", height: "100%", cursor: "pointer" }}
+        />
+      ),
     },
     {
-      field: 'state',
-      headerName: 'Status',
+      field: "state",
+      headerName: "Status",
       width: 100,
       renderCell: (params: GridRenderCellParams) => (
-        <Typography color={
-          params?.value === 'confirmed' ? 'success.main' :
-          params?.value === 'selected' ? 'primary.main' :
-          'text.secondary'
-        }>
-          {params?.value || ''}
+        <Typography
+          color={
+            params?.value === "confirmed"
+              ? "success.main"
+              : params?.value === "selected"
+              ? "primary.main"
+              : "text.secondary"
+          }
+        >
+          {params?.value || ""}
         </Typography>
-      )
-    }
+      ),
+    },
   ];
 
   return (
-    <Box sx={{ width: '100%', position: 'relative' }}>
+    <Box sx={{ width: "100%", position: "relative" }}>
       <Box sx={{ mb: 4 }}>
-        
         <Typography variant="h4" sx={{ mb: 1 }}>
-          {data?.event ? `EVENTS / ${data.event.name}` : 'Loading...'}
+          {data?.event ? `EVENTS / ${data.event.name}` : "Loading..."}
         </Typography>
-        <Typography variant="h6" color='#905AA6' sx={{ mb: 3 }}>
-          Selected Donors : {confirmedDonorsCount + confirmedOtherDonorsCount} /{data?.event.expected_selection}
+        <Typography variant="h6" color="#905AA6" sx={{ mb: 3 }}>
+          Selected Donors : {data?.donors?.filter((donor) => donor.state === "confirmed").length + confirmedOtherDonorsCount} /
+          {data?.event.expected_selection}
         </Typography>
-        <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-          <Typography variant="h5">
-            Your own donors
-          </Typography>
-          <IconButton 
+        <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+          <Typography variant="h5">Your own donors</Typography>
+          <IconButton
             onClick={() => setIsCollapsed(!isCollapsed)}
             size="small"
-            sx={{ 
+            sx={{
               ml: 1,
-              transform: isCollapsed ? 'rotate(180deg)' : 'rotate(0deg)',
-              transition: 'transform 0.3s ease-in-out'
+              transform: isCollapsed ? "rotate(180deg)" : "rotate(0deg)",
+              transition: "transform 0.3s ease-in-out",
             }}
           >
             <KeyboardArrowUpIcon />
@@ -158,53 +147,77 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
       </Box>
 
       <Collapse in={!isCollapsed} timeout={300}>
-        <Box sx={{ width: '100%' }}>
+        <Box sx={{ width: "100%" }}>
           <DataGrid
             rows={data?.donors || []}
             columns={columns}
             checkboxSelection
             disableRowSelectionOnClick
-            isRowSelectable={(params) => params.row.state !== 'confirmed'}
-            onRowSelectionModelChange={(newSelection) => {
-              const confirmedIds = data?.donors
-                .filter(donor => donor.state === 'confirmed')
-                .map(donor => donor.id);
-              
-              const unconfirmedSelection = newSelection.filter(id => {
-                const row = data?.donors.find(donor => donor.id === id);
-                return row && row.state !== 'confirmed';
-              });
-              
-              onSelectionChange([...confirmedIds, ...unconfirmedSelection]);
-            }}
-            rowSelectionModel={selectedDonors}
-            initialState={{
-              pagination: {
-                  paginationModel: { page: 0, pageSize: 10},
-              },
-            }}  
-            getRowClassName={(params) => {
-              if (params.row.state === 'confirmed') return 'confirmed-row';
-              return '';
-            }}
-            sx={{
-              '& .confirmed-row': {
-                backgroundColor: '#E5EEEF',
-                '& .MuiCheckbox-root': {
-                  color: 'rgba(0, 0, 0, 0.38)',
-                  '&.Mui-checked': {
-                    color: 'success.main',
-                  },
-                  '&.Mui-disabled': {
-                    color: 'success.main',
-                    opacity: 1,
-                  }
-                }
-              }
-            }}
+            isRowSelectable={(params) => params.row.state !== "confirmed"}
           />
         </Box>
       </Collapse>
+
+      {/* Sidebar Drawer */}
+      <Drawer anchor="right" open={drawerOpen} onClose={handleDrawerClose}>
+        <Box
+          sx={{
+            width: 400,
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+            padding: 3,
+            boxSizing: "border-box",
+          }}
+        >
+          {/* Title and Main Info */}
+          <Box>
+            <Typography
+              variant="h5"
+              sx={{
+                fontWeight: "bold",
+                marginBottom: 2,
+              }}
+            >
+              Donor Notes
+            </Typography>
+            {sidebarContent && (
+              <>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    fontWeight: "bold",
+                    marginBottom: 1,
+                  }}
+                >
+                  Full Name: {sidebarContent.full_name}
+                </Typography>
+                <Typography variant="body1" sx={{ marginBottom: 1 }}>
+                  Address: {sidebarContent.address_line1}
+                </Typography>
+                <Typography variant="body1" sx={{ marginBottom: 1 }}>
+                  City: {sidebarContent.city}
+                </Typography>
+              </>
+            )}
+          </Box>
+
+          {/* Notes Centered */}
+          <Box
+            sx={{
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center", // Center Notes vertically
+              alignItems: "center",
+            }}
+          >
+            <Typography variant="body1">
+              Notes: {sidebarContent?.notes || "No additional notes"}
+            </Typography>
+          </Box>
+        </Box>
+      </Drawer>
     </Box>
   );
 };
