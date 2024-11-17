@@ -6,7 +6,7 @@ import { DonorService } from '../services/donorService.ts';
 import { useParams } from 'react-router-dom';
 import { EventService } from '../services/eventService.ts';
 import { useEventAndDonors } from '../hooks/useDonors.ts';
-import { DonorNotes, EventData } from '../types/event';
+import { EventData } from '../types/event';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { Drawer } from '@mui/material';
 const donorService = new DonorService();
@@ -66,8 +66,6 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
 
   // Calculate the number of confirmed donors
   const confirmedDonorsCount = data?.donors?.filter(donor => donor.state === 'confirmed').length || 0;
-
-  console.log('Donors data in table component:', data?.donors);
 
   // Function to handle Sidebar toggle
   const handleDrawerOpen = async (params: GridRenderCellParams) => {
@@ -205,9 +203,10 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
             rowSelectionModel={selectedDonors}
             initialState={{
               pagination: {
-                  paginationModel: { page: 0, pageSize: 10},
+                  paginationModel: { page: 0, pageSize: 10 },
               },
             }}  
+            pageSizeOptions={[5, 10, 20]}
             getRowClassName={(params) => {
               if (params.row.state === 'confirmed') return 'confirmed-row';
               return '';

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Box, Typography } from "@mui/material";
+import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Box } from "@mui/material";
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import EventIcon from '@mui/icons-material/Event';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
@@ -29,7 +29,7 @@ const Sidebar: React.FC = () => {
       return currentPath === item.path;
     });
     return matchingItem?.text || "Home";
-  }, []);
+  }, [location.pathname, menuItems]);
 
   const [selectedItem, setSelectedItem] = useState(initialSelectedItem);
 

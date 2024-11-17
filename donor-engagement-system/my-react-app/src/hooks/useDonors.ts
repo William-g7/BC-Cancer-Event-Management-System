@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Donor } from '../types/donor.ts';
-import { EventData } from '../types/event.ts';
-
+  
 export const useDonors = (fetchDonorsFunction: () => Promise<Donor[]>) => {
   const [donors, setDonors] = useState<Donor[]>([]);
   const [loading, setLoading] = useState(true);
