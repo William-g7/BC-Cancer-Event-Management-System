@@ -6,7 +6,6 @@ import { EventService } from '../service/event.service';
 import { FundraiserService } from '../service/fundraiser.service';
 import { NoteService } from '../service/note.service';
 
-
 const router = Router();
 const eventController = new EventController(
     pool, 
