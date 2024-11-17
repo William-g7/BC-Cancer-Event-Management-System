@@ -1,21 +1,14 @@
 // src/components/DonorSelectionTable.tsx
-
-import React, {useCallback, useState} from 'react';
-import { Box, Button, Typography,Drawer,TextField,IconButton, Collapse } from '@mui/material';
-
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import React, { useCallback, useState } from 'react';
+import { Box, Typography, IconButton, Collapse } from '@mui/material';
+import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { useNavigate, Link } from 'react-router-dom';
 import { DonorService } from '../services/donorService.ts';
 import { useParams } from 'react-router-dom';
 import { EventService } from '../services/eventService.ts';
 import { useEventAndDonors } from '../hooks/useDonors.ts';
-
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { EventData } from '../types/event';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import {DonorNotes, EventData} from '../types/event';
-import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
-import "./DonorSelectionTable.css"
-import {useEvents} from "../hooks/useEvents";
 
 const donorService = new DonorService();
 const eventService = new EventService();
@@ -25,51 +18,60 @@ interface DonorSelectionTableProps {
   selectedDonors: number[];  
   onSelectionChange: (selected: number[]) => void;  
   refreshTrigger: number;
+  confirmedOtherDonorsCount: number;
 }
 
 
 const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
   selectedDonors,
   onSelectionChange,
-  refreshTrigger
+  refreshTrigger,
+  confirmedOtherDonorsCount,
 }) => {
   const { id } = useParams<{ id: string }>();
-
   const navigate = useNavigate();
   const [isCollapsed, setIsCollapsed] = useState(false);
-
-
-  let [open,editopen]=useState(false)
-  let [notes,editnotes]=useState<DonorNotes[]>([])
-  let [lastgitDate,editLastgitDate]=useState({
-    largest_gift: null,
-    largest_gift_appeal:null,
-    last_gift_amount:null,
-    last_name:null,
-    first_name:null,
-  })
 
   const fetchEventAndDonors = useCallback(async () => {
     if (!id) throw new Error('Event ID is required');
     const [eventData, donorsData] = await Promise.all([
       eventService.getEventById(parseInt(id)),
-      donorService.getDonorsByEvent(parseInt(id))
+      donorService.getDonorsByEventFundraiser(parseInt(id))
     ]);
-    return { event: eventData as EventData, donors: donorsData };
+
+    // Format the data before returning
+    const formattedDonors = donorsData.map(donor => ({
+      ...donor,
+      total_donations: donor.total_donations ? `$${Number(donor.total_donations).toLocaleString()}` : '-',
+      last_gift_date: donor.last_gift_date 
+        ? new Date(donor.last_gift_date).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+          })
+        : '-',
+      full_name: `${donor.first_name} ${donor.last_name}`
+    }));
+
+    return { 
+      event: eventData as EventData, 
+      donors: formattedDonors 
+    };
   }, [id]);
 
   const { data, loading, error } = useEventAndDonors(fetchEventAndDonors, refreshTrigger);
 
+  // Calculate the number of confirmed donors
+  const confirmedDonorsCount = data?.donors?.filter(donor => donor.state === 'confirmed').length || 0;
+
+  console.log('Donors data in table component:', data?.donors);
+
   React.useEffect(() => {
     if (data?.donors) {
-      const selectedIds = data.donors
-        .filter(donor => 
-          donor.state === 'selected' || 
-          donor.state === 'confirmed'
-                
-        )
+      const confirmedIds = data.donors
+        .filter(donor => donor.state === 'confirmed')
         .map(donor => donor.id);
-      onSelectionChange(selectedIds);
+      onSelectionChange([...confirmedIds]);
     }
   }, [data?.donors, onSelectionChange]);
 
@@ -80,55 +82,62 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
   if (error) {
     return <Typography variant="h6">{error}</Typography>;
   }
-  const toggleDrawer=(isBool:boolean,params)=>{
-    editopen(isBool)
-    let {largest_gift,largest_gift_appeal,last_gift_amount,first_name,last_name}=params.row
-    editLastgitDate({largest_gift,largest_gift_appeal,last_gift_amount,first_name,last_name})
-    eventService.getEventNote(params.id).then(r => {
-      editnotes(r)
-    })
-  }
+
   const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 90 },
-    { field: 'last_name', headerName: 'Donor Last Name', width: 150 },
-    { field: 'first_name', headerName: 'Donor First Name', width: 150 },
-    { field: 'total_donations', headerName: 'Total Donations', width: 180, type: 'number' },
-    { field: 'communication_preference', headerName: 'Communication Preference', width: 200 },
-    { field: 'location', headerName: 'Location', width: 200 },
+    { field: 'full_name', headerName: 'Name', width: 120 },
+    { 
+      field: 'last_gift_appeal', 
+      headerName: 'Last Appeal', 
+      width: 120,
+    },
+    { 
+      field: 'last_gift_date', 
+      headerName: 'Last Donation Date', 
+      width: 150,
+    },
+    { field: 'total_donations', headerName: 'Total Donations', width: 150 },
+    { field: 'address_line1', headerName: 'Address', width: 200 },
+    { field: 'city', headerName: 'Location', width: 200 },
+    { field: 'communication_restrictions', headerName: 'Communication', width: 200 },
     {
       field: 'notes',
       headerName: 'Notes',
-      width: 200,
+      width: 150,
       editable: true,
-      renderCell: (params) => (
-        <p onClick={()=>toggleDrawer(true,params)}>...</p>
-      ),
+      renderCell: (params: GridRenderCellParams) => {
+        if (!params?.value) return '';
+        return (
+          <Link to={`/donor/${params.row.id}`}>
+            {params.value}
+          </Link>
+        );
+      }
     },
     {
       field: 'state',
       headerName: 'Status',
-      width: 120,
-      renderCell: (params) => (
+      width: 100,
+      renderCell: (params: GridRenderCellParams) => (
         <Typography color={
-          params.value === 'confirmed' ? 'success.main' :
-          params.value === 'selected' ? 'primary.main' :
+          params?.value === 'confirmed' ? 'success.main' :
+          params?.value === 'selected' ? 'primary.main' :
           'text.secondary'
         }>
-          {params.value}
+          {params?.value || ''}
         </Typography>
-      ),
+      )
     }
   ];
-
-  if (loading) return <Typography>Loading...</Typography>;
-  if (error) return <Typography color="error">{error}</Typography>;
 
   return (
     <Box sx={{ width: '100%', position: 'relative' }}>
       <Box sx={{ mb: 4 }}>
         
-        <Typography variant="h4" sx={{ mb: 4 }}>
+        <Typography variant="h4" sx={{ mb: 1 }}>
           {data?.event ? `EVENTS / ${data.event.name}` : 'Loading...'}
+        </Typography>
+        <Typography variant="h6" color='#905AA6' sx={{ mb: 3 }}>
+          Selected Donors : {confirmedDonorsCount + confirmedOtherDonorsCount} /{data?.event.expected_selection}
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
           <Typography variant="h5">
@@ -148,55 +157,54 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
         </Box>
       </Box>
 
-
-      <Box sx={{ width: '100%' }}>
-        <DataGrid
-          rows={data?.donors || []}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 10 },
-            },
-          }}
-          pageSizeOptions={[5, 10]}
-          checkboxSelection
-          disableRowSelectionOnClick
-        />
-        <Drawer open={open}
-                onClose={()=>editopen(false)}
-                anchor={"right"}
-        >
-          <div className={"drawer"}>
-            <p className={"drawer_title"}>{lastgitDate.first_name} {lastgitDate.last_name}</p>
-            {/* <div className={"drawer_top"}>
-              <p className={"drawer_top_title"}>Lastgit Date:</p>
-              <div className={"drawer_top_list"}>
-                <span>{lastgitDate.largest_gift}</span>
-                <span>{lastgitDate.largest_gift_appeal}</span>
-                <span>{lastgitDate.last_gift_amount}</span>
-              </div>
-            </div> */}
-            <div className={"drawer_center"}>
-              <p className={"drawer_top_title"}>Notes</p>
-              <div>
-                {notes.map((note, index) => (
-                    <div className={"drawer_select"}>
-                      <span>{note.fundraiser_name}:</span>
-                      <span>{note.note}</span>
-                    </div>
-                ))}
-
-              </div>
-            </div>
-            <div className={"drawer_bottom"}>
-              <TextField fullWidth id="outlined-basic" label="add you notes here" variant="outlined" />
-              <IconButton color="primary" aria-label="add to shopping cart">
-                <AddCircleOutlineRoundedIcon />
-              </IconButton>
-            </div>
-          </div>
-        </Drawer>
-      </Box>
+      <Collapse in={!isCollapsed} timeout={300}>
+        <Box sx={{ width: '100%' }}>
+          <DataGrid
+            rows={data?.donors || []}
+            columns={columns}
+            checkboxSelection
+            disableRowSelectionOnClick
+            isRowSelectable={(params) => params.row.state !== 'confirmed'}
+            onRowSelectionModelChange={(newSelection) => {
+              const confirmedIds = data?.donors
+                .filter(donor => donor.state === 'confirmed')
+                .map(donor => donor.id);
+              
+              const unconfirmedSelection = newSelection.filter(id => {
+                const row = data?.donors.find(donor => donor.id === id);
+                return row && row.state !== 'confirmed';
+              });
+              
+              onSelectionChange([...confirmedIds, ...unconfirmedSelection]);
+            }}
+            rowSelectionModel={selectedDonors}
+            initialState={{
+              pagination: {
+                  paginationModel: { page: 0, pageSize: 10},
+              },
+            }}  
+            getRowClassName={(params) => {
+              if (params.row.state === 'confirmed') return 'confirmed-row';
+              return '';
+            }}
+            sx={{
+              '& .confirmed-row': {
+                backgroundColor: '#E5EEEF',
+                '& .MuiCheckbox-root': {
+                  color: 'rgba(0, 0, 0, 0.38)',
+                  '&.Mui-checked': {
+                    color: 'success.main',
+                  },
+                  '&.Mui-disabled': {
+                    color: 'success.main',
+                    opacity: 1,
+                  }
+                }
+              }
+            }}
+          />
+        </Box>
+      </Collapse>
     </Box>
   );
 };

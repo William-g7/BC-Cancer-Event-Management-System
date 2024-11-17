@@ -3,14 +3,12 @@ import { EventService } from '../service/event.service';
 import e, { Request, Response } from 'express';
 import { FundraiserService } from '../service/fundraiser.service';
 import { CustomRequest } from '../types/custom-request';
-import {NoteService} from "../service/note.service";
 
 export class EventController {
     constructor(
         private pool: Pool, 
         private eventService: EventService, 
-        private fundraiserService: FundraiserService,
-        private noteService: NoteService,
+        private fundraiserService: FundraiserService
     ) {}
 
     /**
@@ -155,28 +153,6 @@ export class EventController {
             });
         } catch (error) {
             console.error('Error creating event:', error);
-            res.status(500).json({
-                success: false,
-                error: error instanceof Error ? error.message : 'An unknown error occurred'
-            });
-        }
-    }
-    /**
-     * @route   GET /api/note/:id
-     * @desc    Get event note
-     * @returns {Object} Note events data
-     */
-    getNoteEvents = async (req: Request, res: Response): Promise<void> => {
-        try {
-            const noteId = parseInt(req.params.id);
-            const note = await this.noteService.getDonorNote(noteId);
-
-            res.json({
-                success: true,
-                data: note
-            });
-        } catch (error) {
-            console.error('Error fetching notes:', error);
             res.status(500).json({
                 success: false,
                 error: error instanceof Error ? error.message : 'An unknown error occurred'
