@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { Grid, Typography, Card, CardContent, CardMedia, Box, CircularProgress } from "@mui/material";
+import { Typography, Card, CardContent, CardMedia, Box, CircularProgress } from "@mui/material";
 import { useEvents } from '../hooks/useEvents.ts';
 import { EventService } from '../services/eventService.ts';
 

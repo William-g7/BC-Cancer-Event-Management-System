@@ -6,7 +6,7 @@ import { Box } from '@mui/system';
 import Header from './Header.tsx';
 import { useParams } from 'react-router-dom';
 import { DonorService } from '../services/donorService.ts';
-import { Button, useTheme, Snackbar, Alert, Typography } from '@mui/material';
+import { Button, useTheme, Snackbar, Alert} from '@mui/material';
 
 const donorService = new DonorService();
 

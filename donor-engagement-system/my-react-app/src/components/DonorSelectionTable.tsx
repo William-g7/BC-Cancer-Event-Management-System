@@ -2,14 +2,13 @@
 import React, { useCallback, useState } from 'react';
 import { Box, Typography, IconButton, Collapse } from '@mui/material';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import { useNavigate, Link } from 'react-router-dom';
 import { DonorService } from '../services/donorService.ts';
 import { useParams } from 'react-router-dom';
 import { EventService } from '../services/eventService.ts';
 import { useEventAndDonors } from '../hooks/useDonors.ts';
 import { EventData } from '../types/event';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-
+import { Drawer } from '@mui/material';
 const donorService = new DonorService();
 const eventService = new EventService();
 
@@ -29,8 +28,11 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
   confirmedOtherDonorsCount,
 }) => {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
   const [isCollapsed, setIsCollapsed] = useState(false);
+
+  // Sidebar State
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [sidebarContent, setSidebarContent] = useState<any>(null);
 
   const fetchEventAndDonors = useCallback(async () => {
     if (!id) throw new Error('Event ID is required');
@@ -65,6 +67,17 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
   const confirmedDonorsCount = data?.donors?.filter(donor => donor.state === 'confirmed').length || 0;
 
   console.log('Donors data in table component:', data?.donors);
+
+  // Function to handle Sidebar toggle
+  const handleDrawerOpen = (params: GridRenderCellParams) => {
+    setSidebarContent(params.row); // Set the clicked row data to Sidebar content
+    setDrawerOpen(true); // Open Sidebar
+  };
+
+  const handleDrawerClose = () => {
+    setDrawerOpen(false); // Close Sidebar
+    setSidebarContent(null); // Clear Sidebar content
+  };
 
   React.useEffect(() => {
     if (data?.donors) {
@@ -104,14 +117,12 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
       headerName: 'Notes',
       width: 150,
       editable: true,
-      renderCell: (params: GridRenderCellParams) => {
-        if (!params?.value) return '';
-        return (
-          <Link to={`/donor/${params.row.id}`}>
-            {params.value}
-          </Link>
-        );
-      }
+      renderCell: (params: GridRenderCellParams) => (
+        <Box
+          onClick={() => handleDrawerOpen(params)}
+          sx={{ width: "100%", height: "100%", cursor: "pointer" }}
+        />
+      ),
     },
     {
       field: 'state',
@@ -205,6 +216,67 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
           />
         </Box>
       </Collapse>
+
+      {/* Sidebar Drawer */}
+      <Drawer anchor="right" open={drawerOpen} onClose={handleDrawerClose}>
+        <Box
+          sx={{
+            width: 400,
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+            padding: 3,
+            boxSizing: "border-box",
+          }}
+        >
+          {/* Title and Main Info */}
+          <Box>
+            <Typography
+              variant="h5"
+              sx={{
+                fontWeight: "bold",
+                marginBottom: 2,
+              }}
+            >
+              Donor Notes
+            </Typography>
+            {sidebarContent && (
+              <>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    fontWeight: "bold",
+                    marginBottom: 1,
+                  }}
+                >
+                  Full Name: {sidebarContent.full_name}
+                </Typography>
+                <Typography variant="body1" sx={{ marginBottom: 1 }}>
+                  Address: {sidebarContent.address_line1}
+                </Typography>
+                <Typography variant="body1" sx={{ marginBottom: 1 }}>
+                  City: {sidebarContent.city}
+                </Typography>
+              </>
+            )}
+          </Box>
+
+          {/* Notes Centered */}
+          <Box
+            sx={{
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center", // Center Notes vertically
+              alignItems: "center",
+            }}
+          >
+            <Typography variant="body1">
+              Notes: {sidebarContent?.notes || "No additional notes"}
+            </Typography>
+          </Box>
+        </Box>
+      </Drawer>
     </Box>
   );
 };
