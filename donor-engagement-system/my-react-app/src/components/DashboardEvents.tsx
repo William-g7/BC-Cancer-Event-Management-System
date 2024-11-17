@@ -11,6 +11,9 @@ const DashboardEvents: React.FC = () => {
   const fetchEvents = useCallback(() => eventService.getDashboardEvents(), []);
   const { events, loading, error } = useEvents(fetchEvents);
 
+  // Sort events by starting date
+  const sortedEvents = events.sort((a, b) => new Date(a.start_time).getTime() - new Date(b.start_time).getTime());
+
   const handleEventClick = (id: number) => {
     navigate(`/event/${id}`);
   };
@@ -45,7 +48,7 @@ const DashboardEvents: React.FC = () => {
           gap: { xs: 1, sm: 2, md: 3 },
           width: '100%'
         }}>
-          {events.map((event) => (
+          {sortedEvents.map((event) => (
             <Box 
               key={event.id}
               // sx={{
