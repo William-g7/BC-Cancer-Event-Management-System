@@ -4,7 +4,7 @@ import { checkUser, errorHandler } from '../middleware/index';
 import pool from '../config/database';
 import { EventService } from '../service/event.service';
 import { FundraiserService } from '../service/fundraiser.service';
-import {NoteService} from "../service/note.service";
+import { NoteService } from '../service/note.service';
 
 const router = Router();
 const eventController = new EventController(
@@ -24,9 +24,11 @@ router.get('/event/:id', checkUser, eventController.getEventById);
 router.get('/dashboard', checkUser, eventController.getDashboardEvents);
 
 // Create a new Event
-router.post('/event/new-event', checkUser, eventController.createEvent)
-// find event notes
-router.get("/event/note/:id",checkUser,eventController.getNoteEvents)
+router.post('/event/new-event', checkUser, eventController.createEvent);
+
+// Find event notes
+router.get('/event/note/:id', checkUser, eventController.getNoteEvents);
+
 // Apply error handler to all routes
 router.use(errorHandler);
 
