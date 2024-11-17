@@ -10,15 +10,22 @@ const Header: React.FC = () => {
         display: "flex", 
         alignItems: "center",
         justifyContent: "flex-end",
-        width: '1200px',
+        marginLeft: {xs:"100px", lg:"270px"},
+        marginRight: {xs:"10px", lg:"40px"},
         height: "88px",
         borderBottom: "1px solid #e0e0e0",
+        position: "relative",
+        right: 0,
+        left: 0,
+        top: 0,
         backgroundColor: "white",
         zIndex: 1100,
-        marginRight: '-30px'
+
+
+
       }}>
         <Avatar alt={username} src="/static/images/avatar.png" />
-        <Box sx={{ display: "flex", flexDirection: "column", marginRight: '0px' }}>
+        <Box sx={{ display: "flex", flexDirection: "column" }}>
             <Typography variant="body1" sx={{ marginLeft: 2, color: theme.palette.primary.main }}>
                 {username}
             </Typography>

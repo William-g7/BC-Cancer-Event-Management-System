@@ -1,9 +1,9 @@
 import { DateTime } from "luxon";
 
 export enum SelectionStatus {
-    UNSELECTED = 'unselect',
-    SELECTED = 'selected',
-    CONFIRMED = 'confirmed',
+    UNSELECTED = 'UNSELECTED',
+    SELECTED = 'SELECTED',
+    CONFIRMED = 'CONFIRMED',
 }
 
 export interface DonorSelection {

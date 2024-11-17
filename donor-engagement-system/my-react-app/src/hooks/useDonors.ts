@@ -30,27 +30,26 @@ export const useDonors = (fetchDonorsFunction: () => Promise<Donor[]>) => {
 
 }
 
-export const useEventAndDonors = (fetchFunction: () => Promise<any>, refreshTrigger: number) => {
-  const [data, setData] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const result = await fetchFunction();
-        setData(result);
-        setError(null);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'An error occurred');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [fetchFunction, refreshTrigger]);
-
-  return { data, loading, error };
-};
+export const useEventAndDonors = (fetchFunction: () => Promise<{ event: EventData, donors: Donor[] }>) => {
+    const [data, setData] = useState<{ event: EventData | null, donors: Donor[] }>({ event: null, donors: [] });
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+  
+    useEffect(() => {
+      const loadData = async () => {
+        try {
+          setLoading(true);
+          const result = await fetchFunction();
+          setData(result);
+        } catch (error) {
+          const errorMessage = error instanceof Error ? error.message : 'Failed to fetch data';
+          setError(errorMessage);
+        } finally {
+          setLoading(false);
+        }
+      };
+      loadData();
+    }, [fetchFunction]);
+  
+    return { data, loading, error };
+  };
