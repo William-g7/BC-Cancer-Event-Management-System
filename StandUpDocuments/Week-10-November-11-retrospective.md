@@ -8,10 +8,9 @@ Week 10 November 11
 
 ## Participants
 - Shiyuan Chen
-- [Team Member 2]
+- Yan Wang
 - Xing Gao
-- [Team Member 4]
-- [Team Member 5]
+- Zhenziye Lin
 
 ---
 
@@ -31,17 +30,17 @@ List the things that went well during the project.
 
 ## What Could Be Improved
 List the areas where there is room for improvement.
-- 
--
--
+- small bugs fixed for the project
+- Develop other features such as calendar feature 
+- code reviews for the whole team
 
 ---
 
 ## Action Items
 Identify actionable steps that can be taken to improve future projects.
-1.
-2.
-3.
+1. Error handling and testing
+2. every member make their codes cleaner and organized
+3. presentation practices
 
 ---
 
