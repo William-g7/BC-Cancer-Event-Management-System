@@ -101,28 +101,44 @@ Identify actionable steps that can be taken to improve future projects.
 - **Feedback and Suggestions:**
   -
 
-### [Team Member 5]
+### Zhenziye Lin
 - **Achievements and Contributions:**
-  -
+  - Assisted in refining the donor selection functionality by providing feedback on user flow and interface design.
+  - Contributed to the improvement of database schema by suggesting optimizations for the `Selections` table.
+  - Participated actively in debugging SQL queries to ensure accurate donor status updates.
+  - Played a key role in team meetings by facilitating discussions on feature prioritization and timelines.
+  
 - **Challenges Faced:**
-  -
+  - Faced difficulties in coordinating front-end and back-end integration due to different approaches in state management.
+  - Encountered challenges while working with React components, particularly in managing real-time updates for `DataGrid`.
+  
 - **Areas for Improvement:**
-  -
+  - Improve proficiency in advanced React features, such as custom hooks and state management libraries, to streamline front-end development.
+  - Enhance debugging techniques for front-end integration issues, especially in identifying the root cause of data inconsistencies.
+  
 - **Feedback and Suggestions:**
-  -
+  - Allocate more time for collaborative debugging sessions to address integration challenges efficiently.
+  - Introduce regular code reviews to maintain consistency and adherence to best practices across the team.
 
 ---
 
-## Overall Team Assessment
-Reflect on the team’s performance as a whole.
+### Overall Team Assessment
+
 - **Team Strengths:**
-  -
-- **Areas for Improvement:**
-  -
-- **Suggestions for Future Projects:**
-  -
+  - The team consistently held regular meetings, ensuring open communication and alignment on project goals.
+  - Team members actively contributed to their respective areas and were proactive in addressing challenges.
+  - Prompt collaboration with each other and the TA/instructor helped resolve technical issues efficiently.
 
----
+- **Areas for Improvement:**
+  - While technical challenges were resolved, some integration issues between front-end and back-end components could have been addressed earlier.
+  - There was limited time allocated for thorough code reviews, leading to minor inconsistencies in coding styles and structure.
+  - Testing was often delayed to the later stages of development, making debugging more challenging.
+
+- **Suggestions for Future Projects:**
+  - Incorporate a structured code review process to ensure consistency and adherence to best practices across the team.
+  - Allocate more time for error handling and testing at every stage of development to minimize late-stage debugging efforts.
+  - Schedule additional team sync-ups to discuss integration progress and potential roadblocks earlier in the process.
+  - Enhance the use of project management tools to track task progress and dependencies effectively.
 
 ## Additional Comments
 Add any additional comments or notes that may be relevant.
