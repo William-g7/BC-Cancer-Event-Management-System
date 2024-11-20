@@ -30,17 +30,17 @@ List the things that went well during the project.
 
 ## What Could Be Improved
 List the areas where there is room for improvement.
-- small bugs fixed for the project
-- Develop other features such as calendar feature 
-- code reviews for the whole team
+- Fix small bugs in the project to ensure smoother functionality
+- Develop additional features, such as a calendar, to enhance usability
+- Conduct thorough code reviews for the entire team to maintain quality and consistency
 
 ---
 
 ## Action Items
 Identify actionable steps that can be taken to improve future projects.
-1. Error handling and testing
-2. every member make their codes cleaner and organized
-3. presentation practices
+1. Implement robust error handling and comprehensive testing procedures
+2. Encourage all team members to write cleaner, more organized code
+3. Dedicate time to practicing presentations for clearer and more confident delivery
 
 ---
 
@@ -59,15 +59,19 @@ Identify actionable steps that can be taken to improve future projects.
 - **Feedback and Suggestions:**
   - do some unit testing for the backend codes at the early stage of development
 
-### [Team Member 2]
+### [Yan Wang]
 - **Achievements and Contributions:**
-  -
+  - Improved the frontend layout by modifying the code for a better user experience
+  - Practiced team presentations to ensure a smooth delivery
 - **Challenges Faced:**
-  -
+  - Encountered persistent bugs when merging code
+  - Faced difficulties in optimizing data fetching for better performance
 - **Areas for Improvement:**
-  -
+  - Enhance proficiency in Git 
+  - Develop a clearer and more organized code structure
 - **Feedback and Suggestions:**
-  -
+  - Task distribution was effective, and all team members completed their tasks on time
+  - Recommend holding some meetings to update everyone on team progress
 
 ### [Xing Gao]
 - **Achievements and Contributions:**
