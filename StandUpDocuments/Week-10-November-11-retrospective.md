@@ -95,16 +95,6 @@ Identify actionable steps that can be taken to improve future projects.
   - Consider creating utility functions or hooks for common data transformation tasks, such as mapping database states to front-end components.
   - Document the logic and flow of donor selection and confirmation processes to make it easier for other team members to maintain and enhance this feature in the future.
 
-### [Team Member 4]
-- **Achievements and Contributions:**
-  -
-- **Challenges Faced:**
-  -
-- **Areas for Improvement:**
-  -
-- **Feedback and Suggestions:**
-  -
-
 ### Zhenziye Lin
 - **Achievements and Contributions:**
   - Assisted in refining the donor selection functionality by providing feedback on user flow and interface design.
