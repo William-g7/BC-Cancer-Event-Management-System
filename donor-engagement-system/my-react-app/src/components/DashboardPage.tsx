@@ -6,8 +6,12 @@ import DashboardEvents from './DashboardEvents.tsx';
 import Notification from './Notification.tsx';
 import { theme } from '../theme/theme.ts';
 import Todo from './todo.tsx';
+import CoordinatorEvents from './CoordinatorEvents.tsx';
 
 const DashboardPage: React.FC = () => {
+  const role = localStorage.getItem('role');
+  
+
   return (
     <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: 'white' }}>
       {/* Sidebar */}
@@ -44,7 +48,7 @@ const DashboardPage: React.FC = () => {
           {/* Title Section */}
           <Box sx={{ mb: 4, mt: 16 }}>
             <Typography variant="h4">
-              FUNDRAISER DASHBOARD
+              {role === 'Coordinator' ? 'COORDINATOR DASHBOARD' : 'FUNDRAISER DASHBOARD'}
             </Typography>
           </Box>
 
@@ -66,7 +70,7 @@ const DashboardPage: React.FC = () => {
               p: { xs: 2, sm: 1.5, md: 3 },
               minWidth: 0
             }}>
-              <DashboardEvents />
+              {role === 'Coordinator' ? <CoordinatorEvents /> : <DashboardEvents />}
             </Box>
 
             {/* Notifications Section */}

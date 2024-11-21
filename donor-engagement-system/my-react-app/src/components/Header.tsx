@@ -4,6 +4,10 @@ import { theme } from "../theme/theme.ts";
 
 const Header: React.FC = () => {
   const username = localStorage.getItem('username') || 'Guest';
+  const role = localStorage.getItem('role') || 'User';
+  console.log('username:', username);
+  console.log('role:', role);
+  
 
   return (
       <Box sx={{ 
@@ -23,7 +27,7 @@ const Header: React.FC = () => {
                 {username}
             </Typography>
             <Typography variant="body2" sx={{ marginLeft: 2, color: theme.palette.darkGrey.main }}>
-                Fundraiser
+               {role} 
             </Typography>
         </Box>
       </Box>

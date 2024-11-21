@@ -12,7 +12,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { theme } from './theme/theme.ts';
 
 const App: React.FC = () => {
-  const isAuthenticated = !!localStorage.getItem('username'); // Check if user is logged in
+  const isAuthenticated = !!localStorage.getItem('username'); 
 
   return (
     <ThemeProvider theme={theme}>

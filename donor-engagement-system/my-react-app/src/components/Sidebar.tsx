@@ -7,6 +7,8 @@ import ChatIcon from '@mui/icons-material/Chat';
 import { useNavigate, useLocation } from "react-router-dom";
 import SettingsIcon from '@mui/icons-material/Settings';
 import { theme } from "../theme/theme.ts";
+
+
 const Sidebar: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();

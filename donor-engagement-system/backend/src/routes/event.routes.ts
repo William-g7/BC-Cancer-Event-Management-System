@@ -23,6 +23,9 @@ router.get('/event/:id', checkUser, eventController.getEventById);
 // Get dashboard data for a fundraiser
 router.get('/dashboard', checkUser, eventController.getDashboardEvents);
 
+// Get upcoming events
+router.get('/coordinators/dashboard', checkUser, eventController.getUpcomingEvents);
+
 // Create a new Event
 router.post('/event/new-event', checkUser, eventController.createEvent)
 

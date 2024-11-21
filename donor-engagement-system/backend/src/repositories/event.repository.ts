@@ -210,4 +210,12 @@ export class EventRepository {
         `, [notesId]) as [DonorNotes[], any];
         return notes
     }
+
+    // get upcoming events  
+    async getUpcomingEvents(): Promise<Event[]> {
+        const [events] = await this.pool.execute(`
+            SELECT * FROM Events WHERE start_time > NOW()
+        `) as [Event[], any];
+        return events;
+    }
 }

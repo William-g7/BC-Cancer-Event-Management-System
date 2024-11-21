@@ -32,4 +32,9 @@ export class EventService {
         }
         return response.data;
     }
+
+    async getUpcomingEvents(): Promise<EventData[]> {
+        const response = await api.get<{success: boolean, data: EventData[]}>('/coordinators/dashboard');
+        return response.data || [];
+    }
 } 
