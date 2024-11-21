@@ -1,18 +1,20 @@
 import { Pool } from 'mysql2/promise';
 import { EventService } from '../service/event.service';
-import { Request, Response } from 'express';
+import e, { Request, Response } from 'express';
 import { FundraiserService } from '../service/fundraiser.service';
 import { CustomRequest } from '../types/custom-request';
+import { NoteService } from '../service/note.service';
 
 export class EventController {
     constructor(
         private pool: Pool, 
         private eventService: EventService, 
-        private fundraiserService: FundraiserService
+        private fundraiserService: FundraiserService,
+        private noteService: NoteService
     ) {}
 
     /**
-     * @route   GET /api/events/:id
+     * @route   GET /api/event/:id
      * @desc    Get a single event by ID with its relations (organizer and assigned fundraisers)
      * @param   req.params.id - Event ID
      * @returns {Object} Event data with relations
@@ -54,6 +56,7 @@ export class EventController {
             }
 
             const fundraiserId = await this.fundraiserService.getFundraiserIdByAccountId(accountId);
+            console.log(fundraiserId);
             const events = await this.eventService.getFundraiserEventsWithRelations(fundraiserId);
     
             res.json({
@@ -78,7 +81,6 @@ export class EventController {
         try {
             // Get user from the request (set by checkUser middleware)
             const accountId = (req as CustomRequest).user?.id;
-            console.log('Account ID:', accountId);
             
             if (!accountId) {
                 res.status(401).json({
@@ -88,13 +90,8 @@ export class EventController {
                 return;
             }
 
-            console.log('Getting fundraiser ID for account:', accountId);
             const fundraiserId = await this.fundraiserService.getFundraiserIdByAccountId(accountId);
-            console.log('Fundraiser ID:', fundraiserId);
-
-            console.log('Getting dashboard events for fundraiser:', fundraiserId);
-            const dashboardData = await this.eventService.getDashboardEvents(fundraiserId);
-            console.log('Dashboard data:', dashboardData);
+            const dashboardData = await this.eventService.getDashboardEvents(fundraiserId)
 
             res.json({
                 success: true,
@@ -111,4 +108,122 @@ export class EventController {
             });
         }
     }
+
+    /**
+     * @route   POST /api//event/new-event
+     * @desc    Create a new event
+     * @returns {Object} New event data
+     */
+    createEvent = async (req: CustomRequest, res: Response): Promise<void> => {
+        try {
+
+            const accountId = (req as CustomRequest).user?.id;
+
+            if (!accountId) {
+                res.status(401).json({
+                    success: false,
+                    error: 'User not authenticated'
+                });
+                return;
+            }
+
+            const fundraiserId = await this.fundraiserService.getFundraiserIdByAccountId(accountId);
+
+            const eventData = {
+                ...req.body,
+                organizer_id: fundraiserId,
+                deadline: req.body.end_time,
+                selected_count: 0
+            };
+
+            // Validate required fields
+            if (!eventData.name || !eventData.start_time || !eventData.end_time || 
+                !eventData.location || !eventData.deadline || !eventData.expected_selection) {
+                res.status(400).json({
+                    success: false,
+                    error: 'Missing required fields'
+                });
+                return;
+            }
+
+            const newEventId = await this.eventService.createEvent(eventData);
+            const newEventWithRelations = await this.eventService.getEventWithRelations(newEventId);
+
+            res.status(201).json({
+                success: true,
+                data: newEventWithRelations
+            });
+        } catch (error) {
+            console.error('Error creating event:', error);
+            res.status(500).json({
+                success: false,
+                error: error instanceof Error ? error.message : 'An unknown error occurred'
+            });
+        }
+    }
+
+    /**
+     * @route   GET /api/note/:id
+     * @desc    Get event note
+     * @returns {Object} Note events data
+     */
+    getNoteEvents = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const noteId = parseInt(req.params.id);
+            const note = await this.noteService.getDonorNote(noteId);
+
+            res.json({
+                success: true,
+                data: note
+            });
+        } catch (error) {
+            console.error('Error fetching notes:', error);
+            res.status(500).json({
+                success: false,
+                error: error instanceof Error ? error.message : 'An unknown error occurred'
+            });
+        }
+    }
+
+    /**
+     * @desc    Get upcoming events
+     * @returns {Array} List of upcoming events
+     */
+    getUpcomingEvents = async (req: Request, res: Response): Promise<void> => { 
+        try {
+            const upcomingEvents = await this.eventService.getUpcomingEvents();
+            
+            if (!upcomingEvents) {
+                res.status(404).json({
+                    success: false,
+                    message: 'No upcoming events found'
+                });
+                return;
+            }
+
+            res.status(200).json({  // Explicitly set 200 status
+                success: true,
+                data: upcomingEvents
+            });
+        } catch (error) {
+            console.error('Error fetching upcoming events:', error);
+            
+            // More specific error handling
+            if (error instanceof Error) {
+                if (error.message.includes('database')) {  // Adjust based on your error types
+                    res.status(503).json({
+                        success: false,
+                        error: 'Database service unavailable'
+                    });
+                    return;
+                }
+            }
+
+            res.status(500).json({
+                success: false,
+                error: error instanceof Error ? error.message : 'An unknown error occurred'
+            });
+        }
+    }
 }
+

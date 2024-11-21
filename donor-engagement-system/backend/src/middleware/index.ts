@@ -6,8 +6,6 @@ import { Account } from '../types/account.types';
 // Check user from header
 export const checkUser = async (req: CustomRequest, res: Response, next: NextFunction) => {
     const username = req.headers['x-user-name'] as string;
-     console.log('username:', username);
-
 
     if (!username) {
         return res.status(401).json({ 
@@ -24,7 +22,6 @@ export const checkUser = async (req: CustomRequest, res: Response, next: NextFun
         ) as [Account[], any];
 
         const user = users[0] as Account | undefined;
-        console.log('user:', user);
 
         if (!user) {
             return res.status(401).json({ 
@@ -39,6 +36,7 @@ export const checkUser = async (req: CustomRequest, res: Response, next: NextFun
             name: user.name,
             role: user.role
         };
+        console.log('User authenticated:', req.user);
 
         next();
     } catch (error) {

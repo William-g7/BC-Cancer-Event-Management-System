@@ -106,3 +106,94 @@ INSERT INTO Selections (event_id, donor_id, event_fundraiser_id, state) VALUES
 (3, 19, 4, 'selected');
 
 
+-- 插入 pmm 数据
+INSERT INTO Accounts (name, password_hash, role) VALUES 
+('Gurtrude Schmidt', 'hashed_password_1', 'Fundraiser'),
+('Hiroshi Nakamura', 'hashed_password_2', 'Fundraiser'),
+('Maria González', 'hashed_password_3', 'Fundraiser'),
+('Parvati Patel', 'hashed_password_4', 'Fundraiser'),
+('Peter Smith', 'hashed_password_5', 'Fundraiser');
+
+-- 插入 Fundraisers 数据（Account 对应 Fundraiser）
+INSERT INTO Fundraisers (account_id) VALUES 
+(9),
+(10),
+(11),
+(12),
+(13);
+
+UPDATE Donors
+SET total_donations = 1000, last_gift_date = '2023-01-15 14:30:00', city = 'Vancouver'
+WHERE id = 1;
+
+UPDATE Donors
+SET total_donations = 2000, last_gift_date = '2023-02-20 16:45:00', city = 'Richmond'
+WHERE id = 2;
+
+UPDATE Donors
+SET total_donations = 1500, last_gift_date = '2023-03-10 11:00:00', city = 'Burnaby'
+WHERE id = 3;
+
+UPDATE Donors
+SET total_donations = 1800, last_gift_date = '2023-04-05 09:15:00', city = 'Surrey'
+WHERE id = 4;
+
+UPDATE Donors
+SET total_donations = 2500, last_gift_date = '2023-05-12 13:30:00', city = 'New Westminster'
+WHERE id = 5;
+
+UPDATE Donors
+SET total_donations = 2200, last_gift_date = '2023-06-15 15:30:00', city = 'North Vancouver'
+WHERE id = 6;
+
+UPDATE Donors
+SET total_donations = 3000, last_gift_date = '2023-07-22 12:45:00', city = 'West Vancouver'
+WHERE id = 7;
+
+UPDATE Donors
+SET total_donations = 2700, last_gift_date = '2023-08-17 10:00:00', city = 'Delta'
+WHERE id = 8;
+
+UPDATE Donors
+SET total_donations = 3200, last_gift_date = '2023-09-05 14:00:00', city = 'Langley'
+WHERE id = 9;
+
+UPDATE Donors
+SET total_donations = 4000, last_gift_date = '2023-10-10 16:15:00', city = 'Coquitlam'
+WHERE id = 10;
+
+UPDATE Donors
+SET total_donations = 4500, last_gift_date = '2023-11-01 13:00:00', city = 'Port Coquitlam'
+WHERE id = 11;
+
+UPDATE Donors
+SET total_donations = 5000, last_gift_date = '2023-12-05 11:30:00', city = 'White Rock'
+WHERE id = 12;
+
+UPDATE Donors
+SET total_donations = 3500, last_gift_date = '2024-01-10 14:15:00', city = 'Maple Ridge'
+WHERE id = 13;
+
+UPDATE Donors
+SET total_donations = 3800, last_gift_date = '2024-02-18 10:30:00', city = 'Mission'
+WHERE id = 14;
+
+UPDATE Donors
+SET total_donations = 4500, last_gift_date = '2024-03-20 16:45:00', city = 'Abbotsford'
+WHERE id = 15;
+
+UPDATE Donors
+SET total_donations = 3200, last_gift_date = '2024-04-15 13:20:00', city = 'Chilliwack'
+WHERE id = 16;
+
+UPDATE Donors
+SET total_donations = 4200, last_gift_date = '2024-05-12 15:00:00', city = 'Squamish'
+WHERE id = 17;
+
+UPDATE Donors
+SET total_donations = 3600, last_gift_date = '2024-06-08 11:15:00', city = 'Whistler'
+WHERE id = 18;
+
+UPDATE Donors
+SET total_donations = 4100, last_gift_date = '2024-07-22 12:30:00', city = 'Pemberton'
+WHERE id = 19;

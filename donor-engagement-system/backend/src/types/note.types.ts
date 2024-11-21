@@ -1,11 +1,11 @@
 
 import { DateTime } from "luxon";
 
-export interface DonorNote {
-    note_id: number;
+export interface DonorNotes{
+    id: number;
     donor_id: number;
-    account_id: number;
-    content: string;
+    fundraiser_name:string;
+    note:string;
     created_at: DateTime;
 }
 
