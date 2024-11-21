@@ -45,19 +45,18 @@ Identify actionable steps that can be taken to improve future projects.
 ---
 
 ## Individual Self-Assessments
-### [Team Member 1]
+### [Shiyuan Chen]
 - **Achievements and Contributions:**
-  - finish the full-stack codes for the 'create event' feature
-  - enrich the database with 5000 donors from the outside API
-  - finish the high-fidelity mockup for the whole application
-  - optimize the layout of the frontend pages based on the latest design
+  - clean up the codes for all features and prepare for deployment
+  - clean up the database and delete the test data
+  - prepare for the presentation
   
 - **Challenges Faced:**
-  - It is hard to test some backend codes and delete the test date from the database
+  - some sql queries are slow to run
 - **Areas for Improvement:**
-  - the frontend codes need to be cleaner and more organized to follow the best practices
+  - better communication with the team members to keep git history clean
 - **Feedback and Suggestions:**
-  - do some unit testing for the backend codes at the early stage of development
+  - be careful about the git history - do not mix the codes from different features and change other people's codes
 
 ### [Yan Wang]
 - **Achievements and Contributions:**
