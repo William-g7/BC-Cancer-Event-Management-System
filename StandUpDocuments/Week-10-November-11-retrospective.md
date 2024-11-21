@@ -74,25 +74,21 @@ Identify actionable steps that can be taken to improve future projects.
 
 ### [Xing Gao]
 - **Achievements and Contributions:**
-  - Successfully implemented donor selection functionality for fundraisers, allowing users to save selected donors with a "selected" status and confirm selections with a "confirmed" status.
-  - Enabled the persistence of donor selection states across page reloads, ensuring selected and confirmed donors remain highlighted and display the correct status.
-  - Enhanced user experience by integrating real-time synchronization with the database, ensuring consistency between the front-end display and back-end data.
-  - Overcame technical challenges related to SQL queries to accurately fetch donor states based on the `Selections` table, ensuring the correct state is displayed in the UI.
+  - Successfully implemented donor selection functionality for fundraisers
+  - Enabled the persistence of donor selection states across page reloads
+  - Practice presentation to ensure a smooth delivery
 
 - **Challenges Faced:**
-  - Encountered issues with SQL query logic when retrieving donor states, leading to incorrect or missing state updates in the UI.
-  - Debugging and resolving an issue where the API returned correct data, but the front-end failed to reflect the updated states due to mishandled mapping or integration.
-  - Experienced difficulties in ensuring the front-end `DataGrid` component dynamically updated selected donors based on back-end data during page refresh.
+  - The current database's schema can be optimized
+  - Deploy the project on AWS economic-friendly
 
 - **Areas for Improvement:**
   - Improve understanding of SQL joins and query optimization to handle complex data retrieval scenarios more effectively.
   - Enhance testing practices to validate end-to-end functionality, particularly ensuring consistency between front-end state and back-end data.
-  - Collaborate more closely with team members to identify and address potential integration issues earlier in the development process.
 
 - **Feedback and Suggestions:**
-  - The `DataGrid` implementation was an effective solution for displaying and managing donor data, but the handling of state updates could be streamlined further to reduce redundancy in the code.
   - Consider creating utility functions or hooks for common data transformation tasks, such as mapping database states to front-end components.
-  - Document the logic and flow of donor selection and confirmation processes to make it easier for other team members to maintain and enhance this feature in the future.
+  - Keep on learning the knowledge of project deployment and container
 
 ### Zhenziye Lin
 - **Achievements and Contributions:**
