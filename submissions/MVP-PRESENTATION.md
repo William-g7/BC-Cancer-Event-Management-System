@@ -1,6 +1,12 @@
 
 # MVP Presentation Summary
 
+### [Yan Wang]
+## What I Did Well
+I practiced multiple times before the presentation, which made me very familiar with the content I was going to discuss. This preparation allowed me to deliver my points in a clear, well-paced manner.
+
+## What I Can Improve On
+During the presentation, I realized that I didn’t engage with our clients as much as I could have. I spent most of the time looking at the slides rather than interacting directly with the audience. In the future, I’d like to improve this by making more eye contact with the clients, asking them questions, and inviting their feedback throughout the presentation to make it feel more interactive and engaging.
 
 
 ### [Xing Gao]
