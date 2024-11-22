@@ -137,7 +137,12 @@ export class EventService {
         const today = DateTime.now();
         const upcomingEvents = events.filter(event => event.start_time > today);
         
-        console.log('upcomingEvents', upcomingEvents);
         return upcomingEvents;
+    }
+
+    async getAllEvents(): Promise<Event[]> {
+        const eventRepository = new EventRepository(this.pool);
+        const events = await eventRepository.getAllEvents();
+        return events;
     }
 }

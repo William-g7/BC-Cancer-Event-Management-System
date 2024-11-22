@@ -218,4 +218,12 @@ export class EventRepository {
         `) as [Event[], any];
         return events;
     }
+
+    // get all events
+    async getAllEvents(): Promise<Event[]> {
+        const [events] = await this.pool.execute(`
+            SELECT * FROM Events
+        `) as [Event[], any];
+        return events;
+    }
 }

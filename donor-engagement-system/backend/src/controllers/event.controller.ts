@@ -186,6 +186,7 @@ export class EventController {
     }
 
     /**
+     * @route   GET /api/coordinators/dashboard 
      * @desc    Get upcoming events
      * @returns {Array} List of upcoming events
      */
@@ -219,6 +220,22 @@ export class EventController {
                 }
             }
 
+            res.status(500).json({
+                success: false,
+                error: error instanceof Error ? error.message : 'An unknown error occurred'
+            });
+        }
+    }
+
+    getAllEvents = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const events = await this.eventService.getAllEvents();
+            res.json({
+                success: true,
+                data: events
+            });
+        } catch (error) {
+            console.error('Error fetching all events:', error);
             res.status(500).json({
                 success: false,
                 error: error instanceof Error ? error.message : 'An unknown error occurred'
