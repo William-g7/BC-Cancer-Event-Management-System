@@ -41,7 +41,7 @@ const CalendarEvents: React.FC = () => {
     });
   };
 
-  const today = new Date().toISOString().split('T')[0];
+  const today = new Date().toLocaleDateString('en-CA').split('T')[0];
 
   // State to manage the current year and month displayed
   const [currentYear, setCurrentYear] = useState<number>(2024);
