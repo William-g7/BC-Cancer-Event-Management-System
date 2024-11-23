@@ -5,11 +5,7 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { EventService } from '../services/eventService.ts';
 import { useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useEvents } from '../hooks/useEvents.ts';
-import { EventData } from '../types/event';
-import { range } from '@mui/x-data-grid/internals';
-
 
 
 const eventService = new EventService();
