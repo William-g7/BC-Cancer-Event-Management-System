@@ -148,7 +148,8 @@ export class EventRepository {
             WHERE a.name = ?
         `, [donor[0].pmm]) as [any[], any];
 
-        return fundraiserId[0].id;
+        // Return null if no fundraiser found
+        return fundraiserId[0]?.id || null;
     }
 
     // assign fundraiser to event_fundraisers
