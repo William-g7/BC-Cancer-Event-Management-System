@@ -1,6 +1,14 @@
 
 # MVP Presentation Summary
 
+### [Shiyuan Chen]
+## What I Did Well
+I successfully completed the first part of the demo presentation. I did not encounter any technical issues during the demo. Also I keep eye contact with the audience and interact with them.
+
+## What I Can Improve On
+I only showed the user flow normally, but did not create any interesting interaction with the audience or create any instereting stories.For the next time, I will try to make it more like a product display instead of a homework report.
+
+
 ### [Yan Wang]
 ## What I Did Well
 I practiced multiple times before the presentation, which made me very familiar with the content I was going to discuss. This preparation allowed me to deliver my points in a clear, well-paced manner.
