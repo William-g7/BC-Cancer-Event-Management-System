@@ -184,5 +184,63 @@ export class EventController {
             });
         }
     }
+
+    /**
+     * @route   GET /api/coordinators/dashboard 
+     * @desc    Get upcoming events
+     * @returns {Array} List of upcoming events
+     */
+    getUpcomingEvents = async (req: Request, res: Response): Promise<void> => { 
+        try {
+            const upcomingEvents = await this.eventService.getUpcomingEvents();
+            
+            if (!upcomingEvents) {
+                res.status(404).json({
+                    success: false,
+                    message: 'No upcoming events found'
+                });
+                return;
+            }
+
+            res.status(200).json({  // Explicitly set 200 status
+                success: true,
+                data: upcomingEvents
+            });
+        } catch (error) {
+            console.error('Error fetching upcoming events:', error);
+            
+            // More specific error handling
+            if (error instanceof Error) {
+                if (error.message.includes('database')) {  // Adjust based on your error types
+                    res.status(503).json({
+                        success: false,
+                        error: 'Database service unavailable'
+                    });
+                    return;
+                }
+            }
+
+            res.status(500).json({
+                success: false,
+                error: error instanceof Error ? error.message : 'An unknown error occurred'
+            });
+        }
+    }
+
+    getAllEvents = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const events = await this.eventService.getAllEvents();
+            res.json({
+                success: true,
+                data: events
+            });
+        } catch (error) {
+            console.error('Error fetching all events:', error);
+            res.status(500).json({
+                success: false,
+                error: error instanceof Error ? error.message : 'An unknown error occurred'
+            });
+        }
+    }
 }
 

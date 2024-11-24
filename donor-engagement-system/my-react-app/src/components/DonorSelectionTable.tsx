@@ -134,7 +134,10 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
         <Box
           onClick={() => handleDrawerOpen(params)}
           sx={{ width: "100%", height: "100%", cursor: "pointer" }}
-        />
+        >
+        <img src='/notes.png' alt='Donor' style={{ width: 25, height: 25, marginTop: 10, marginLeft: 5 }} />
+        </Box>
+        
       ),
     },
     {
