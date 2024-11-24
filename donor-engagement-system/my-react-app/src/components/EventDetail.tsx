@@ -110,6 +110,18 @@ const EventDetail: React.FC = () => {
               <Typography>{event.expected_selection}</Typography>
             </Box>
           </Grid>
+          <Grid item xs={4}>
+            <Typography sx={{ mb: 1 }}>Participant goal</Typography>
+            <Box sx={{ 
+              p: 2,
+              border: `1px solid ${theme.palette.grey[500]}`,
+              borderRadius: 1,
+              backgroundColor: 'white',
+              minHeight: '24px'
+            }}>
+              <Typography>{event.participant_goal}</Typography>
+            </Box>
+          </Grid>
 
           {/* Description field */}
           <Grid item xs={12}>

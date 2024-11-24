@@ -20,7 +20,8 @@ const CreateEvent: React.FC = () => {
     address: '',
     city: '',
     description: '',
-    expected_selection: ''
+    expected_selection: '',
+    participant_goal: '' // Ensure this is initialized
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +39,8 @@ const CreateEvent: React.FC = () => {
       end_time: 'End time',
       address: 'Address',
       city: 'City',
-      expected_selection: 'Number of invitation'
+      expected_selection: 'Number of invitation',
+      participant_goal: 'Participant goal'
     };
 
     // Check for empty fields
@@ -74,11 +76,13 @@ const CreateEvent: React.FC = () => {
         end_time: eventData.end_time,
         location: `${eventData.address}, ${eventData.city}`,
         description: eventData.description || '', // Handle optional description
-        expected_selection: parseInt(eventData.expected_selection),
+        expected_selection: parseInt(eventData.expected_selection || '0'),
+        participant_goal: parseInt(eventData.participant_goal || '0') // Ensure it's parsed correctly
       };
       
-      navigate('/events');
+      console.log('Complete Event Data:', completeEventData); // Add logging
       await eventService.createEvent(completeEventData);
+      navigate('/events');
     } catch (error) {
       console.error('Error creating event:', error);
       alert('Failed to create event. Please try again.');
@@ -290,6 +294,34 @@ const CreateEvent: React.FC = () => {
                         name="expected_selection"
                         type="number"
                         value={eventData.expected_selection}
+                        onChange={handleChange}
+                        fullWidth
+                        variant="outlined"
+                        InputProps={{
+                            inputProps: { 
+                                min: 1 
+                            }
+                        }}
+                        sx={{ 
+                            backgroundColor: 'white',
+                            '& .MuiOutlinedInput-root': {
+                                '& fieldset': {
+                                    borderColor: theme.palette.grey[500],
+                                },
+                                '&.Mui-focused fieldset': {
+                                    borderColor: theme.palette.darkpurple.main,
+                                    borderWidth: 3,
+                                }
+                            }
+                        }}
+                    />
+                </Grid>
+                <Grid item xs={4}>
+                    <Typography sx={{ mb: 1 }}>Participant goal</Typography>
+                    <TextField
+                        name="participant_goal"
+                        type="number"
+                        value={eventData.participant_goal}
                         onChange={handleChange}
                         fullWidth
                         variant="outlined"

@@ -37,6 +37,7 @@ export const useSingleEvent = (fetchEvent: () => Promise<EventData>) => {
         setLoading(true);
         const data = await fetchEvent();
         setEvent(data);
+        console.log(data);
       } catch (err) {
         console.error('Error fetching event:', err);
         setError(err instanceof Error ? err.message : 'Failed to fetch event');

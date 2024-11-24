@@ -79,8 +79,9 @@ export class EventRepository {
             organizer_id,
             deadline,
             expected_selection,
-            selected_count
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            selected_count,
+            participant_goal    
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
         const formatDateForMySQL = (date: string | DateTime) => {
@@ -98,7 +99,8 @@ export class EventRepository {
             event.organizer_id,
             formatDateForMySQL(event.deadline),
             event.expected_selection,
-            0
+            0,
+            event.participant_goal
         ];
 
         console.log('Event data in Repository:', values);

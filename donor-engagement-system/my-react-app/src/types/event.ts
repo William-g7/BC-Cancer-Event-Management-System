@@ -14,6 +14,7 @@ export interface EventData {
     assigned_fundraisers?: Fundraiser[];
     organizer?: Fundraiser;
     image_url?: string | null;
+    participant_goal: number | null;
 }
 
 export interface DonorNotes{
@@ -31,4 +32,5 @@ export interface CreateEventData {
     location: string;
     description: string;
     expected_selection: number;
+    participant_goal: number | null;
 }

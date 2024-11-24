@@ -14,6 +14,7 @@ export interface Event {
     expected_selection: number;
     selected_count: number;
     image_url?: string | null;
+    participant_goal: number | null;
 }
 
 export interface CreateEventDTO {
@@ -27,5 +28,6 @@ export interface CreateEventDTO {
     deadline: string | DateTime;
     expected_selection: number;
     selected_count?: number;
+    participant_goal: number | null;
 }
 
