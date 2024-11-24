@@ -45,6 +45,7 @@ CREATE TABLE Events (
     deadline DATETIME,
     expected_selection INT,  
     selected_count INT,  
+    participant_goal INT,
     UNIQUE(name), 
     FOREIGN KEY (organizer_id) REFERENCES Fundraisers(id)
 );
