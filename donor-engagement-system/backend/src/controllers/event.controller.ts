@@ -184,7 +184,35 @@ export class EventController {
             });
         }
     }
-
+        /**
+     * @route   POST /api/note/add
+     * @desc    Add event note
+     * @returns {void} void
+     */
+        addNoteEvents = async (req: Request, res: Response): Promise<void> => {
+            try {
+    
+                const accountId = (req as CustomRequest).user?.id;
+                if (!accountId) {
+                    res.status(401).json({
+                        success: false,
+                        error: 'User not authenticated'
+                    });
+                    return;
+                }
+                const a=await this.noteService.addDonorNote(req.body.donor_id,accountId,req.body.note)
+                res.status(201).json({
+                    success: true,
+                    data: a
+                });
+            } catch (error) {
+                console.error('Error creating note:', error);
+                res.status(500).json({
+                    success: false,
+                    error: error instanceof Error ? error.message : 'An unknown error occurred'
+                });
+            }
+        }
     /**
      * @route   GET /api/coordinators/dashboard 
      * @desc    Get upcoming events

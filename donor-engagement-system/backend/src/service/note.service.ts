@@ -8,4 +8,8 @@ export class NoteService {
         const eventRepository = new EventRepository(this.pool);
         return eventRepository.findNotes(id)
     }
+    async addDonorNote(donor_id:number,account_id:number,note:string): Promise<void> {
+        const eventRepository = new EventRepository(this.pool);
+        return eventRepository.addNotes(donor_id,account_id,note);
+    }
 }

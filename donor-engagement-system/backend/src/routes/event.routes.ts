@@ -35,6 +35,9 @@ router.post('/event/new-event', checkUser, eventController.createEvent)
 // find event notes
 router.get("/event/note/:id",checkUser,eventController.getNoteEvents)
 
+// add event notes
+router.post('/event/note/add',checkUser,eventController.addNoteEvents)
+
 // Apply error handler to all routes
 router.use(errorHandler);
 

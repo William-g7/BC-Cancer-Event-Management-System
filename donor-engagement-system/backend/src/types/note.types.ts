@@ -8,7 +8,10 @@ export interface DonorNotes{
     note:string;
     created_at: DateTime;
 }
-
+export interface Fundraisers{
+    id:number;
+    account_id:number;
+}
 export interface CreateNoteDTO {
     donor_id: number;
     account_id: number;
