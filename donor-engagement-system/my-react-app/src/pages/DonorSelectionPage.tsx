@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import DonorSelectionTable from './DonorSelectionTable.tsx';
-import OtherSelectionsTable from './OtherSelectionsTable.tsx';
-import Sidebar from './Sidebar.tsx';
+import DonorSelectionTable from '../components/DonorSelectionTable.tsx';
+import OtherSelectionsTable from '../components/OtherSelectionsTable.tsx';
+import Sidebar from '../components/Sidebar.tsx';
 import { Box } from '@mui/system';
-import Header from './Header.tsx';
+import Header from '../components/Header.tsx';
 import { useParams } from 'react-router-dom';
 import { DonorService } from '../services/donorService.ts';
 import { Button, useTheme, Snackbar, Alert} from '@mui/material';

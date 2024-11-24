@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, Button, Typography} from '@mui/material';
-import EventList from "./EventList.tsx";
-import Sidebar from "./Sidebar.tsx";
-import Header from "./Header.tsx";
+import EventList from "../components/EventList.tsx";
+import Sidebar from "../components/Sidebar.tsx";
+import Header from "../components/Header.tsx";
 import AddIcon from '@mui/icons-material/Add';
 import { useNavigate } from 'react-router-dom';
 import { theme } from '../theme/theme.ts';

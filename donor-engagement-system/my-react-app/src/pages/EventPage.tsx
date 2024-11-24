@@ -1,8 +1,8 @@
 import React from 'react';
 import { Box } from '@mui/system';
-import Sidebar from './Sidebar.tsx';
-import Header from './Header.tsx';
-import EventDetail from './EventDetail.tsx';
+import Sidebar from '../components/Sidebar.tsx';
+import Header from '../components/Header.tsx';
+import EventDetail from '../components/EventDetail.tsx';
 
 const EventPage: React.FC = () => {
 

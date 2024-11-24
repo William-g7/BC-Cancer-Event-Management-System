@@ -6,12 +6,13 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { EventService } from '../services/eventService.ts';
 import { useCallback } from 'react';
 import { useEvents } from '../hooks/useEvents.ts';
+import { EventData } from '../types/event.ts';
 
 
 const eventService = new EventService();
 
 // Styling for each day box
-const DayBox = styled(Box)(({ theme, isToday }) => ({
+const DayBox = styled(Box)(({ theme }) => ({
   border: '1px solid #ddd',
   height: '90px',
   position: 'relative',
@@ -28,7 +29,7 @@ const CalendarEvents: React.FC = () => {
   const { events, loading, error } = useEvents(fetchEvents);
 
   // Function to get all events for a specific date
-  const getEventsForDate = (date: string): Event[] => {
+  const getEventsForDate = (date: string): EventData[] => {
     return events.filter((event) => {
       // Extract just the date portion from the event's start_time (YYYY-MM-DD)
       const eventDateStr = new Date(event.start_time).toLocaleDateString('en-CA').split('T')[0];

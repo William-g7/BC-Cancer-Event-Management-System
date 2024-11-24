@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Box, Typography, TextField, Button, Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from './Sidebar.tsx';
-import Header from './Header.tsx';
+import Sidebar from '../components/Sidebar.tsx';
+import Header from '../components/Header.tsx';
 import { EventService } from '../services/eventService.ts';
 import { theme } from '../theme/theme.ts';
 

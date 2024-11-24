@@ -1,8 +1,8 @@
 import React from 'react';
 import { Box, Typography} from '@mui/material';
-import Sidebar from './Sidebar.tsx';
-import Header from './Header.tsx';
-import CalendarEvents from './CalendarEvents.tsx';
+import Sidebar from '../components/Sidebar.tsx';
+import Header from '../components/Header.tsx';
+import CalendarEvents from '../components/CalendarEvents.tsx';
 
 const CalendarPage: React.FC = () => {
     return (

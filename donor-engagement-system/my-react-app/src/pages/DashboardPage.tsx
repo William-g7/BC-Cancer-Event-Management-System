@@ -1,12 +1,12 @@
 import React from 'react';
 import { Box, Typography} from '@mui/material';
-import Sidebar from './Sidebar.tsx';
-import Header from './Header.tsx';
-import DashboardEvents from './DashboardEvents.tsx';
-import Notification from './Notification.tsx';
+import Sidebar from '../components/Sidebar.tsx';
+import Header from '../components/Header.tsx';
+import DashboardEvents from '../components/DashboardEvents.tsx';
+import Notification from '../components/Notification.tsx';
 import { theme } from '../theme/theme.ts';
-import Todo from './todo.tsx';
-import CoordinatorEvents from './CoordinatorEvents.tsx';
+import Todo from '../components/todo.tsx';
+import CoordinatorEvents from '../components/CoordinatorEvents.tsx';
 
 const DashboardPage: React.FC = () => {
   const role = localStorage.getItem('role');

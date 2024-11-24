@@ -1,7 +1,7 @@
 // src/components/DonorNotePage.tsx
 import React from 'react';
-import Sidebar from './Sidebar.tsx';
-import Header from './Header.tsx';
+import Sidebar from '../components/Sidebar.tsx';
+import Header from '../components/Header.tsx';
 import { Box, Typography, List, ListItem, ListItemText, Button } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
 
