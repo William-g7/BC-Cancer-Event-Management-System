@@ -6,17 +6,19 @@ const useLogin = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const navigate  = useNavigate();
-    const authService = new AuthService();  
+    const authService = new AuthService(); 
 
 
     const handleLogin = async (username: string, password: string) => {
         try {
             setLoading(true);
             const response = await authService.login(username, password);
-            if (response.success) {
-                navigate('/dashboard'); // Redirect to the dashboard upon successful login
+            if (response.success && response.data) {
+                localStorage.setItem('role', response.data.role);
+                navigate('/dashboard');
                 return;
-            } else {
+            }
+            else {
                 setError(response.message || 'Failed to login');
             }
 

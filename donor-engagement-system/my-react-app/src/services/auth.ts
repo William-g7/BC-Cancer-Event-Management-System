@@ -3,8 +3,12 @@ import { api } from '../utils/api.ts';
 interface LoginResponse {
     success: boolean;
     message?: string;
-    user?: {
+    data?: {
+        id: number;
         name: string;
+        password_hash: string;
+        role: string;
+        created_at: string;
     };
 }
 
@@ -12,12 +16,13 @@ export class AuthService {
     async login(username: string, password: string): Promise<LoginResponse> {
         try {
             api.setUsername(username);
-            console.log('Attempting to log in with:', { username, password }); // Debugging log
             const response = await api.post<LoginResponse>('/login', { username, password });
-            console.log('Login response:', response); // Debugging log
             if (response.success) {
-                return response;
-            } 
+                return { success: true, data: response.data };
+            } else {
+                return { success: false, message: 'Invalid response data' };
+            }
+        
         } catch (error) {
             console.error('Login failed:', error);
             return { success: false, message: 'Invalid User or Invalid Password! Please try it again!' };
