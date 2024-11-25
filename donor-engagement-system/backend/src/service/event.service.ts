@@ -143,7 +143,22 @@ export class EventService {
 
     async getAllEvents(): Promise<Event[]> {
         const eventRepository = new EventRepository(this.pool);
+        const fundraiserRepository = new FundraiserRepository(this.pool);
         const events = await eventRepository.getAllEvents();
-        return events;
+    
+        const eventsWithOrganizerNames = await Promise.all(events.map(async (event) => {
+          const organizer = await fundraiserRepository.findByFundraiserId(event.organizer_id);
+    
+          if (!organizer) {
+            throw new Error(`Organizer with id ${event.organizer_id} not found`);
+          }
+    
+          return {
+            ...event,
+            organizer: organizer
+          };
+        }));
+    
+        return eventsWithOrganizerNames;
     }
-}
+  }

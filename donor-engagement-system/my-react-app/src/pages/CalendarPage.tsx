@@ -4,7 +4,10 @@ import Sidebar from '../components/Sidebar.tsx';
 import Header from '../components/Header.tsx';
 import CalendarEvents from '../components/CalendarEvents.tsx';
 
+ 
 const CalendarPage: React.FC = () => {
+    const userRole = localStorage.getItem('role') || null;
+    
     return (
         <Box sx={{ display: 'flex', minHeight: '100vh', bgcolor: 'white' }}>
           {/* Sidebar */}
@@ -38,7 +41,7 @@ const CalendarPage: React.FC = () => {
               </Box>
 
                 <Box sx={{ position: 'absolute', top: 90, left: 70}}>
-                  <CalendarEvents />
+                  <CalendarEvents role={userRole} />
                 </Box>
               </Box>
             </Box>

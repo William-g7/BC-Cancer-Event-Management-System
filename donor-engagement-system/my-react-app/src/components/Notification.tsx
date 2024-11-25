@@ -2,7 +2,7 @@ import React from "react";
 import { Card, CardContent, Typography, List, ListItem } from "@mui/material";
 
 const notifications = [
-  "Celine: Can you please select 2 more donors (in total 24) for the Charity Night?",
+  "Chao: Can you please select 2 more donors (in total 24) for the Charity Night?",
   "Tom: Please confirm your selection for the Bowie Ball by Friday.",
 ];
 

@@ -10,9 +10,12 @@ import { EventData } from '../types/event.ts';
 
 
 const eventService = new EventService();
+interface CalendarEventsProps {
+  role: string | null;
+}
 
 // Styling for each day box
-const DayBox = styled(Box)(({ theme }) => ({
+const DayBox = styled(Box)(({ theme, isToday }) => ({
   border: '1px solid #ddd',
   height: '90px',
   position: 'relative',
@@ -24,8 +27,17 @@ const DayBox = styled(Box)(({ theme }) => ({
 
 
 
-const CalendarEvents: React.FC = () => {
-  const fetchEvents = useCallback(() => eventService.getAllEvents(), []);
+const CalendarEvents: React.FC<CalendarEventsProps> = () => {
+  const role = localStorage.getItem('role');
+  const fetchEvents = useCallback(async () => {
+    if (role === 'Fundraiser') {
+      return await eventService.getEvents();
+    } else if (role === 'Coordinator') {
+      return await eventService.getAllEvents();
+    }
+    return []; // Ensure a Promise<EventData[]> is always returned
+  }, [role]);
+
   const { events, loading, error } = useEvents(fetchEvents);
 
   // Function to get all events for a specific date

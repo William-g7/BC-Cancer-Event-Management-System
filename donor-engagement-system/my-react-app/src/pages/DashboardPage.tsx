@@ -7,6 +7,7 @@ import Notification from '../components/Notification.tsx';
 import { theme } from '../theme/theme.ts';
 import Todo from '../components/todo.tsx';
 import CoordinatorEvents from '../components/CoordinatorEvents.tsx';
+import Feedback from '../components/Feedback.tsx';
 
 const DashboardPage: React.FC = () => {
   const role = localStorage.getItem('role');
@@ -73,7 +74,7 @@ const DashboardPage: React.FC = () => {
               {role === 'Coordinator' ? <CoordinatorEvents /> : <DashboardEvents />}
             </Box>
 
-            {/* Notifications Section */}
+            {/* Notifications or Recent Feedback Section */}
             <Box sx={{ 
               flex: { xs: '1 1 auto', sm: '1 1 auto', md: '1 1 auto', lg: '0 0 330px' },
               bgcolor: theme.palette.lightgrey.main,
@@ -81,7 +82,7 @@ const DashboardPage: React.FC = () => {
               p: { xs: 2, sm: 2, md: 3 }
             }}>
               <Todo />
-              <Notification />
+              {role === 'Coordinator' ? <Feedback /> : <Notification />}
             </Box>
           </Box>
         </Box>
