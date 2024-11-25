@@ -5,8 +5,6 @@ import { theme } from "../theme/theme.ts";
 const Header: React.FC = () => {
   const username = localStorage.getItem('username') || 'Guest';
   const role = localStorage.getItem('role') || 'User';
-  console.log('username:', username);
-  console.log('role:', role);
   
 
   return (

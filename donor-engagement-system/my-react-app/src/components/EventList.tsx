@@ -15,15 +15,31 @@ import {
 import { useEvents } from '../hooks/useEvents.ts';
 import { EventService } from '../services/eventService.ts';
 import { useNavigate } from 'react-router-dom';
+import { useCallback } from 'react';
+import { EventData } from '../types/event.ts';
+
 
 const eventService = new EventService();
+interface EventListProps {
+  role: string | null;
+}
 
-const EventList: React.FC = () => {
+const EventList: React.FC<EventListProps> = () => {
   const navigate = useNavigate();
-  const fetchEvents = React.useCallback(() => {
-    console.log('fetchEvents called');
-    return eventService.getEvents();
-  }, []);
+  const role = localStorage.getItem('role');
+
+  const fetchEvents = useCallback(async (): Promise<EventData[]> => {
+    if (role === 'Fundraiser') {
+      const events = await eventService.getEvents();
+      console.log(events); // Log the events to verify the data
+      return events;
+    } else if (role === 'Coordinator') {
+      const events = await eventService.getAllEvents();
+      console.log(events); // Log the events to verify the data
+      return events;
+    }
+    return Promise.resolve([]); // Ensure a Promise<EventData[]> is always returned
+  }, [role]);
   
   const { events, loading, error } = useEvents(fetchEvents);
   

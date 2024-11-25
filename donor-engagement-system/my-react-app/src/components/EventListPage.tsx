@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { theme } from '../theme/theme.ts';
 
 const EventListPage: React.FC = () => {
+    const userRole = localStorage.getItem('role') || null;
     const navigate = useNavigate();
 
     const handleCreateEvent = () => {
@@ -44,6 +45,7 @@ const EventListPage: React.FC = () => {
                     <Typography variant="h4">
                         EVENTS
                     </Typography>
+                    {userRole == 'Fundraiser' && (
                     <Button
                         variant="contained"
                         startIcon={<AddIcon />}
@@ -59,6 +61,7 @@ const EventListPage: React.FC = () => {
                     >
                         Create Event
                     </Button>
+                 )}
                 </Box>
 
                 <Box sx={{ 
@@ -68,7 +71,7 @@ const EventListPage: React.FC = () => {
                     gap: 2,
                 }}>
                     
-                    <EventList />
+                    <EventList role={userRole} />
                 </Box >
                 
             </Box>
