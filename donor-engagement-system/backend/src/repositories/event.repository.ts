@@ -2,8 +2,7 @@ import { Pool, ResultSetHeader } from 'mysql2/promise';
 import { Event, CreateEventDTO} from '../types/event.types';   
 import { Fundraiser } from '../types/fundraiser.types';
 import { DateTime } from 'luxon';
-import { DonorNotes, Fundraisers } from '../types/note.types';
-
+import {DonorNotes, Fundraisers} from '../types/note.types';
 
 export class EventRepository {
     constructor(private pool: Pool) {}
@@ -228,7 +227,11 @@ export class EventRepository {
                 note
             ) VALUES (?, ?, ?)
         `
-        await this.pool.execute(querys,[donor_id,fundraisers[0].id,note])
+        try {
+            await this.pool.execute(querys,[donor_id,fundraisers[0].id,note])
+        }catch(error){
+            console.error(error)
+        }
     }
 
     // get upcoming events  
