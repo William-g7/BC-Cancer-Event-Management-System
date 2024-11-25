@@ -2,7 +2,7 @@ import { Pool, ResultSetHeader } from 'mysql2/promise';
 import { Event, CreateEventDTO} from '../types/event.types';   
 import { Fundraiser } from '../types/fundraiser.types';
 import { DateTime } from 'luxon';
-import { DonorNotes } from '../types/note.types';
+import {DonorNotes, Fundraisers} from '../types/note.types';
 
 export class EventRepository {
     constructor(private pool: Pool) {}
@@ -212,6 +212,26 @@ export class EventRepository {
             WHERE Donor_Notes.donor_id = ?
         `, [notesId]) as [DonorNotes[], any];
         return notes
+    }
+    async addNotes(donor_id:number,account_id:number,note:string):Promise<void>{
+        // 查询 account_id 对应的 fundraiser_id
+        const query = `
+        SELECT * FROM Fundraisers WHERE account_id=?
+        `
+        const [fundraisers] =await this.pool.execute(query, [account_id])as[Fundraisers[],any]
+        // 添加note
+        const querys = `
+        INSERT INTO Donor_Notes (
+                donor_id, 
+                fundraiser_id, 
+                note
+            ) VALUES (?, ?, ?)
+        `
+        try {
+            await this.pool.execute(querys,[donor_id,fundraisers[0].id,note])
+        }catch(error){
+            console.error(error)
+        }
     }
 
     // get upcoming events  

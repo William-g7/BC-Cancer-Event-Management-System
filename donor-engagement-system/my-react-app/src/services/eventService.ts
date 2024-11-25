@@ -32,7 +32,12 @@ export class EventService {
         }
         return response.data;
     }
-
+    async addEventNote(donor_id:number,note:string):Promise<void>{
+        const response = await api.post<{success: boolean}>('/event/note/add', {donor_id,note})
+        if (!response.success) {
+            throw new Error('Failed to get notes');
+        }
+    }
     async getUpcomingEvents(): Promise<EventData[]> {
         const response = await api.get<{success: boolean, data: EventData[]}>('/coordinators/dashboard');
         return response.data || [];

@@ -35,7 +35,7 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
   // Sidebar State
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [sidebarContent, setSidebarContent] = useState<any>(null);
-
+  const [row,setRow]=useState<GridRenderCellParams>(null);
   const fetchEventAndDonors = useCallback(async () => {
     if (!id) throw new Error('Event ID is required');
     const [eventData, donorsData] = await Promise.all([
@@ -73,6 +73,7 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
     const donorId = params.row.id; // Assuming the donor ID is in the row data
     const notes = await eventService.getEventNote(donorId); // Fetch notes for the selected donor
     setSidebarContent({ ...params.row, notes }); // Set the clicked row data and notes to Sidebar content
+    setRow(params);
     setDrawerOpen(true); // Open Sidebar
   };
 
@@ -80,7 +81,7 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
     setDrawerOpen(false); // Close Sidebar
     setSidebarContent(null); // Clear Sidebar content
   };
-
+// TODO
   const handleAddNote = async () => {
     if (newNote.trim() && sidebarContent) {
       const noteToAdd = {
@@ -88,6 +89,8 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
         note: newNote,
       };
       sidebarContent.notes.push(noteToAdd);
+      const donorId = row.row.id; // Assuming the donor ID is in the row data
+      const notes = await eventService.addEventNote(donorId,newNote); // Fetch notes for the selected donor
       setNewNote('');
     }
   };
@@ -244,7 +247,7 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
             flexDirection: "column",
             padding: 3,
             boxSizing: "border-box",
-            backgroundColor: '#f9f9f9',
+            backgroundColor: '#DFEAEB',
             borderLeft: '1px solid #e0e0e0',
           }}
         >
@@ -252,13 +255,13 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
           <Box>
             {sidebarContent && (
               <>
-                <Typography variant="body1" sx={{ fontWeight: "bold", marginBottom: 1 }}>
+                <Typography variant="body1" sx={{ fontWeight: "bold", marginBottom: 1,textAlign:"center",color:"#333D4E" }}>
                   {sidebarContent.full_name}
                 </Typography>
                 <Typography variant="body1" sx={{ marginTop: 2 }}>
                   {sidebarContent.notes.length > 0 ? (
                     sidebarContent.notes.map((note, index) => (
-                      <div key={index}>
+                      <div key={index} style={{marginTop: 10,backgroundColor:"white",padding:10,borderRadius:"25px",color:"#646C77",textAlign:"center"}}>
                         {note.fundraiser_name}: {note.note}
                       </div>
                     ))
@@ -267,29 +270,32 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
                   )}
                 </Typography>
                 {/* Input for new note */}
-                <Box sx={{ display: 'flex', flexDirection: 'column', marginTop: 50 }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column',justifyContent:"center",alignItems:"center", marginTop: 50 }}>
                   <textarea 
-                    value={newNote} 
+                    value={newNote}
                     onChange={(e) => setNewNote(e.target.value)} 
                     placeholder="Add your notes here"
                     style={{
-                      border: '1px solid #007BFF',
-                      borderRadius: '4px',
+                      border: '2px solid #26B9D0',
+                      borderRadius: '6px',
                       padding: '10px',
                       resize: 'none',
                       height: '100px',
+                      width:"80%",
                       marginBottom: '8px',
                     }} 
                   />
                   <button 
                     onClick={handleAddNote} 
                     style={{
-                      backgroundColor: theme.palette.primary.main,
+                      backgroundColor: "#1AB2CB",
                       color: 'white',
                       border: 'none',
                       borderRadius: '4px',
-                      padding: '10px',
                       cursor: 'pointer',
+                      width:"50px",
+                      height:"50px",
+                      fontSize:"44px",
                     }}
                   >
                     +
