@@ -81,7 +81,7 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
     setDrawerOpen(false); // Close Sidebar
     setSidebarContent(null); // Clear Sidebar content
   };
-
+// TODO
   const handleAddNote = async () => {
     if (newNote.trim() && sidebarContent) {
       const noteToAdd = {
@@ -237,8 +237,8 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
         </Box>
       </Collapse>
 
-       {/* Sidebar Drawer */}
-       <Drawer anchor="right" open={drawerOpen} onClose={handleDrawerClose}>
+      {/* Sidebar Drawer */}
+      <Drawer anchor="right" open={drawerOpen} onClose={handleDrawerClose}>
         <Box
           sx={{
             width: 400,
@@ -258,10 +258,10 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
                 <Typography variant="body1" sx={{ fontWeight: "bold", marginBottom: 1,textAlign:"center",color:"#333D4E" }}>
                   {sidebarContent.full_name}
                 </Typography>
-                <Typography variant="body1" sx={{ marginTop: 2,backgroundColor:"white",padding:2,borderRadius:"25px",color:"#646C77" }}>
+                <Typography variant="body1" sx={{ marginTop: 2 }}>
                   {sidebarContent.notes.length > 0 ? (
                     sidebarContent.notes.map((note, index) => (
-                      <div key={index}>
+                      <div key={index} style={{marginTop: 10,backgroundColor:"white",padding:10,borderRadius:"25px",color:"#646C77",textAlign:"center"}}>
                         {note.fundraiser_name}: {note.note}
                       </div>
                     ))
