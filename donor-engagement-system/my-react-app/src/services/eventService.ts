@@ -65,4 +65,26 @@ export class EventService {
         const response = await api.get<{success: boolean, data: EventData[]}>('/calendar/events');
         return response.data || [];
     }
+
+    async getFundraiserStatus(eventId: number): Promise<{ 
+        fundraiserId: number;
+        status: 'confirmed' | 'in_progress';
+    }[]> {
+        try {
+            const response = await api.get<{
+                success: boolean,
+                data: { fundraiserId: number; status: 'confirmed' | 'in_progress' }[]
+            }>(`/event/${eventId}/fundraiser-status`);
+    
+            if (!response.success) {
+                throw new Error('Failed to fetch fundraiser status');
+            }
+    
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching fundraiser status:', error);
+            throw error;
+        }
+    }
+      
 } 

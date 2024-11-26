@@ -3,6 +3,7 @@ import { EventController } from '../controllers/event.controller';
 import { checkUser, errorHandler } from '../middleware/index';
 import pool from '../config/database';
 import { EventService } from '../service/event.service';
+import { DonorService } from '../service/donor.service';
 import { FundraiserService } from '../service/fundraiser.service';
 import { NoteService } from '../service/note.service';
 
@@ -11,7 +12,8 @@ const eventController = new EventController(
     pool, 
     new EventService(pool), 
     new FundraiserService(pool),
-    new NoteService(pool)
+    new NoteService(pool),
+    new DonorService(pool)
 );
 
 // Get events for a fundraiser's dashboard
@@ -43,5 +45,9 @@ router.post('/event/note/add',checkUser,eventController.addNoteEvents)
 
 // Apply error handler to all routes
 router.use(errorHandler);
+
+// Get fundraiser status
+router.get('/event/:id/fundraiser-status', checkUser, eventController.getFundraiserStatus);
+
 
 export default router;
