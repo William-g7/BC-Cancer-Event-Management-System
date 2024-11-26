@@ -2,6 +2,7 @@ import { Pool } from 'mysql2/promise';
 import { EventService } from '../service/event.service';
 import e, { Request, Response } from 'express';
 import { FundraiserService } from '../service/fundraiser.service';
+import { DonorService } from '../service/donor.service';
 import { CustomRequest } from '../types/custom-request';
 import { NoteService } from '../service/note.service';
 
@@ -10,7 +11,8 @@ export class EventController {
         private pool: Pool, 
         private eventService: EventService, 
         private fundraiserService: FundraiserService,
-        private noteService: NoteService
+        private noteService: NoteService,
+        private donorService: DonorService
     ) {}
 
     /**
@@ -270,5 +272,41 @@ export class EventController {
             });
         }
     }
+
+
+    getEventsByStatus = async (req: Request, res: Response) => {
+        try {
+            const events = await this.eventService.getEventsByStatus();
+            res.json({
+                success: true,
+                data: events
+            });
+        } catch (error) {
+            console.error('Error getting events by status:', error);
+            res.status(500).json({
+                success: false,
+                error: 'Failed to get events by status'
+            });
+        }
+    }
+
+    getFundraiserStatus = async (req: Request, res: Response): Promise<void> => {
+        try {
+            const eventId = parseInt(req.params.id);
+            const status = await this.donorService.getFundraiserSelectionStatus(eventId);
+            
+            res.json({
+                success: true,
+                data: status
+            });
+        } catch (error) {
+            console.error('Error getting fundraiser status:', error);
+            res.status(500).json({
+                success: false,
+                error: error instanceof Error ? error.message : 'An unknown error occurred'
+            });
+        }
+    };
+
 }
 

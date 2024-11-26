@@ -17,6 +17,24 @@ export class EventService {
         return response.data || [];
     }
 
+    async getEventsByStatus(): Promise<{ finishedEvents: EventData[], waitingEvents: EventData[] }> {
+        try {
+          const response = await api.get<{
+            success: boolean,
+            data: { finishedEvents: EventData[], waitingEvents: EventData[] }
+          }>('/events/status');
+    
+          if (!response.success) {
+            throw new Error('Failed to fetch events by status');
+          }
+    
+          return response.data;
+        } catch (error) {
+          console.error('Error fetching events by status:', error);
+          throw error;
+        }
+      }
+
     async createEvent(event: CreateEventData): Promise<EventData> {
         const response = await api.post<{success: boolean, data: EventData}>('/event/new-event', event);
         if (!response.success) {
@@ -47,4 +65,26 @@ export class EventService {
         const response = await api.get<{success: boolean, data: EventData[]}>('/calendar/events');
         return response.data || [];
     }
+
+    async getFundraiserStatus(eventId: number): Promise<{ 
+        fundraiserId: number;
+        status: 'confirmed' | 'in_progress';
+    }[]> {
+        try {
+            const response = await api.get<{
+                success: boolean,
+                data: { fundraiserId: number; status: 'confirmed' | 'in_progress' }[]
+            }>(`/event/${eventId}/fundraiser-status`);
+    
+            if (!response.success) {
+                throw new Error('Failed to fetch fundraiser status');
+            }
+    
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching fundraiser status:', error);
+            throw error;
+        }
+    }
+      
 } 

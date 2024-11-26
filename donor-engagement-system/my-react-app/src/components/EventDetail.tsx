@@ -1,4 +1,4 @@
-import React, { useCallback} from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
@@ -15,8 +15,8 @@ const eventService = new EventService();
 const EventDetail: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
-
-
+  const role = localStorage.getItem('role');
+  
   const fetchEvent = useCallback(() => {
     if (!id) throw new Error('Event ID is required');
     return eventService.getEventById(parseInt(id));
@@ -27,6 +27,32 @@ const EventDetail: React.FC = () => {
   const handleClick = () => {
     navigate(`/event/${id}/selections`);
   }
+
+  const [fundraiserStatus, setFundraiserStatus] = useState<{
+    [key: number]: 'confirmed' | 'in_progress'
+  }>({});
+  
+  useEffect(() => {
+    const fetchFundraiserStatus = async () => {
+      if (role === 'Coordinator' && id) {
+        try {
+          const status = await eventService.getFundraiserStatus(parseInt(id));
+          
+          const statusMap: { [key: number]: 'confirmed' | 'in_progress' } = {};
+          
+          status.forEach(item => {
+            statusMap[item.fundraiserId] = item.status as 'confirmed' | 'in_progress';
+          });
+          
+          setFundraiserStatus(statusMap);
+        } catch (error) {
+          console.error('Error fetching fundraiser status:', error);
+        }
+      }
+    };
+  
+    fetchFundraiserStatus();
+  }, [id, role]);
 
   if (loading) {
     return (
@@ -139,28 +165,49 @@ const EventDetail: React.FC = () => {
 
           {/* Fundraisers section */}
           <Grid item xs={12} sx={{ mt: 4 }}>
-            <Typography variant="h5" sx={{ mb: 2 }}>EVENT FUNDRAISERS</Typography>
+            <Typography variant="h5" sx={{ mb: 2 }}>
+            {role === 'Coordinator' ? 'FUNDRAISERS STATUS' : 'EVENT FUNDRAISERS'}
+              </Typography>
             <Box sx={{ 
               backgroundColor: 'white'
             }}>
               {event.assigned_fundraisers?.map((fundraiser, index) => (
-                <Box key={index} sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                  <Box sx={{ 
-                    width: 40,
-                    height: 40,
-                    borderRadius: '50%',
-                    bgcolor: 'grey.500',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'white',
-                    mr: 2
-                  }}>
-                    {fundraiser.name ? fundraiser.name[0] : '?'}
+                <Box key={index} sx={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  mb: 2,
+                  justifyContent: 'space-between'
+                }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <Box sx={{ 
+                      width: 40,
+                      height: 40,
+                      borderRadius: '50%',
+                      bgcolor: 'grey.500',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: 'white',
+                      mr: 2
+                    }}>
+                      {fundraiser.name ? fundraiser.name[0] : '?'}
+                    </Box>
+                    <Typography>
+                      {fundraiser.name}
+                    </Typography>
                   </Box>
-                  <Typography>
-                    {fundraiser.name}
-                  </Typography>
+                  {role === 'Coordinator' && (
+                    <Typography 
+                      sx={{ 
+                        color: fundraiserStatus[fundraiser.id] === 'confirmed' 
+                          ? theme.palette.green.main 
+                          : theme.palette.warning.main,
+                        fontWeight: 500
+                      }}
+                    >
+                      {fundraiserStatus[fundraiser.id] === 'confirmed' ? 'Confirmed' : 'In Progress'}
+                    </Typography>
+                  )}
                 </Box>
               ))}
               {(!event.assigned_fundraisers || event.assigned_fundraisers.length === 0) && (
@@ -190,7 +237,7 @@ const EventDetail: React.FC = () => {
             }
           }}
         >
-          Start Selection
+         {role === 'Coordinator' ? 'SEE RESULTS' : 'START SELECTION'}
         </Button>
       </Box>
     </Box>

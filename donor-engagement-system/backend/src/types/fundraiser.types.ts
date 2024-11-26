@@ -5,3 +5,9 @@ export interface Fundraiser {
     name: string;
     role: string;
 }
+
+export interface FundraiserStatus {
+    event_fundraiser_id: number;
+    fundraiserId: number;
+    status: 'confirmed' | 'in_progress';
+}

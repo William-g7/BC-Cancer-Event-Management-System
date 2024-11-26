@@ -161,4 +161,32 @@ export class EventService {
     
         return eventsWithOrganizerNames;
     }
+    
+    
+    async getEventsByStatus(): Promise<{ 
+        finishedEvents: Event[], 
+        waitingEvents: Event[] 
+    }> {
+        const [results] = await this.pool.execute(`
+            SELECT 
+                e.*,
+                EXISTS (
+                    SELECT 1 
+                    FROM Selections s 
+                    WHERE s.event_id = e.id 
+                    AND s.state = 'confirmed'
+                ) as has_confirmed_donors
+            FROM Events e
+        `) as [any[], any];
+
+        const finishedEvents = results.filter(event => event.has_confirmed_donors);
+        const waitingEvents = results.filter(event => !event.has_confirmed_donors);
+
+        return {
+            finishedEvents,
+            waitingEvents
+        };
+    }
+
+
   }
