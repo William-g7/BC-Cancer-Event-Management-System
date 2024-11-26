@@ -2,6 +2,9 @@ import { Donor } from 'src/types/donor.types';
 import { DonorRepository } from '../repositories/donor.repository';
 import { Pool } from 'mysql2/promise';
 
+import { FundraiserRepository } from '../repositories/fundraiser.repository';
+import { FundraiserStatus } from '../types/fundraiser.types';
+
 export class DonorService {
     constructor(private pool: Pool) {}
 
@@ -16,7 +19,6 @@ export class DonorService {
     }
 
     private async getEventFundraiserId(eventId: number, accountId: number): Promise<number> {
-        // 先获取 fundraiser_id
         const [fundraiser] = await this.pool.execute(
             'SELECT id FROM Fundraisers WHERE account_id = ?',
             [accountId]
@@ -26,7 +28,6 @@ export class DonorService {
             throw new Error('Fundraiser not found');
         }
 
-        // 再获取 event_fundraiser_id
         const [eventFundraiser] = await this.pool.execute(
             'SELECT id FROM Event_Fundraisers WHERE event_id = ? AND fundraiser_id = ?',
             [eventId, fundraiser[0].id]
@@ -74,6 +75,7 @@ export class DonorService {
         const donorRepository = new DonorRepository(this.pool);
         const eventFundraiserId = await this.getEventFundraiserId(eventId, accountId);
         await donorRepository.unselectDonors(eventId, donorIds, eventFundraiserId);
+
     } 
 
     async getConfirmedDonorsByEvent(eventId: number): Promise<Donor[]> {
@@ -93,6 +95,13 @@ export class DonorService {
             console.error('DonorService: Error in getConfirmedDonorsByEvent:', error);
             throw error;
         }
+
+    }
+
+    async getFundraiserSelectionStatus(eventId: number): Promise<FundraiserStatus[]> {
+        const donorRepository = new DonorRepository(this.pool);
+        return await donorRepository.getFundraiserSelectionStatus(eventId);
+
     }
 }
 

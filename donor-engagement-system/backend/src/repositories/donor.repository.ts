@@ -2,6 +2,7 @@ import { Pool } from 'mysql2/promise';
 import { Donor } from '../types/donor.types';
 import { SelectionStatus } from '../types/selection';
 import { RowDataPacket, FieldPacket } from 'mysql2';
+import { FundraiserStatus } from '../types/fundraiser.types';
 
 interface DonorSelectionRow {
     donor_id: number;
@@ -200,6 +201,40 @@ export class DonorRepository {
             console.error('DonorRepository: Error in findConfirmedDonorsByEvent:', error);
             throw error;
         }
+
+    async getFundraiserSelectionStatus(eventId: number): Promise<FundraiserStatus[]> {
+        // First, let's check if there are any confirmed selections
+        const [confirmedSelections] = await this.pool.execute(`
+            SELECT s.id, s.event_fundraiser_id, s.state
+            FROM Selections s
+            JOIN Event_Fundraisers ef ON s.event_fundraiser_id = ef.id
+            WHERE ef.event_id = ? AND s.state = 'confirmed'
+        `, [eventId]) as [any[], any];
+        
+        console.log('Confirmed selections:', confirmedSelections);
+
+        // Then get the fundraiser status
+        const [results] = await this.pool.execute(`
+            SELECT 
+                ef.id as event_fundraiser_id,
+                ef.fundraiser_id as fundraiserId,
+                CASE 
+                    WHEN EXISTS (
+                        SELECT 1 
+                        FROM Selections s2 
+                        WHERE s2.event_fundraiser_id = ef.id 
+                        AND s2.state = 'confirmed'
+                    ) THEN 'confirmed'
+                    ELSE 'in_progress'
+                END as status
+            FROM Event_Fundraisers ef
+            WHERE ef.event_id = ?
+            GROUP BY ef.fundraiser_id, ef.id
+        `, [eventId]) as [any[], any];
+
+        console.log('Fundraiser status results:', results);
+        return results;
+
     }
 }
     
