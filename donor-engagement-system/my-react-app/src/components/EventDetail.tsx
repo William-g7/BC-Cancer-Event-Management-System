@@ -15,6 +15,7 @@ const eventService = new EventService();
 const EventDetail: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
+  const role = localStorage.getItem('role');
 
 
   const fetchEvent = useCallback(() => {
@@ -190,7 +191,7 @@ const EventDetail: React.FC = () => {
             }
           }}
         >
-          Start Selection
+         {role === 'Coordinator' ? 'SEE RESULTS' : 'START SELECTION'}
         </Button>
       </Box>
     </Box>
