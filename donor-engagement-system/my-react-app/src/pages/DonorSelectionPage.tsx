@@ -10,7 +10,6 @@ import { Button, useTheme, Snackbar, Alert} from '@mui/material';
 
 const donorService = new DonorService();
 
-const role = localStorage.getItem('role');
 
 const DonorSelectionPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -233,20 +232,20 @@ const DonorSelectionPage: React.FC = () => {
 
         {/* Content */}
         <Box sx={{ mt: 16 }}>
-          {role === 'fundraiser' && <DonorSelectionTable 
+          <DonorSelectionTable 
             onSelectionChange={setSelectedDonors}
             selectedDonors={selectedDonors}
             refreshTrigger={refreshTrigger}
             confirmedOtherDonorsCount={confirmedOtherDonorsCount}
-          />}
+          />
           
           <Box sx={{ mt: 4 }}>
-            {role === 'fundraiser' && <OtherSelectionsTable donors={otherSelections} />}
+            <OtherSelectionsTable donors={otherSelections} />
           </Box>
 
 
           {/* Buttons */}
-          {role === 'fundraiser' && (<Box sx={{ 
+          <Box sx={{ 
             position: 'absolute',
             top: 210,
             right: 10,
@@ -284,7 +283,7 @@ const DonorSelectionPage: React.FC = () => {
             >
               {isChangeMode ? 'Change Selection' : 'Confirm Selection'}
             </Button>
-          </Box>)}
+          </Box>
         </Box>
       </Box>
 

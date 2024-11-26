@@ -73,7 +73,9 @@ const EventDetail: React.FC = () => {
 
   const handleOpenNotification = (fundraiser: any) => {
     setSelectedFundraiser(fundraiser);
-    setNotificationMessage(`Please finish the donor selection for ${event.name}`);
+    if (event) {
+      setNotificationMessage(`Please finish the donor selection for ${event.name}`);
+    }
     setOpenNotification(true);
   };
 
