@@ -17,6 +17,24 @@ export class EventService {
         return response.data || [];
     }
 
+    async getEventsByStatus(): Promise<{ finishedEvents: EventData[], waitingEvents: EventData[] }> {
+        try {
+          const response = await api.get<{
+            success: boolean,
+            data: { finishedEvents: EventData[], waitingEvents: EventData[] }
+          }>('/events/status');
+    
+          if (!response.success) {
+            throw new Error('Failed to fetch events by status');
+          }
+    
+          return response.data;
+        } catch (error) {
+          console.error('Error fetching events by status:', error);
+          throw error;
+        }
+      }
+
     async createEvent(event: CreateEventData): Promise<EventData> {
         const response = await api.post<{success: boolean, data: EventData}>('/event/new-event', event);
         if (!response.success) {

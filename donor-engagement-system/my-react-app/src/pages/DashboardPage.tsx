@@ -2,11 +2,11 @@ import React from 'react';
 import { Box, Typography} from '@mui/material';
 import Sidebar from '../components/Sidebar.tsx';
 import Header from '../components/Header.tsx';
-import DashboardEvents from '../components/DashboardEvents.tsx';
+import  CoordinatorDashboard  from '../components/CoordinatorDashboard.tsx';
+import  DashboardEvents  from '../components/DashboardEvents.tsx';
 import Notification from '../components/Notification.tsx';
 import { theme } from '../theme/theme.ts';
 import Todo from '../components/todo.tsx';
-import CoordinatorEvents from '../components/CoordinatorEvents.tsx';
 import Feedback from '../components/Feedback.tsx';
 
 const DashboardPage: React.FC = () => {
@@ -71,7 +71,7 @@ const DashboardPage: React.FC = () => {
               p: { xs: 2, sm: 1.5, md: 3 },
               minWidth: 0
             }}>
-              {role === 'Coordinator' ? <CoordinatorEvents /> : <DashboardEvents />}
+              {role === 'Coordinator' ? <CoordinatorDashboard /> : <DashboardEvents />}
             </Box>
 
             {/* Notifications or Recent Feedback Section */}

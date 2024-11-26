@@ -270,5 +270,23 @@ export class EventController {
             });
         }
     }
+
+
+    getEventsByStatus = async (req: Request, res: Response) => {
+        try {
+            const events = await this.eventService.getEventsByStatus();
+            res.json({
+                success: true,
+                data: events
+            });
+        } catch (error) {
+            console.error('Error getting events by status:', error);
+            res.status(500).json({
+                success: false,
+                error: 'Failed to get events by status'
+            });
+        }
+    }
+
 }
 

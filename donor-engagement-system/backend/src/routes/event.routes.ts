@@ -29,6 +29,9 @@ router.get('/coordinators/dashboard', checkUser, eventController.getUpcomingEven
 // Get all events
 router.get('/calendar/events', checkUser, eventController.getAllEvents);
 
+// Get events by status
+router.get('/events/status', checkUser, eventController.getEventsByStatus);
+
 // Create a new Event
 router.post('/event/new-event', checkUser, eventController.createEvent)
 
