@@ -123,6 +123,29 @@ export class DonorService {
     }
   }
 
+  async getConfirmedDonorsByEvent(eventId: number, timeout: number = 10000): Promise<Donor[]> {
+    try {
+        console.log('DonorService: Fetching confirmed donors for event ID:', eventId);
+
+        // Create the API request promise
+        const response = await api.get<{ success: boolean, data: Donor[] }>(
+            `/event/${eventId}/review`,
+            { timeout } // Pass timeout to axios config
+        );
+
+        console.log('DonorService: Confirmed donors response:', response);
+        
+        if (!response.success) {
+            throw new Error('Failed to fetch confirmed donors');
+        }
+
+        return response.data || [];
+    } catch (error) {
+        console.error('Error fetching confirmed donors:', error);
+        throw error;
+    }
+  }
+
 }
 
 

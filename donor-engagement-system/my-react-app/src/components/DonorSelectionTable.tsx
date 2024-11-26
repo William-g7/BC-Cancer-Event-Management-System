@@ -31,11 +31,11 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
   const { id } = useParams<{ id: string }>();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [newNote, setNewNote] = useState<string>('');
-
-  // Sidebar State
+  // Side drawer State
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [sidebarContent, setSidebarContent] = useState<any>(null);
-  const [row,setRow]=useState<GridRenderCellParams>(null);
+  const [row,setRow]=useState<GridRenderCellParams | null>(null);
+  
   const fetchEventAndDonors = useCallback(async () => {
     if (!id) throw new Error('Event ID is required');
     const [eventData, donorsData] = await Promise.all([
@@ -89,8 +89,10 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
         note: newNote,
       };
       sidebarContent.notes.push(noteToAdd);
-      const donorId = row.row.id; // Assuming the donor ID is in the row data
-      const notes = await eventService.addEventNote(donorId,newNote); // Fetch notes for the selected donor
+      if (row) {
+        const donorId = row.row.id; // Assuming the donor ID is in the row data
+        const notes = await eventService.addEventNote(donorId,newNote); // Fetch notes for the selected donor
+      }
       setNewNote('');
     }
   };

@@ -27,7 +27,6 @@ export class AuthService {
             console.error('Login failed:', error);
             return { success: false, message: 'Invalid User or Invalid Password! Please try it again!' };
         }
-        return { success: false };
     }
 }
    

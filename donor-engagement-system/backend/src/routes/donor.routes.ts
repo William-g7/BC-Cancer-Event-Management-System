@@ -26,4 +26,6 @@ router.get('/event/:id/other-selections', checkUser, donorController.getOtherFun
 // Unselect donors
 router.post('/event/:id/selections/unselect', checkUser, donorController.unselectDonors);
 
+// Get confirmed donors by event
+router.get('/event/:id/review', checkUser, donorController.getConfirmedDonorsByEvent);
 export default router;

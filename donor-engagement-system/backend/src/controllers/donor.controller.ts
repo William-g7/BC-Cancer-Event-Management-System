@@ -169,4 +169,45 @@ export class DonorController {
             });
         }
     }
+
+    /**
+     * @route   GET /api/event/:id/review
+     * @desc    Get confirmed donors by event
+     */
+    getConfirmedDonorsByEvent = async (req: CustomRequest, res: Response) => {
+        try {
+            const accountId = req.user?.id;
+            if (!accountId) {
+                console.log('DonorController: User not authenticated');
+                return res.status(401).json({
+                    success: false,
+                    error: 'User not authenticated'
+                });
+            }
+
+            const eventId = parseInt(req.params.id);
+            if (isNaN(eventId)) {
+                console.log('DonorController: Invalid event ID');
+                return res.status(400).json({
+                    success: false,
+                    error: 'Invalid event ID'
+                });
+            }
+
+            console.log('DonorController: Fetching confirmed donors for event ID:', eventId);
+            const donors = await this.donorService.getConfirmedDonorsByEvent(eventId);
+            console.log('DonorController: Confirmed donors:', donors);
+            
+            return res.json({
+                success: true,
+                data: donors
+            });
+        } catch (error) {
+            console.error('DonorController: Error fetching confirmed donors:', error);
+            return res.status(500).json({
+                success: false,
+                error: 'Failed to fetch confirmed donors'
+            });
+        }
+    }
 }
