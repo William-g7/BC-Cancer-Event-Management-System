@@ -5,21 +5,43 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 const columns: GridColDef[] = [
-    { field: 'full_name', headerName: 'Name', width: 150 },
-    { field: 'last_gift_appeal', headerName: 'Last Appeal', width: 180 },
-    { field: 'last_gift_date', headerName: 'Last Donation Date', width: 180 },
-    { field: 'total_donations', headerName: 'Total Donations', width: 180 },
+    { 
+        field: 'contacted',
+        headerName: 'Contacted', 
+        width: 100,
+        type: 'boolean',
+        editable: true,
+        renderCell: (params) => (
+            <input
+                type="checkbox"
+                checked={params.value || false}
+                onChange={(event) => {
+                    params.api.setEditCellValue({
+                        id: params.id,
+                        field: 'contacted',
+                        value: event.target.checked
+                    }, event);
+                }}
+            />
+        )
+    },
     { field: 'fundraiser_name', headerName: 'Selected By', width: 150 },
-    { field: 'state', headerName: 'Status', width: 120 },
+    { field: 'full_name', headerName: 'Name', width: 150 },
+    { field: 'email', headerName: 'Email', width: 180 },
+    { field: 'phone', headerName: 'Phone', width: 120 },
+    { field: 'address_line1', headerName: 'Address', width: 240 },
+    { field: 'communication_restrictions', headerName: 'Communication Restrictions', width: 240 },
+    { field: 'email_restrictions', headerName: 'Email Restrictions', width: 200 }
 ];
 
-interface OtherSelectionsTableProps {
+interface ConfirmedSelectionsTableProps {
     donors: any[];
 }
 
-const OtherSelectionsTable: React.FC<OtherSelectionsTableProps> = ({ donors }) => {
+const ConfirmedSelectionsTable: React.FC<ConfirmedSelectionsTableProps> = ({ donors }) => {
     const [isCollapsed, setIsCollapsed] = useState(false);
-    
+    const [contactedDonors, setContactedDonors] = useState<{[key: number]: boolean}>({});
+
     // Format the data before returning
     const formattedDonors = donors.map(donor => ({
         ...donor,
@@ -31,7 +53,9 @@ const OtherSelectionsTable: React.FC<OtherSelectionsTableProps> = ({ donors }) =
               day: 'numeric'
             })
           : '-',
-        full_name: `${donor.first_name} ${donor.last_name}`
+        full_name: `${donor.first_name} ${donor.last_name}`,
+        email: `${donor.first_name}@${donor.last_name}.com`,
+        phone: '123-456-7890'
       }));
   
 
@@ -39,7 +63,7 @@ const OtherSelectionsTable: React.FC<OtherSelectionsTableProps> = ({ donors }) =
         <Box sx={{ mt: 4 }}>
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                 <Typography variant="h5">
-                    Donors selected by other fundraisers ({donors.length})
+                    Confirmed Donors
                 </Typography>
                 <IconButton 
                     onClick={() => setIsCollapsed(!isCollapsed)}
@@ -55,17 +79,22 @@ const OtherSelectionsTable: React.FC<OtherSelectionsTableProps> = ({ donors }) =
                     rows={formattedDonors}
                     columns={columns}
                     autoHeight
-                    disableRowSelectionOnClick
+                    editMode="cell"
                     initialState={{
                         pagination: {
-                            paginationModel: { page: 0, pageSize: 5 },
+                            paginationModel: { page: 0, pageSize: 10 },
                         },
                     }}
-                    pageSizeOptions={[5, 10]}
+                    onCellEditCommit={(params) => {
+                        if (params.field === 'contacted') {
+                            setContactedDonors(prev => ({ ...prev, [params.id]: params.value as boolean }));
+                        }
+                    }}
+                    pageSizeOptions={[10, 20]}
                 />
             </Collapse>
         </Box>
     );
 };
 
-export default OtherSelectionsTable;
+export default ConfirmedSelectionsTable;

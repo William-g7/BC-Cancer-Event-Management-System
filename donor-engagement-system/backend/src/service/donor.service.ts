@@ -1,9 +1,9 @@
 import { Donor } from 'src/types/donor.types';
 import { DonorRepository } from '../repositories/donor.repository';
 import { Pool } from 'mysql2/promise';
+
 import { FundraiserRepository } from '../repositories/fundraiser.repository';
 import { FundraiserStatus } from '../types/fundraiser.types';
-
 
 export class DonorService {
     constructor(private pool: Pool) {}
@@ -75,11 +75,33 @@ export class DonorService {
         const donorRepository = new DonorRepository(this.pool);
         const eventFundraiserId = await this.getEventFundraiserId(eventId, accountId);
         await donorRepository.unselectDonors(eventId, donorIds, eventFundraiserId);
+
+    } 
+
+    async getConfirmedDonorsByEvent(eventId: number): Promise<Donor[]> {
+        try {
+            console.log('DonorService: Starting getConfirmedDonorsByEvent');
+            console.log('DonorService: Event ID:', eventId);
+            
+            const donorRepository = new DonorRepository(this.pool);
+            console.log('DonorService: Repository initialized');
+            
+            const donors = await donorRepository.getConfirmedDonorsByEvent(eventId);
+            console.log('DonorService: Query completed');
+            console.log('DonorService: Found donors:', donors);
+            
+            return donors;
+        } catch (error) {
+            console.error('DonorService: Error in getConfirmedDonorsByEvent:', error);
+            throw error;
+        }
+
     }
 
     async getFundraiserSelectionStatus(eventId: number): Promise<FundraiserStatus[]> {
         const donorRepository = new DonorRepository(this.pool);
         return await donorRepository.getFundraiserSelectionStatus(eventId);
+
     }
 }
 

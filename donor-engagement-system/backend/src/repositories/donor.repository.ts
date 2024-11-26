@@ -165,6 +165,43 @@ export class DonorRepository {
         return donors;
     }
 
+    async getConfirmedDonorsByEvent(eventId: number): Promise<Donor[]> {
+        try {
+            console.log('DonorRepository: Starting findConfirmedDonorsByEvent');
+            console.log('DonorRepository: Event ID:', eventId);
+            console.log('DonorRepository: SelectionStatus.CONFIRMED =', SelectionStatus.CONFIRMED);
+            
+            const query = `
+                SELECT 
+                    d.*,
+                    s.state,
+                    a.name as fundraiser_name
+                FROM Selections s
+                INNER JOIN Donors d ON d.id = s.donor_id
+                INNER JOIN Event_Fundraisers ef ON s.event_fundraiser_id = ef.id
+                INNER JOIN Fundraisers f ON ef.fundraiser_id = f.id
+                INNER JOIN Accounts a ON f.account_id = a.id
+                WHERE s.event_id = ? 
+                AND s.state = ?
+                ORDER BY s.ID
+            `;
+            
+            console.log('DonorRepository: Executing query:', query);
+            console.log('DonorRepository: Parameters:', [eventId, SelectionStatus.CONFIRMED]);
+            
+            const [rows] = await this.pool.execute<RowDataPacket[]>(query, 
+                [eventId, SelectionStatus.CONFIRMED]);
+            
+            console.log('DonorRepository: Query completed');
+            console.log('DonorRepository: Number of rows returned:', rows.length);
+            console.log('DonorRepository: First row:', rows[0]);
+            
+            return rows as (Donor & { fundraiser_name: string; state: string; })[];
+        } catch (error) {
+            console.error('DonorRepository: Error in findConfirmedDonorsByEvent:', error);
+            throw error;
+        }
+
     async getFundraiserSelectionStatus(eventId: number): Promise<FundraiserStatus[]> {
         // First, let's check if there are any confirmed selections
         const [confirmedSelections] = await this.pool.execute(`
@@ -197,6 +234,7 @@ export class DonorRepository {
 
         console.log('Fundraiser status results:', results);
         return results;
+
     }
 }
     

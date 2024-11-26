@@ -11,7 +11,7 @@ import CreateEvent from "./pages/CreateEvent.tsx";
 import { ThemeProvider } from '@mui/material/styles';
 import { theme } from './theme/theme.ts';
 import CalendarPage from './pages/CalendarPage.tsx';
-
+import DonorSelectionReviewPage from './pages/DonorSelectionReviewPage.tsx';
 
 const App: React.FC = () => {
   const isAuthenticated = !!localStorage.getItem('username'); 
@@ -29,6 +29,7 @@ const App: React.FC = () => {
           <Route path="/event/:id/selections" element={isAuthenticated ? <DonorSelectionPage /> : <Navigate to="/login" />} />
           <Route path="/donor/:id" element={isAuthenticated ? <DonorNotePage /> : <Navigate to="/login" />} />
           <Route path="/calendar" element={isAuthenticated ? <CalendarPage /> : <Navigate to="/login" />} />
+          <Route path="/event/:id/selections/review" element={isAuthenticated ? <DonorSelectionReviewPage /> : <Navigate to="/login" />} />
         </Routes>
       </Router>
     </ThemeProvider>
