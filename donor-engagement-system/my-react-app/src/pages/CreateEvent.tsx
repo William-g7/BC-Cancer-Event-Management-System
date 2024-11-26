@@ -81,8 +81,9 @@ const CreateEvent: React.FC = () => {
       };
       
       console.log('Complete Event Data:', completeEventData); // Add logging
-      await eventService.createEvent(completeEventData);
       navigate('/events');
+      await eventService.createEvent(completeEventData);
+      
     } catch (error) {
       console.error('Error creating event:', error);
       alert('Failed to create event. Please try again.');
