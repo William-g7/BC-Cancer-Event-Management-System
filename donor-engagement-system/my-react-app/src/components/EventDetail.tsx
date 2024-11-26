@@ -9,6 +9,14 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useSingleEvent } from '../hooks/useEvents.ts';
 import { EventService } from '../services/eventService.ts';
 import { theme } from '../theme/theme.ts';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import TextField from '@mui/material/TextField';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 const eventService = new EventService();
 
@@ -25,7 +33,11 @@ const EventDetail: React.FC = () => {
   const { event, loading, error } = useSingleEvent(fetchEvent);
 
   const handleClick = () => {
-    navigate(`/event/${id}/selections`);
+    if (role === 'Fundraiser') {
+      navigate(`/event/${id}/selections`);
+    } else {
+      navigate(`/event/${id}/selections/review`);
+    }
   }
 
   const [fundraiserStatus, setFundraiserStatus] = useState<{
@@ -53,6 +65,37 @@ const EventDetail: React.FC = () => {
   
     fetchFundraiserStatus();
   }, [id, role]);
+
+  const [openNotification, setOpenNotification] = useState(false);
+  const [selectedFundraiser, setSelectedFundraiser] = useState<any>(null);
+  const [notificationMessage, setNotificationMessage] = useState('');
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+
+  const handleOpenNotification = (fundraiser: any) => {
+    setSelectedFundraiser(fundraiser);
+    setNotificationMessage(`Please finish the donor selection for ${event.name}`);
+    setOpenNotification(true);
+  };
+
+  const handleCloseNotification = () => {
+    setOpenNotification(false);
+    setNotificationMessage('');
+  };
+
+  const handleSendNotification = async () => {
+    try {
+      // Add your notification sending logic here
+      // await eventService.sendNotification(selectedFundraiser.id, notificationMessage);
+      handleCloseNotification();
+      setOpenSnackbar(true);
+    } catch (error) {
+      console.error('Error sending notification:', error);
+    }
+  };
+
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
+  };
 
   if (loading) {
     return (
@@ -164,7 +207,7 @@ const EventDetail: React.FC = () => {
           </Grid>
 
           {/* Fundraisers section */}
-          <Grid item xs={12} sx={{ mt: 4 }}>
+          <Grid item xs={3} sx={{ mt: 4 }}>
             <Typography variant="h5" sx={{ mb: 2 }}>
             {role === 'Coordinator' ? 'FUNDRAISERS STATUS' : 'EVENT FUNDRAISERS'}
               </Typography>
@@ -176,7 +219,11 @@ const EventDetail: React.FC = () => {
                   display: 'flex', 
                   alignItems: 'center', 
                   mb: 2,
-                  justifyContent: 'space-between'
+                  justifyContent: 'space-between',
+                  '& > :last-child': {
+                    marginLeft: 'auto',
+                    paddingLeft: 2
+                  }
                 }}>
                   <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     <Box sx={{ 
@@ -197,16 +244,26 @@ const EventDetail: React.FC = () => {
                     </Typography>
                   </Box>
                   {role === 'Coordinator' && (
-                    <Typography 
-                      sx={{ 
-                        color: fundraiserStatus[fundraiser.id] === 'confirmed' 
-                          ? theme.palette.green.main 
-                          : theme.palette.warning.main,
-                        fontWeight: 500
-                      }}
-                    >
-                      {fundraiserStatus[fundraiser.id] === 'confirmed' ? 'Confirmed' : 'In Progress'}
-                    </Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                      <Typography 
+                        sx={{ 
+                          color: fundraiserStatus[fundraiser.id] === 'confirmed' 
+                            ? theme.palette.green.main 
+                            : theme.palette.warning.main,
+                          fontWeight: 500
+                        }}
+                      >
+                        {fundraiserStatus[fundraiser.id] === 'confirmed' ? 'Confirmed' : 'In Progress'}
+                      </Typography>
+                      <MailOutlineIcon 
+                        sx={{ 
+                          color: theme.palette.text.secondary,
+                          cursor: 'pointer',
+                          fontSize: 20
+                        }} 
+                        onClick={() => handleOpenNotification(fundraiser)}
+                      />
+                    </Box>
                   )}
                 </Box>
               ))}
@@ -240,6 +297,66 @@ const EventDetail: React.FC = () => {
          {role === 'Coordinator' ? 'SEE RESULTS' : 'START SELECTION'}
         </Button>
       </Box>
+      <Dialog 
+        open={openNotification} 
+        onClose={handleCloseNotification} 
+        maxWidth="sm" 
+        fullWidth
+        PaperProps={{
+          sx: {
+            '& .MuiDialogTitle-root': {
+              backgroundColor: theme.palette.primary.main,
+              color: 'white'
+            }
+          }
+        }}
+      >
+        <DialogTitle>Send Notification to {selectedFundraiser?.name}</DialogTitle>
+        <DialogContent sx={{ mt: 5, mb: 2 }}>
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Message"
+            fullWidth
+            multiline
+            rows={4}
+            value={notificationMessage}
+            onChange={(e) => setNotificationMessage(e.target.value)}
+            defaultValue={`Please finish the donor selection for ${event.name}`}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseNotification} color="primary">
+            Cancel
+          </Button>
+          <Button 
+            onClick={handleSendNotification} 
+            variant="contained" 
+            sx={{ 
+              backgroundColor: theme.palette.green.main,
+              '&:hover': {
+                backgroundColor: theme.palette.primary.main
+              }
+            }}
+          >
+            Send
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Snackbar 
+        open={openSnackbar} 
+        autoHideDuration={3000} 
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert 
+          onClose={handleCloseSnackbar} 
+          severity="success" 
+          sx={{ width: '100%' }}
+        >
+          Message sent successfully!
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }

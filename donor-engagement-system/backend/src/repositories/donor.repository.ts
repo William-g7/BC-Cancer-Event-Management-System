@@ -201,6 +201,7 @@ export class DonorRepository {
             console.error('DonorRepository: Error in findConfirmedDonorsByEvent:', error);
             throw error;
         }
+    }
 
     async getFundraiserSelectionStatus(eventId: number): Promise<FundraiserStatus[]> {
         // First, let's check if there are any confirmed selections
@@ -234,7 +235,6 @@ export class DonorRepository {
 
         console.log('Fundraiser status results:', results);
         return results;
-
     }
 }
     
