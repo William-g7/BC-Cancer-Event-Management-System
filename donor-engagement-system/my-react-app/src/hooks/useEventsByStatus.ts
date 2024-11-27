@@ -2,19 +2,16 @@
 import { useState, useEffect } from 'react';
 import { EventData } from '../types/event';
 
-interface EventsByStatusData {
+interface EventsByStatusState {
   finishedEvents: EventData[];
   waitingEvents: EventData[];
-}
-
-interface EventsByStatusState extends EventsByStatusData {
   loading: boolean;
   error: string | null;
 }
 
 export const useEventsByStatus = (
-  fetchFunction: () => Promise<EventsByStatusData>
-): EventsByStatusState => {
+  fetchFunction: () => Promise<any>,
+) => {
   const [state, setState] = useState<EventsByStatusState>({
     finishedEvents: [],
     waitingEvents: [],
@@ -23,25 +20,52 @@ export const useEventsByStatus = (
   });
 
   useEffect(() => {
+    let mounted = true;
+    let intervalId: NodeJS.Timeout | null = null;
+
     const fetchEvents = async () => {
+      if (!mounted) return;
+      
       try {
         const result = await fetchFunction();
-        setState({
-          ...result,
-          loading: false,
-          error: null
-        });
+        if (mounted) {
+
+          const currentTime = new Date().getTime();
+          
+          const filteredWatingEvents = result.waitingEvents.filter((event: EventData) => {
+            const eventTime = new Date(event.start_time).getTime();
+            return eventTime >= currentTime;
+          });
+
+
+          setState({
+            finishedEvents: result.finishedEvents || [],
+            waitingEvents: filteredWatingEvents || [],
+            loading: false,
+            error: null
+          });
+        }
       } catch (error) {
-        setState(prev => ({
-          ...prev,
-          loading: false,
-          error: error instanceof Error ? error.message : 'An error occurred'
-        }));
+        if (mounted) {
+          setState(prev => ({
+            ...prev,
+            loading: false,
+            error: error instanceof Error ? error.message : 'An error occurred'
+          }));
+        }
       }
     };
 
+   
     fetchEvents();
-  }, [fetchFunction]);
+
+    return () => {
+      mounted = false;
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+  }, []); 
 
   return state;
 };
