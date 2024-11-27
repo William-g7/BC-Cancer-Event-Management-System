@@ -168,19 +168,38 @@ export class EventService {
         waitingEvents: Event[] 
     }> {
         const [results] = await this.pool.execute(`
+            WITH EventFundraiserCounts AS (
+                SELECT 
+                    e.id as event_id,
+                    COUNT(DISTINCT ef.fundraiser_id) as total_fundraisers,
+                    COUNT(DISTINCT CASE 
+                        WHEN EXISTS (
+                            SELECT 1 
+                            FROM Selections s 
+                            WHERE s.event_fundraiser_id = ef.id 
+                            AND s.state = 'confirmed'
+                        ) 
+                        THEN ef.fundraiser_id 
+                    END) as fundraisers_with_confirmed
+                FROM Events e
+                LEFT JOIN Event_Fundraisers ef ON e.id = ef.event_id
+                GROUP BY e.id
+            )
             SELECT 
                 e.*,
-                EXISTS (
-                    SELECT 1 
-                    FROM Selections s 
-                    WHERE s.event_id = e.id 
-                    AND s.state = 'confirmed'
-                ) as has_confirmed_donors
+                efc.total_fundraisers,
+                efc.fundraisers_with_confirmed,
+                CASE 
+                    WHEN efc.total_fundraisers = efc.fundraisers_with_confirmed 
+                    THEN true 
+                    ELSE false 
+                END as is_finished
             FROM Events e
+            JOIN EventFundraiserCounts efc ON e.id = efc.event_id
         `) as [any[], any];
 
-        const finishedEvents = results.filter(event => event.has_confirmed_donors);
-        const waitingEvents = results.filter(event => !event.has_confirmed_donors);
+        const finishedEvents = results.filter(event => event.is_finished);
+        const waitingEvents = results.filter(event => !event.is_finished);
 
         return {
             finishedEvents,

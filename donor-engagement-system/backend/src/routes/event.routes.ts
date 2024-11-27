@@ -16,6 +16,9 @@ const eventController = new EventController(
     new DonorService(pool)
 );
 
+// Get events by status
+router.get('/events/status', checkUser, eventController.getEventsByStatus);
+
 // Get events for a fundraiser's dashboard
 router.get('/events', checkUser, eventController.getFundraiserEvents);
 
@@ -31,9 +34,6 @@ router.get('/coordinators/dashboard', checkUser, eventController.getUpcomingEven
 // Get all events
 router.get('/calendar/events', checkUser, eventController.getAllEvents);
 
-// Get events by status
-router.get('/events/status', checkUser, eventController.getEventsByStatus);
-
 // Create a new Event
 router.post('/event/new-event', checkUser, eventController.createEvent)
 
@@ -43,11 +43,11 @@ router.get("/event/note/:id",checkUser,eventController.getNoteEvents)
 // add event notes
 router.post('/event/note/add',checkUser,eventController.addNoteEvents)
 
-// Apply error handler to all routes
-router.use(errorHandler);
 
 // Get fundraiser status
 router.get('/event/:id/fundraiser-status', checkUser, eventController.getFundraiserStatus);
 
+// Apply error handler to all routes
+router.use(errorHandler);
 
 export default router;
