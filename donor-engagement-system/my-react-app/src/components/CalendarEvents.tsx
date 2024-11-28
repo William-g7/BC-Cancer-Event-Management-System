@@ -81,7 +81,7 @@ const CalendarEvents: React.FC<CalendarEventsProps> = () => {
   console.log(firstDay);    
 
   return (
-    <Box sx={{ padding: 2, width: '100%', maxWidth: '1000px', marginRight: '35px'}}>
+    <Box sx={{ height: '100%', width: '90%', padding: 2}}>
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
         <IconButton onClick={() => handleMonthChange('prev')}>
           <ArrowBackIosIcon />
@@ -106,7 +106,7 @@ const CalendarEvents: React.FC<CalendarEventsProps> = () => {
       </Grid>
 
       {/* Calendar days */}
-      <Grid container display="flex">
+      <Grid container sx={{ flexGrow: 1 }}>
         {/* Empty boxes for days before the first day of the month */}
         {[...Array(firstDay)].map((_, idx) => (
           <Grid item xs={12/7} key={`empty-${idx}`}>
@@ -155,7 +155,7 @@ const CalendarEvents: React.FC<CalendarEventsProps> = () => {
                         color="secondary"
                         variant="dot"
                         sx={{ 
-                          backgroundColor: '#FFE0E0',
+                          backgroundColor: '#fceaad',
                           borderRadius: '8px',
                           padding: '2px 6px',
                           width: '120px',  // Slightly smaller than parent to show padding

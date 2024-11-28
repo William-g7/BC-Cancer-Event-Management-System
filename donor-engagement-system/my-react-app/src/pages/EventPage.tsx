@@ -14,33 +14,27 @@ const EventPage: React.FC = () => {
 
             {/* Main content */}
             <Box sx={{ 
-                flexGrow: 1,
-                display: 'flex',
-                justifyContent: 'center'
-            }}>
-                <Box sx={{ 
-                flexGrow: 1,
-                overflow: 'auto',
-                position: 'relative',
-                marginLeft: { xs: '10px', sm: '20px', md: '40px' },
-            }}>
-               
-               <Box sx={{ 
-                position: 'absolute', 
-                right: 40
+                    flexGrow: 1,
+                    width: '100%',
+                    overflow: 'auto',
+                    position: 'relative',
+                    marginLeft: { xs: '10px', sm: '20px', md: '40px' },
+                    marginRight: { xs: '10px', sm: '20px', md: '20px' },
                 }}>
-                    <Header />
-                </Box>
+              {/* Header */}
+                <Header />
         
 
 
                 {/* Event Detail Content */}
-                <Box sx={{ position: 'relative', mt:16}}>
+                <Box sx={{ position: 'relative', mt:16, marginTop: 5
+                    
+                }}>
                     <EventDetail />
                 </Box>
             </Box>
         </Box>
-    </Box>
+   
     );
 }
 

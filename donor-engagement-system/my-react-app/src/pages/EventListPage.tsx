@@ -23,25 +23,19 @@ const EventListPage: React.FC = () => {
 
             {/* Main content */}
             <Box sx={{ 
-                flexGrow: 1,
-                overflow: 'auto',
-                position: 'relative',
-                marginLeft: { xs: '10px', sm: '20px', md: '40px' },
-            }}>
-            {/* Main content with max width */}
-            
-                {/* Header */}
-                
-                <Box sx={{ 
-                    position: 'absolute',
-                    right: 40 
+                    flexGrow: 1,
+                    width: '100%',
+                    overflow: 'auto',
+                    position: 'relative',
+                    marginLeft: { xs: '10px', sm: '20px', md: '40px' },
+                    marginRight: { xs: '10px', sm: '20px', md: '20px' },
                 }}>
-                    <Header />
-                </Box>
+              {/* Header */}
+                <Header />
                 
 
 
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 16 }}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 16, marginTop: 5}}>
                     <Typography variant="h4">
                         EVENTS
                     </Typography>

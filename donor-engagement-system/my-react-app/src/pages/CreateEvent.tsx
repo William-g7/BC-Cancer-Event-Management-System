@@ -123,15 +123,15 @@ const CreateEvent: React.FC = () => {
 
     {/* Main content */}
     <Box sx={{ 
-        flexGrow: 1,
-        overflow: 'auto',
-        position: 'relative',
-        marginLeft: { xs: '10px', sm: '20px', md: '40px' },
-    }}>
-        {/* Header */}
-        <Box sx={{ position: 'absolute', right: 40 }}>
+                flexGrow: 1,
+                width: '100%',
+                overflow: 'auto',
+                position: 'relative',
+                marginLeft: { xs: '10px', sm: '20px', md: '40px' },
+                marginRight: { xs: '10px', sm: '20px', md: '20px' },
+            }}>
+            {/* Header */}
             <Header />
-        </Box>
 
         {/* Title and button section */}
         <Box sx={{ 
@@ -139,7 +139,8 @@ const CreateEvent: React.FC = () => {
             justifyContent: 'space-between', 
             alignItems: 'center', 
             mt: 16,
-            mb: 4  // Add margin bottom
+            mb: 4,  // Add margin bottom
+            marginTop: 5
         }}>
             <Typography variant="h4">NEW EVENT</Typography>
             <Button
@@ -375,6 +376,7 @@ const CreateEvent: React.FC = () => {
         </Box>
     </Box>
   </Box>
+
   );
 };
 

@@ -51,22 +51,19 @@ const DonorSelectionReviewPage: React.FC = () => {
   
         {/* Main content */}
         <Box sx={{ 
-              flexGrow: 1,
-              overflow: 'auto',
-              position: 'relative',
-              marginLeft: { xs: '10px', sm: '20px', md: '40px' },
-            }}>
-          {/* Header */}
-          <Box sx={{ 
-            position: 'absolute', 
-            right: 40,
-          }}>
-            <Header />
-          </Box>
+                    flexGrow: 1,
+                    width: '100%',
+                    overflow: 'auto',
+                    position: 'relative',
+                    marginLeft: { xs: '10px', sm: '20px', md: '40px' },
+                    marginRight: { xs: '10px', sm: '20px', md: '20px' },
+                }}>
+              {/* Header */}
+                <Header />
   
           {/* Content */}
-          <Box sx={{ width: '100%', position: 'relative', mt: 16 }}>
-            <Box sx={{ mb: 4 }}>
+          <Box sx={{ width: '100%', position: 'relative', mt: 16, marginTop: 5}}>
+            <Box sx={{ mb: 4}}>
               <Typography variant="h4" sx={{ mb: 1 }}>
                 {event ? `EVENTS / ${event.name}` : 'Loading...'}
               </Typography>
@@ -75,7 +72,7 @@ const DonorSelectionReviewPage: React.FC = () => {
               </Typography>
             </Box>
           
-          <Box sx={{ mt: 4 }}>
+          <Box sx={{ mt: 4, marginRight: 2 }}>
             <ConfirmedSelectionsTable donors={confirmedSelections} />
           </Box>
         </Box>

@@ -209,12 +209,11 @@ const DonorSelectionPage: React.FC = () => {
   };
   
   return (
-    <Box sx={{ display: "flex", minHeight: '100vh', bgcolor: 'white' }}>
+    <Box sx={{ display: "flex", minHeight: '100vh', bgcolor: 'white'}}>
       {/* Sidebar */}
       <Box sx={{ width: { xs: '60px', lg: '200px', flexShrink: 0 } }}>
         <Sidebar />
       </Box>
-
       {/* Main content */}
       <Box sx={{ 
             flexGrow: 1,
@@ -224,14 +223,18 @@ const DonorSelectionPage: React.FC = () => {
           }}>
         {/* Header */}
         <Box sx={{ 
-          position: 'absolute', 
-          right: 40,
-        }}>
+            flexGrow: 1,
+            overflow: 'auto',
+            position: 'relative',
+            marginLeft: { xs: '10px', sm: '20px', md: '20px' },
+            marginRight: { xs: '10px', sm: '20px', md: '40px' },
+          }}>
+        {/* Header */}
           <Header />
-        </Box>
+        
 
         {/* Content */}
-        <Box sx={{ mt: 16 }}>
+        <Box sx={{mt: 16, marginRight: 3, marginTop: 5 }}>
           <DonorSelectionTable 
             onSelectionChange={setSelectedDonors}
             selectedDonors={selectedDonors}
@@ -278,7 +281,8 @@ const DonorSelectionPage: React.FC = () => {
                 height: '40px',
                 '&:hover': {
                   backgroundColor: theme.palette.primary.main
-                }
+                },
+                marginRight: 2
               }}
             >
               {isChangeMode ? 'Change Selection' : 'Confirm Selection'}
@@ -302,6 +306,10 @@ const DonorSelectionPage: React.FC = () => {
         </Alert>
       </Snackbar>
     </Box>
+  </Box>
+ 
+
+  
   );
 }
 

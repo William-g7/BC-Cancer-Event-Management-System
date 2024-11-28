@@ -17,6 +17,7 @@ import DialogActions from '@mui/material/DialogActions';
 import TextField from '@mui/material/TextField';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import Avatar from '@mui/material/Avatar';
 
 const eventService = new EventService();
 
@@ -209,74 +210,65 @@ const EventDetail: React.FC = () => {
           </Grid>
 
           {/* Fundraisers section */}
-          <Grid item xs={3} sx={{ mt: 4 }}>
+          <Grid item xs={12} sx={{ mt: 4 }}>
             <Typography variant="h5" sx={{ mb: 2 }}>
-            {role === 'Coordinator' ? 'FUNDRAISERS STATUS' : 'EVENT FUNDRAISERS'}
-              </Typography>
-            <Box sx={{ 
-              backgroundColor: 'white'
-            }}>
-              {event.assigned_fundraisers?.map((fundraiser, index) => (
-                <Box key={index} sx={{ 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  mb: 2,
-                  justifyContent: 'space-between',
-                  '& > :last-child': {
-                    marginLeft: 'auto',
-                    paddingLeft: 2
-                  }
-                }}>
-                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <Box sx={{ 
-                      width: 40,
-                      height: 40,
-                      borderRadius: '50%',
-                      bgcolor: 'grey.500',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: 'white',
-                      mr: 2
+              {role === 'Coordinator' ? 'FUNDRAISERS STATUS' : 'EVENT FUNDRAISERS'}
+            </Typography>
+            <Box sx={{ backgroundColor: 'white', borderRadius: 1, marginLeft: '5px'}}>
+              <Grid container spacing={2}>
+                {event.assigned_fundraisers?.map((fundraiser, index) => (
+                  <Grid item xs={12} key={index}>
+                    <Box sx={{
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'space-between',
+                      '& > :last-child': {
+                      }
                     }}>
-                      {fundraiser.name ? fundraiser.name[0] : '?'}
+                      <Box sx={{ display: 'flex', alignItems: 'left'}}>
+                        <Avatar alt={fundraiser.name} src="/static/images/avatar.png" />
+                        <Typography variant="body1" sx={{ padding: 1, marginLeft: 2, color: theme.palette.primary.main }}>
+                          {fundraiser.name}
+                        </Typography>
+                      </Box>
+                      {role === 'Coordinator' && (
+                        <Box sx={{ display: 'flex', alignItems: 'left',  gap: 1, marginRight: 108  }}>
+                          <Typography 
+                            sx={{ 
+                              color: fundraiserStatus[fundraiser.id] === 'confirmed' 
+                                ? theme.palette.green.main 
+                                : theme.palette.warning.main,
+                              fontWeight: 500,
+                              width: 95, 
+                              textAlign: 'left',
+    
+                            }}
+                          >
+                            {fundraiserStatus[fundraiser.id] === 'confirmed' ? 'Confirmed' : 'In Progress'}
+                          </Typography>
+                          <MailOutlineIcon 
+                            sx={{ 
+                              color: theme.palette.text.secondary,
+                              cursor: 'pointer',
+                              fontSize: 20
+                            }} 
+                            onClick={() => handleOpenNotification(fundraiser)}
+                          />
+                        </Box>
+                      )}
                     </Box>
-                    <Typography>
-                      {fundraiser.name}
-                    </Typography>
-                  </Box>
-                  {role === 'Coordinator' && (
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                      <Typography 
-                        sx={{ 
-                          color: fundraiserStatus[fundraiser.id] === 'confirmed' 
-                            ? theme.palette.green.main 
-                            : theme.palette.warning.main,
-                          fontWeight: 500
-                        }}
-                      >
-                        {fundraiserStatus[fundraiser.id] === 'confirmed' ? 'Confirmed' : 'In Progress'}
-                      </Typography>
-                      <MailOutlineIcon 
-                        sx={{ 
-                          color: theme.palette.text.secondary,
-                          cursor: 'pointer',
-                          fontSize: 20
-                        }} 
-                        onClick={() => handleOpenNotification(fundraiser)}
-                      />
-                    </Box>
-                  )}
-                </Box>
-              ))}
-              {(!event.assigned_fundraisers || event.assigned_fundraisers.length === 0) && (
-                <Typography color="text.secondary">No fundraisers assigned</Typography>
-              )}
+                  </Grid>
+                ))}
+                {(!event.assigned_fundraisers || event.assigned_fundraisers.length === 0) && (
+                  <Typography color="text.secondary" sx={{padding: 2}}>No Fundraisers Assigned</Typography>
+                )}
+              </Grid>
             </Box>
           </Grid>
 
         </Grid>
       </Box>
+      
       {/* Button at bottom of content */}
       <Box sx={{
         display: 'flex',

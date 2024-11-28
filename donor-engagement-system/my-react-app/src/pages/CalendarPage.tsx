@@ -27,20 +27,24 @@ const CalendarPage: React.FC = () => {
             {/* Main content with max width */}
             <Box sx={{ 
                     flexGrow: 1,
+                    width: '100%',
                     overflow: 'auto',
                     position: 'relative',
                     marginLeft: { xs: '10px', sm: '20px', md: '40px' },
+                    marginRight: { xs: '10px', sm: '20px', md: '20px' },
                 }}>
               {/* Header */}
-              
-              <Box sx={{ 
-                position: 'absolute',
-                right: 40
-              }}>
                 <Header />
-              </Box>
-
-                <Box sx={{ position: 'absolute', top: 80, left: 70}}>
+        
+                <Box sx={{
+                        flexGrow: 1,
+                        width: '100%',
+                        overflow: 'auto',
+                        position: 'relative',
+                        marginTop: '20px',
+                        marginLeft: { xs: '10px', sm: '20px', md: '40px' },
+                    marginRight: { xs: '10px', sm: '20px', md: '20px' },
+                }}>
                   <CalendarEvents role={userRole} />
                 </Box>
               </Box>

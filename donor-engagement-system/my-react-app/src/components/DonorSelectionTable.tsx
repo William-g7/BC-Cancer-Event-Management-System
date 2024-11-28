@@ -162,7 +162,7 @@ const DonorSelectionTable: React.FC<DonorSelectionTableProps> = ({
   ];
 
   return (
-    <Box sx={{ width: '100%', position: 'relative' }}>
+    <Box sx={{ width: '100%', position: 'relative'}}>
       <Box sx={{ mb: 4 }}>
         
         <Typography variant="h4" sx={{ mb: 1 }}>

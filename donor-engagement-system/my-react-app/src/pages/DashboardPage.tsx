@@ -27,27 +27,24 @@ const DashboardPage: React.FC = () => {
       <Box sx={{ 
         flexGrow: 1,
         display: 'flex',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        
       }}>
         {/* Main content with max width */}
         <Box sx={{ 
-                flexGrow: 1,
-                overflow: 'auto',
-                position: 'relative',
-                marginLeft: { xs: '10px', sm: '20px', md: '40px' },
-            }}>
-          {/* Header */}
+                  flexGrow: 1,
+                  width: '100%',
+                  overflow: 'auto',
+                  position: 'relative',
+                  marginLeft: { xs: '10px', sm: '20px', md: '40px' },
+                  marginRight: { xs: '10px', sm: '20px', md: '20px' },
+              }}>
+            {/* Header */}
+              <Header />
           
-          <Box sx={{ 
-            position: 'absolute',
-            right: 40
-          }}>
-            <Header />
-          </Box>
           
-
           {/* Title Section */}
-          <Box sx={{ mb: 4, mt: 16 }}>
+          <Box sx={{ mb: 4, mt: 16, marginTop: 5 }}>
             <Typography variant="h4">
               {role === 'Coordinator' ? 'COORDINATOR DASHBOARD' : 'FUNDRAISER DASHBOARD'}
             </Typography>

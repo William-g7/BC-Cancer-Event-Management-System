@@ -12,12 +12,14 @@ const Header: React.FC = () => {
         display: "flex", 
         alignItems: "center",
         justifyContent: "flex-end",
-        width: '1200px',
+        width: '100%',
+        // width: '1300px',
         height: "88px",
         borderBottom: "1px solid #e0e0e0",
         backgroundColor: "white",
         zIndex: 1100,
-        marginRight: '-30px'
+        // marginRight: '-30px'
+        paddingRight: 2
       }}>
         <Avatar alt={username} src="/static/images/avatar.png" />
         <Box sx={{ display: "flex", flexDirection: "column", marginRight: '0px' }}>
