@@ -15,7 +15,7 @@ interface CalendarEventsProps {
 }
 
 // Styling for each day box
-const DayBox = styled(Box)(({ theme, isToday }) => ({
+const DayBox = styled(Box)(({ theme}) => ({
   border: '1px solid #ddd',
   height: '90px',
   position: 'relative',
@@ -81,7 +81,7 @@ const CalendarEvents: React.FC<CalendarEventsProps> = () => {
   console.log(firstDay);    
 
   return (
-    <Box sx={{ padding: 2, width: '100%', maxWidth: '1000px', position: 'fixed', marginRight: '35px'}}>
+    <Box sx={{ padding: 2, width: '100%', maxWidth: '1000px', marginRight: '35px'}}>
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
         <IconButton onClick={() => handleMonthChange('prev')}>
           <ArrowBackIosIcon />
@@ -97,7 +97,7 @@ const CalendarEvents: React.FC<CalendarEventsProps> = () => {
       </Box>
 
       {/* Day labels */}
-      <Grid container>
+      <Grid container display="flex">
         {['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'].map((day) => (
           <Grid item xs={12/7} key={day}>
             <Typography align="center">{day}</Typography>
@@ -106,7 +106,7 @@ const CalendarEvents: React.FC<CalendarEventsProps> = () => {
       </Grid>
 
       {/* Calendar days */}
-      <Grid container>
+      <Grid container display="flex">
         {/* Empty boxes for days before the first day of the month */}
         {[...Array(firstDay)].map((_, idx) => (
           <Grid item xs={12/7} key={`empty-${idx}`}>

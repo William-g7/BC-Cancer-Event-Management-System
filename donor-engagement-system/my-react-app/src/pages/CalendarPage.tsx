@@ -40,7 +40,7 @@ const CalendarPage: React.FC = () => {
                 <Header />
               </Box>
 
-                <Box sx={{ position: 'absolute', top: 90, left: 70}}>
+                <Box sx={{ position: 'absolute', top: 80, left: 70}}>
                   <CalendarEvents role={userRole} />
                 </Box>
               </Box>
