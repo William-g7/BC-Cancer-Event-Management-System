@@ -79,7 +79,7 @@ const DashboardPage: React.FC = () => {
               p: { xs: 2, sm: 2, md: 3 }
             }}>
               <Todo />
-              {role === 'Coordinator' ? <Feedback /> : <Notification />}
+              {role === 'Coordinator' || role === 'EventLeader' ? <Feedback /> : <Notification />}
             </Box>
           </Box>
         </Box>

@@ -288,7 +288,7 @@ const EventDetail: React.FC = () => {
             }
           }}
         >
-         {role === 'Coordinator' ? 'SEE RESULTS' : 'START SELECTION'}
+         {role === 'Coordinator' || role === 'EventLeader' ? 'SEE RESULTS' : 'START SELECTION'}
         </Button>
       </Box>
       <Dialog 

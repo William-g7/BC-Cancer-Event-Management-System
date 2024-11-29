@@ -29,7 +29,7 @@ const EventList: React.FC<EventListProps> = () => {
   const role = localStorage.getItem('role');
 
   const fetchEvents = useCallback(async (): Promise<EventData[]> => {
-    if (role === 'Fundraiser') {
+    if (role === 'Fundraiser' || role === 'EventLeader') {
       const events = await eventService.getEvents();
       console.log(events); // Log the events to verify the data
       return events;

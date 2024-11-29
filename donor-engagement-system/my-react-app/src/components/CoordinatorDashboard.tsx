@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Typography, Card, CardContent, CardMedia, Box, CircularProgress } from "@mui/material";
-import { useEvents } from '../hooks/useEvents.ts';
 import { EventService } from '../services/eventService.ts';
 import { useEventsByStatus } from '../hooks/useEventsByStatus.ts';
 
