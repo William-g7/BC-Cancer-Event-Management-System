@@ -6,7 +6,7 @@ CREATE TABLE Accounts (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255),
     password_hash VARCHAR(255),
-    role ENUM('Fundraiser', 'Coordinator'),
+    role ENUM('Fundraiser', 'Coordinator', 'EventLeader'),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     UNIQUE(name, role)
 );

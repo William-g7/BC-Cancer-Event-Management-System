@@ -39,7 +39,7 @@ const EventListPage: React.FC = () => {
                     <Typography variant="h4">
                         EVENTS
                     </Typography>
-                    {userRole == 'Fundraiser' && (
+                    {userRole === 'EventLeader' && (
                     <Button
                         variant="contained"
                         startIcon={<AddIcon />}
