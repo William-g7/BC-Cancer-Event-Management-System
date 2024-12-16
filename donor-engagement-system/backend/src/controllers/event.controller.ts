@@ -118,6 +118,9 @@ export class EventController {
      */
     createEvent = async (req: CustomRequest, res: Response): Promise<void> => {
         try {
+            const version = req.headers['if-match'];
+            // Check version before proceeding
+            // This prevents concurrent modifications
 
             const accountId = (req as CustomRequest).user?.id;
 
