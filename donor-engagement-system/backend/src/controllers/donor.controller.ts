@@ -1,7 +1,7 @@
 import { CustomRequest } from 'src/types/custom-request';
 import { DonorService } from 'src/service/donor.service';
 import { FundraiserService } from '../service/fundraiser.service';
-import { Request, Response } from 'express';
+import { Response } from 'express';
 
 export class DonorController {
     constructor(
